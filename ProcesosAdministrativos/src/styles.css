@@ -1,0 +1,15 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+ 
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #c9d6ff;
+    background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+    overflow: hidden; /* Para eliminar el scroll */
+    height: 100vh; /* Para que ocupe toda la altura de la pantalla */
+}
