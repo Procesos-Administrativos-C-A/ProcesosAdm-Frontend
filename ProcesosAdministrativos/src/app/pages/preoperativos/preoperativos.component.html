@@ -1,0 +1,120 @@
+<nav class="navbar">
+    <div class="logo">
+      <img src="../../../assets/logo_cable_aereo_color_dos.png" alt="Logo" class="logo-img">
+    </div>
+    <div class="nav-menu">
+        <div class="nav-links">
+            <ul>
+              <li><a href="#">Inicio</a></li>
+              <li class="dropdown">
+                <a href="#" onclick="return false;">Preoperativos</a>
+                <div class="dropdown-content">
+                  <a href="#">Registros</a>
+                  <a href="#">Generar Informe</a>
+                </div>
+              </li>
+              <li class="dropdown">
+                <a href="#" onclick="return false;">Trámites</a>
+                <div class="dropdown-content">
+                  <a href="#">Certificado Laboral</a>
+                  <a href="#">Retiro de Cesantias</a>
+                  <a href="#">Solicitud de Vacaciones</a>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="profile">
+            <img src="../../../assets/user_icon.png" alt="Usuario"> 
+            <div class="user-dropdown">
+              <a href="#">Perfil</a>
+              <a href="#">Mensajes</a>
+              <a href="#">Configuración</a>
+              <a href="#">Cerrar Sesión</a>
+            </div>
+          </div>
+    </div>
+    <button class="menu-btn">☰</button>
+    
+</nav>
+<div class="parent">
+
+    <div class="container">
+        <h2>Preoperativos</h2>
+        <form>
+            <div class="form-row">
+                <div class="campo">
+                    <label for="lugar">Lugar:</label>
+                    <select (change)="cambioLinea($event)" id="lugar" name="lugar" >
+                        <option value="Linea1">Cambulos - Fundadores</option>
+                        <option value="Linea2">Cambulos - Villamaria</option>
+                        <option value="Mantenimiento">Mantenimiento</option>
+                    </select>
+                </div>
+                <div class="campo">
+                    <label for="fecha">Fecha:</label>
+                    <input type="date" id="fecha" name="fecha">
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="campo">
+                    <label for="turno">Turno:</label>
+                    <select id="turno" name="turno">
+                        <option value="Turno1">6  a.m.  -   2  p.m.</option>
+                        <option value="Turno2">2  p.m.  -   10 p.m.</option>
+                        <option value="Turno3">10 p.m.  -   6  a.m.</option>
+                    </select>
+                </div>
+                <div class="campo">
+                    <label for="dia_festivo">Día festivo:</label>
+                    <input type="checkbox" id="dia_festivo" name="dia_festivo">
+                </div>
+              
+            </div>
+            <div class="campoTab">
+                <table *ngFor="let lugar of lugares(); ">
+                
+                    <thead>
+                    <tr>
+                        <th colspan="2" class="titulo">
+                            <span >{{lugar}}</span>
+                            <button class="añadirEmp">+</button>
+                        </th>
+                        
+                    </tr>
+                    <tr>
+                        <th>Cargo</th>
+                        <th>Persona</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                        <select id="cargo" name="cargo">
+                            <option value="">Seleccione un cargo</option>
+                            <option value="hospital">Hospital</option>
+                            <option value="clinica">Clínica</option>
+                        </select>
+                        </td>
+                        <td>
+                            <select id="persona" name="persona">
+                                <option value="">Seleccione una persona</option>
+                                <option value="hospital">Hospital</option>
+                                <option value="clinica">Clínica</option>
+                            </select>
+                            
+                            <button class="eliminarEmp">-</button>
+                        </td>
+                        
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button type="submit">Guardar</button>
+          </form>
+
+          
+    </div>
+
+</div>
+

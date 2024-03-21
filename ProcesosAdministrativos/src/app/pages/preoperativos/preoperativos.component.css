@@ -1,0 +1,317 @@
+.navbar {
+    background-color: #002252;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+  
+.nav-menu{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 10px;
+    gap: 60px;
+}
+
+.logo {
+    position: relative;
+    text-align: center;
+    height: 53px;
+}
+
+.logo-img{
+    max-height: 100%;
+    width: auto;
+}
+  
+.nav-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    
+}
+  
+.nav-links ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 60px;
+}
+  
+.nav-links li {
+    margin-right: 20px;
+}
+  
+.nav-links li a {
+    color: white;
+    text-decoration: none;
+}
+  
+.dropdown {
+    position: relative;
+}
+  
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #002252;
+    min-width: 120px;
+    padding: 10px;
+    top: 30px;
+    flex-direction: column;
+    gap: 10px;
+}
+  
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+  
+.profile {
+    display: flex;
+    align-items: center;
+}
+  
+.profile img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-right: 10px;
+}
+  
+.menu-btn {
+    display: none;
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+  
+.user-dropdown {
+    display: none;
+    position: absolute;
+    background-color: #002252;
+    min-width: 120px;
+    top: 55px;
+    right: 5px;
+    padding: 10px;
+    flex-direction: column; /* Mostrar elementos en columna */
+    gap: 10px;
+}
+
+.profile:hover .user-dropdown {
+    display: flex;
+}
+  
+.user-dropdown a {
+    color: white;
+    text-decoration: none;
+}
+
+.menu-btn{
+    display: none;
+}
+
+
+ /* --------------------------Formulario ---------------------------*/
+
+ .parent{
+   /* background-image: url('../../../assets/fondo-web.png');
+    background-size: cover;
+    background-position: center; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+}
+
+ .container {
+    position: relative;
+    background-color: #fff;
+    border-radius: 30px;
+    padding: 20px;
+    width: 80%;
+    min-height: 540px;
+    margin: 0 auto;
+  }
+  
+  h2 {
+    text-align: start;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center ;
+    align-content: space-around;
+    margin-top: 40px;
+  }
+  
+
+  .form-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; /* Ensures rows fill the container width */
+    margin-bottom: 15px;
+  }
+  .campo {
+    width: 40%; /* Distribute width equally between elements */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 18px;
+  }
+  .campoTab {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 18px;
+    gap: 20px;
+  }
+  .form-row label,
+  .form-row select,
+  .form-row input[type="date"],
+  .form-row input[type="checkbox"] {
+    margin-right: 15px; /* Distribute width equally between elements */
+  }
+  label {
+    margin-bottom: 10px;
+  }
+  
+  select,
+  input[type="date"],
+  input[type="checkbox"] {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  
+  button {
+    background-color: #000;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+/* --------------------------------Tabla ------------------------------- */
+
+  table {
+    border-collapse: collapse; /* Combinar bordes adyacentes */
+    min-width:  450px; /* Ajustar al ancho del contenedor */
+    margin-bottom: 20px;
+  }
+  
+  th, td {
+    border: 1px solid #ddd; /* Bordes para todas las celdas */
+    padding: 8px; /* Espacio interior en las celdas */
+    text-align: left; /* Alineación del texto a la izquierda */
+  }
+  
+  caption {
+    font-weight: bold; /* Texto del título en negrita */
+    padding: 10px; /* Espacio alrededor del título */
+  }
+  
+  tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Color de fondo alterno para filas pares */
+  }
+  
+  /* Opcional: estilo para mejorar la visualización */
+  th {
+    background-color: #fafafa; /* Color de fondo para encabezados */
+  }
+
+  th.titulo {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: 40%;
+    
+  }
+
+.añadirEmp{
+    background-color: #2e7014;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative;
+    left: 20%
+}
+
+.eliminarEmp{
+    background-color: #750b0b;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    left: 5%
+    
+}
+
+
+
+
+  
+@media screen and (max-width: 768px) {
+
+  
+.nav-menu {
+    display: none;
+}
+  
+.menu-btn{
+    display: flex;
+}
+
+.nav-menu{
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+
+.nav-links ul {
+      flex-direction: column;
+      align-items: flex-start;
+}
+  
+.nav-links li {
+      margin-right: 0;
+      margin-bottom: 10px;
+}
+  
+.profile {
+      margin-top: 10px;
+      align-self: flex-end;
+}
+  
+.menu-btn {
+      display: block;
+}
+  
+.user-dropdown {
+      position: relative;
+      right: auto;
+      left: 0;
+      margin-top: 10px;
+}
+
+.dropdown:hover .nav-menu {
+    display: flex;
+}
+
+}
+  
