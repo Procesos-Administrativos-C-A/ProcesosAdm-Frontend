@@ -1,16 +1,13 @@
 import { Routes } from '@angular/router';
 
-import { LoginComponent } from './pages/login/login.component';
-import { PreoperativosComponent } from './pages/preoperativos/preoperativos.component';
-
 export const routes: Routes = [
     {
         path: '',
-        component: LoginComponent
+        loadChildren: () => import('./pages/login/login.routes').then(m => m.LoginRoutes)
     },
     {
         path: 'Preoperativos',
-        component: PreoperativosComponent 
+        loadChildren: () => import('./pages/operador_y_mantenimiento/operador_y_mantenimeinto.routes').then(m => m.OMRoutes)
     }   
 
 ];

@@ -52,7 +52,7 @@
                 </div>
                 <div class="campo">
                     <label for="fecha">Fecha:</label>
-                    <input type="date" id="fecha" name="fecha">
+                    <input disabled type="date" id="fecha" name="fecha" value="{{fechaHoy}}">
                 </div>
             </div>
             
@@ -72,13 +72,13 @@
               
             </div>
             <div class="campoTab">
-                <table *ngFor="let lugar of lugares(); ">
+                <table *ngFor="let lugar of lugares(); index as i ">
                 
                     <thead>
                     <tr>
                         <th colspan="2" class="titulo">
-                            <span >{{lugar}}</span>
-                            <button class="añadirEmp">+</button>
+                            <span >{{lugar.lugar}}</span>
+                            <button (click)="agregarPersona(i)" class="añadirEmp">+</button>
                         </th>
                         
                     </tr>
@@ -88,29 +88,31 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
+                    <tr *ngFor="let empleado of lugar.empleados; index as j">
                         <td>
                         <select id="cargo" name="cargo">
                             <option value="">Seleccione un cargo</option>
-                            <option value="hospital">Hospital</option>
-                            <option value="clinica">Clínica</option>
+                            <option value="Auxiliar de Abordaje">Auxiliar de Abordaje</option>
+                            <option value="Auxiliar de Taquilla">Auxiliar de Taquilla</option>
+                            <option value="Tecnico MTTO">Tecnico MTTO</option>
+                            <option value="Operador">Operador</option>
                         </select>
                         </td>
                         <td>
-                            <select id="persona" name="persona">
+                            <select (change)="actualizarPersona(j,i,$event)" id="persona" name="persona">
                                 <option value="">Seleccione una persona</option>
-                                <option value="hospital">Hospital</option>
-                                <option value="clinica">Clínica</option>
+                                <option value="Carlos Perez">Carlos Perez</option>
+                                <option value="Diana Mesa">Diana Mesa</option>
                             </select>
                             
-                            <button class="eliminarEmp">-</button>
+                            <button (click)="quitarPersona(j,i) " class="eliminarEmp">-</button>
                         </td>
                         
                     </tr>
                     </tbody>
                 </table>
             </div>
-            <button type="submit">Guardar</button>
+            <button type="submit" class="guardar">Guardar</button>
           </form>
 
           
