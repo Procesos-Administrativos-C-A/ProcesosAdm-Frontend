@@ -2,19 +2,26 @@ import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {Preoperativo} from '../../../core/models/preoperativo.model';
 import {EmpleadosPreoperativo} from '../../../core/models/empleados_preoperativo.model';
+import { FormsModule } from '@angular/forms';
 import {ReactiveFormsModule} from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-preoperativos',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule,FontAwesomeModule],
   templateUrl: './preoperativos.component.html',
   styleUrl: './preoperativos.component.css'
 })
 export class PreoperativosComponent implements OnInit {
 
+  dropdown_preoperativos = signal(false);
+  dropdown_tramites = signal(false);
+  horas_extra = signal(true);
   
-  fechaHoy = '';
+  fecha_hoy = '';
+  
 
   lugares = signal<EmpleadosPreoperativo[]>([
     {
@@ -31,8 +38,17 @@ export class PreoperativosComponent implements OnInit {
     }
   ]);
 
+  dropDownPre(): void {
+    this.dropdown_preoperativos.set(!this.dropdown_preoperativos()) ;
+  }
+
+  dropDownTram(): void {
+    this.dropdown_tramites.set(!this.dropdown_tramites()) ;
+  }
+
+
   ngOnInit(): void {
-    this.fechaHoy = new Date().toISOString().substring(0, 10);
+    this.fecha_hoy = new Date().toISOString().substring(0, 10);
   }
   agregarPersona(index : number){
     this.lugares.update((lugares) => {
