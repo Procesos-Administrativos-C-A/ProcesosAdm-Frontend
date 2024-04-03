@@ -1,0 +1,12 @@
+.pantalla-principal{
+    background-image: url('../../../../assets/fondo-web.png');
+    background-size: cover;
+    background-position: center;   
+}
+
+.appearance-none::-webkit-inner-spin-button,
+.appearance-none::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+

@@ -1,0 +1,43 @@
+<main class=" w-screen relative  "> 
+    <div class="pantalla-principal w-screen h-screen min-h-[760px] flex flex-col items-center justify-start ">
+        <div class="my-8 ">
+            <img src="../../../../assets/logo_cable_aereo_color_dos.png" alt="Logo" class="bg-contain h-[11rem]">
+        </div>
+        <div class=" flex gap-8  flex-col  lg:w-1/3 sm:w-3/4 telefono:w-11/12  mx-auto rounded-md shadow-inner shadow-TextoGris/45 bg-white " >
+            <form class="animate-fade-down animate-ease-in flex  flex-col " *ngIf="!menuRecuperacion() ; else formularioRecuperar" [formGroup]="usuarioForm" (ngSubmit)="enviarInicioSesion()">
+                <h1 class="text-center text-2xl font-semibold leading-7 text-gray-900 my-8 ">Iniciar sesión</h1>
+                <label for="cedula" class="ml-9 my-2 text-sm font-medium leading-6 text-gray-900">Numero de Cedula</label>
+                <input type="number" name="cedula" id="cedula" placeholder="" formControlName="cedula" class="appearance-none h-12 sm:w-3/4 telefono:w-11/12 pl-4 mx-auto  border-2 text-xl border-gray-300 rounded-md  focus:outline-none focus:ring-0 focus:border-4 focus:border-Secundario" >
+                <label for="contrasena" class="mt-5 ml-9 text-sm font-medium leading-6 text-gray-900">Contraseña</label>
+                <input type="password" name="contrasena" id="contrasena" placeholder="" formControlName="contrasena" class="h-12 sm:w-3/4 telefono:w-11/12 pl-4 mx-auto mt-2  border-2 text-xl border-gray-300 rounded-md focus:outline-none focus:ring-0 focus:border-4 focus:border-Secundario ">
+                <button type="submit" [disabled]="!usuarioForm.valid" class="flex disabled:bg-Primario items-center justify-center p-3 w-1/4 mx-auto mt-8 rounded-md bg-Primario text-TextoBlanco hover:bg-Secundario active:bg-gray-500">Acceder</button>
+            </form>
+            <ng-template #formularioRecuperar >
+                <form class="animate-fade-down animate-ease-in flex  flex-col " >
+                    <h1 class="text-center text-2xl font-semibold leading-7 text-gray-900 my-8">Recuperar Contraseña</h1>
+                    <p class=" sm:w-3/4 telefono:w-11/12 mx-auto mt-2 mb-14 text-center text-sm font-medium leading-6 text-TextoGris">
+                        Introduce tu numero de cedula y te enviaremos un enlace al correo electronico que tengas registrado
+                        para que puedas restablecer la contraseña de tu cuenta. 
+                    </p>
+                    <input type="number" name="cedula" placeholder="Numero de cedula" [formControl]="cedulaRecForm" class="appearance-none h-12 sm:w-3/4 telefono:w-11/12 pl-4 mx-auto  border-2 text-xl border-gray-300 rounded-md focus:outline-none focus:ring-0 focus:border-4 focus:border-Secundario"  >                    
+                    <button type="submit" class="flex items-center justify-center p-3 sm:w-3/5 telefono:w-3/4 mx-auto mt-8 rounded-md bg-Primario text-TextoBlanco hover:bg-Secundario active:bg-gray-500">Enviar enlace de acceso</button>
+                </form>
+               </ng-template>
+            <div class="animate-flip-up h-12 flex  flex-col justify-center bg-Primario rounded-t-full text-TextoBlanco "
+                *ngIf="!menuRecuperacion() ; else elseBlock">
+                <span class="text-center cursor-pointer w-40 m-auto" (click)="cambiarMenu()">
+                   <p > Olvidé mi contraseña</p> 
+                </span>
+            </div>
+            <ng-template #elseBlock >
+                <div class="animate-flip-up h-12 flex  flex-col justify-center bg-Primario rounded-t-full text-TextoBlanco">
+                <span class="text-center cursor-pointer w-40 m-auto" (click)="cambiarMenu()">
+                   <p > Iniciar Sesion</p> 
+                </span>
+                </div>
+            </ng-template>
+        </div>
+
+    </div>
+    
+</main>
