@@ -6,6 +6,8 @@ import { FormArray, FormBuilder, FormsModule } from '@angular/forms';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
+import { Empleado } from '../../../core/models/empleados.model';
+import { BackendService } from '../../../core/services/backend.service';
 
 
 
@@ -17,10 +19,14 @@ import { faCoffee } from '@fortawesome/free-solid-svg-icons';
   styleUrl: './preoperativos.component.css'
 })
 export class PreoperativosComponent implements OnInit {
+  preoperativo: Preoperativo | null = null;
+  empleadosPreoperativos: EmpleadosPreoperativo[] = [];
+  empleados: Empleado[] = [];
+
 
   preoperativoForm!: FormGroup;
   fecha_hoy = '';
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder , private backendService: BackendService) { }
 
   ngOnInit(): void {
 
@@ -47,6 +53,68 @@ export class PreoperativosComponent implements OnInit {
     
   }
 
+/*
+  obtenerNombresEmpleados(cargo: string) {
+    this.backendService.getObtenerNombresEmpleadosCargo(cargo)
+      .subscribe({
+        next: (empleados) => {
+          this.empleados = empleados;
+        },
+        error: (error) => {
+          console.error('Error al obtener los nombres de empleados:', error);
+        }
+      });
+  }
+  
+  onSubmit() {
+    if (this.preoperativoForm.valid) {
+      const preoperativo: Preoperativo = this.preoperativoForm.get('preoperativo')?.value;
+      const empleadosPreoperativos: EmpleadoPreoperativo[] = this.getEmpleadosPreoperativos();
+
+      this.backendService.crearPreoperativo(preoperativo, empleadosPreoperativos)
+        .subscribe(
+          (preoperativoInsertado) => {
+            console.log('Registro preoperativo insertado:', preoperativoInsertado);
+            // Realiza cualquier otra acción necesaria
+          },
+          (error) => {
+            console.error('Error al insertar registro preoperativo:', error);
+            // Maneja el error según sea necesario
+          }
+        );
+    }
+  }
+
+  ngOnInit(): void {
+    // Obtener un registro de preoperativo por su ID
+    const idPreoperativo = 1; // Reemplaza con el ID deseado
+    this.backendService.getPreoperativoPorId(idPreoperativo).subscribe(
+      (preoperativo) => {
+        this.preoperativo = preoperativo;
+        this.empleadosPreoperativos = preoperativo.empleados_preoperativos;
+      },
+      (error) => {
+        console.error('Error al obtener el registro de preoperativo:', error);
+      }
+    );
+  }
+
+  actualizarPreoperativo(): void {
+    if (this.preoperativo) {
+      const idPreoperativo = this.preoperativo.id;
+      this.backendService.actualizarPreoperativo(idPreoperativo, this.preoperativo, this.empleadosPreoperativos).subscribe(
+        (preoperativoActualizado) => {
+          console.log('Registro de preoperativo actualizado:', preoperativoActualizado);
+          // Realiza cualquier otra acción necesaria después de actualizar el registro
+        },
+        (error) => {
+          console.error('Error al actualizar el registro de preoperativo:', error);
+        }
+      );
+    }
+  }
+  
+*/
   dropdown_preoperativos = signal(false);
   dropdown_tramites = signal(false);
   

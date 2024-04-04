@@ -1,4 +1,6 @@
 export interface EmpleadosPreoperativo{
-    lugar: string,
-    empleados: string[],
+    cedula: string;
+    horas_diarias: number;
+    horas_adicionales: number;
+    estacion: string;
 }

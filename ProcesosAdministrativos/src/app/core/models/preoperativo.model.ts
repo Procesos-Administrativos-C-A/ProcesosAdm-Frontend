@@ -1,6 +1,7 @@
 export interface Preoperativo{
-    fecha: Date,
+    fecha: string,
     encargado: string,
     turno: string,
     lugar: string,
+    festivo: boolean,
 }
