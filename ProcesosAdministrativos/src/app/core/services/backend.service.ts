@@ -23,6 +23,22 @@ export class BackendService {
     return this.http.post<Preoperativo>(url, body);
   }
 
+  // Método para obtener un registro de preoperativo por su ID junto con sus empleados preoperativos
+  getPreoperativoPorId(id: number): Observable<Preoperativo> {
+    const url = `${this.apiUrl}/preoperativos/idPreoperativos/${id}`;
+    return this.http.get<Preoperativo>(url);
+  }
+
+  // Método para actualizar un registro de preoperativo por su ID junto con sus empleados preoperativos
+  actualizarPreoperativo(id: number, preoperativo: Preoperativo, empleadosPreoperativos: EmpleadosPreoperativo[]): Observable<Preoperativo> {
+    const url = `${this.apiUrl}/preoperativos/putPreoperativos/${id}`;
+    const body = {
+      preoperativo,
+      empleados_preoperativos: empleadosPreoperativos
+    };
+    return this.http.put<Preoperativo>(url, body);
+  }
+
   getObtenerNombresEmpleadosCargo(cargo: string): Observable<Empleado[]> {
     return this.http.get<Empleado[]>(`${this.apiUrl}/empleados/getEmpleados/${cargo}`)
       .pipe(

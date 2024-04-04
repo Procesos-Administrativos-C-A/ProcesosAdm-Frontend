@@ -17,11 +17,12 @@ import { BackendService } from '../../../core/services/backend.service';
   styleUrl: './preoperativos.component.css'
 })
 export class PreoperativosComponent implements OnInit {
-
+  preoperativo: Preoperativo | null = null;
+  empleadosPreoperativos: EmpleadosPreoperativo[] = [];
   empleados: Empleado[] = [];
 
   constructor(private backendService: BackendService) { }
-
+/*
   obtenerNombresEmpleados(cargo: string) {
     this.backendService.getObtenerNombresEmpleadosCargo(cargo)
       .subscribe({
@@ -33,7 +34,56 @@ export class PreoperativosComponent implements OnInit {
         }
       });
   }
+  
+  onSubmit() {
+    if (this.preoperativoForm.valid) {
+      const preoperativo: Preoperativo = this.preoperativoForm.get('preoperativo')?.value;
+      const empleadosPreoperativos: EmpleadoPreoperativo[] = this.getEmpleadosPreoperativos();
 
+      this.backendService.crearPreoperativo(preoperativo, empleadosPreoperativos)
+        .subscribe(
+          (preoperativoInsertado) => {
+            console.log('Registro preoperativo insertado:', preoperativoInsertado);
+            // Realiza cualquier otra acción necesaria
+          },
+          (error) => {
+            console.error('Error al insertar registro preoperativo:', error);
+            // Maneja el error según sea necesario
+          }
+        );
+    }
+  }
+
+  ngOnInit(): void {
+    // Obtener un registro de preoperativo por su ID
+    const idPreoperativo = 1; // Reemplaza con el ID deseado
+    this.backendService.getPreoperativoPorId(idPreoperativo).subscribe(
+      (preoperativo) => {
+        this.preoperativo = preoperativo;
+        this.empleadosPreoperativos = preoperativo.empleados_preoperativos;
+      },
+      (error) => {
+        console.error('Error al obtener el registro de preoperativo:', error);
+      }
+    );
+  }
+
+  actualizarPreoperativo(): void {
+    if (this.preoperativo) {
+      const idPreoperativo = this.preoperativo.id;
+      this.backendService.actualizarPreoperativo(idPreoperativo, this.preoperativo, this.empleadosPreoperativos).subscribe(
+        (preoperativoActualizado) => {
+          console.log('Registro de preoperativo actualizado:', preoperativoActualizado);
+          // Realiza cualquier otra acción necesaria después de actualizar el registro
+        },
+        (error) => {
+          console.error('Error al actualizar el registro de preoperativo:', error);
+        }
+      );
+    }
+  }
+  
+*/
   dropdown_preoperativos = signal(false);
   dropdown_tramites = signal(false);
   horas_extra = signal(true);
