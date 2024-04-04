@@ -3,4 +3,5 @@ export interface Preoperativo{
     encargado: string,
     turno: string,
     lugar: string,
+    festivo: boolean,
 }
