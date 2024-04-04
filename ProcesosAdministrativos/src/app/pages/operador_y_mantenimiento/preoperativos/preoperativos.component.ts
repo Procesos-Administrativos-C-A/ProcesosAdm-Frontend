@@ -6,6 +6,8 @@ import { FormsModule } from '@angular/forms';
 import {ReactiveFormsModule} from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
+import { Empleado } from '../../../core/models/empleados.model';
+import { BackendService } from '../../../core/services/backend.service';
 
 @Component({
   selector: 'app-preoperativos',
@@ -15,6 +17,22 @@ import { faCoffee } from '@fortawesome/free-solid-svg-icons';
   styleUrl: './preoperativos.component.css'
 })
 export class PreoperativosComponent implements OnInit {
+
+  empleados: Empleado[] = [];
+
+  constructor(private backendService: BackendService) { }
+
+  obtenerNombresEmpleados(cargo: string) {
+    this.backendService.getObtenerNombresEmpleadosCargo(cargo)
+      .subscribe({
+        next: (empleados) => {
+          this.empleados = empleados;
+        },
+        error: (error) => {
+          console.error('Error al obtener los nombres de empleados:', error);
+        }
+      });
+  }
 
   dropdown_preoperativos = signal(false);
   dropdown_tramites = signal(false);
