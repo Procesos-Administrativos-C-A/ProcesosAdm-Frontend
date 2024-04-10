@@ -39,6 +39,17 @@ export class BackendService {
     return this.http.put<Preoperativo>(url, body);
   }
 
+  getEmpleados(): Observable<any[]> {
+    const url = `${this.apiUrl}/empleados/getEmpleados`;
+    return this.http.get<any[]>(url)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          console.error('Error al obtener los empleados:', error);
+          return throwError(() => error);
+        })
+      );
+  }
+
   getObtenerNombresEmpleadosCargo(cargo: string): Observable<Empleado[]> {
     return this.http.get<Empleado[]>(`${this.apiUrl}/empleados/getEmpleados/${cargo}`)
       .pipe(
@@ -52,4 +63,5 @@ export class BackendService {
         })
       );
   }
+
 }

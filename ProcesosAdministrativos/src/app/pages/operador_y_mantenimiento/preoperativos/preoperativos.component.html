@@ -10,8 +10,8 @@
         <div class="nav-links sm:block telefono:hidden ">
         <ul class="flex items-center ">
             <li class=" mx-10"><a href="#">Inicio</a></li>
-            <li class=" mx-10  " >
-                <button type="button" class="bg-transparent  rounded-md" (click)="dropDownPre()">Preoperativos</button> 
+            <li class=" mx-10" >
+                <button type="button" class="bg-transparent  rounded-md h-12 w-32 focus:shadow-lg focus:shadow-white/10" (click)="dropDownPre()">Preoperativos</button> 
                 <div class="animate-fade-right absolute  mt-2 w-56 z-10   rounded-md bg-white shadow-lg shadow-gray-400  focus:outline-none" (mouseleave)="dropDownPre()" *ngIf="dropdown_preoperativos()" >
                     <div class="" role="none">
                       <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
@@ -110,31 +110,29 @@
                     </div>
                     <tr>
                       <th colspan="3" class="bg-gray-200 py-4 text-center">{{estacion.value.nombre[0]}}
-                        <button type="button" class="bg-Primario text-white rounded-full w-8 h-8 flex items-center justify-center absolute top-3 right-2" (click)="agregarEmpleado()">+</button>
+                        <button type="button" class="bg-Primario text-white rounded-full w-8 h-8 flex items-center justify-center absolute top-3 right-2" (click)="agregarEmpleado(estacion.value.nombre[0])">+</button>
                     </th>
                       
                     </tr>
-                    <tr *ngFor="let empleado of empleadosArray(i).controls; let i = index">
+                    <tr *ngFor="let empleado of empleadosArray(i).controls; let j = index">
                         <td *ngIf="preoperativoForm.get('extra')?.value" class="w-16 p-4 border">
 
-                            <input type="number" min="0" max="9" inputmode="numeric" class="appearance-none w-14 rounded-md focus:outline-none focus:ring-0 focus:appearance-none">
+                            <input type="number" min="0" max="9" inputmode="numeric" value="{{empleado.get('hora_extra')?.value}}" class="appearance-none w-14 rounded-md focus:outline-none focus:ring-0 focus:appearance-none" (change)="asignarHorasEmpleado(i,j,$event)">
                         </td>
                         <td class="w-5/12 p-4 border">
-                            <select name="cargo"  id="cargo" class="rounded-md">
-                                <option value="Oper">Operador</option>
-                                <option value="Auxi">Auxiliar de T & A</option>
-                                <option value="Inge">Ingeniero de MTTO</option>
-                                <option value="Tecn">Tecnico MTTO</option>
+                            <select name="cargo"  id="cargo" class="rounded-md" (change)="asignarCargoEmpleado(i,j,$event)">
+                                <option value="Operador">Operador</option>
+                                <option value="Auxiliar de T & A">Auxiliar de T & A</option>
+                                <option value="Ingeniero MTTO">Ingeniero de MTTO</option>
+                                <option value="Tecnico MTTO">Tecnico MTTO</option>
                             </select>
                         </td>
                         <td class="w-6/12 p-4 border relative">
-                            <select name="empleado"  id="empleado" class="rounded-md">
-                                <option value="">Juan Martínez Pérez </option>
-                                <option value="">Luis García Sánchez</option>
-                                <option value="">Alejandro Rodríguez López</option>
-                                <option value="">Carlos Fernández Martín</option>
+                            <select name="empleado"  id="empleado" class="rounded-md" (change)="asignarNombreEmpleado(i,j,$event)">
+                                <option value="">{{empleado.get('nombre')?.value}}</option>
+                                <option *ngFor="let empleado of empl[empleado.get('cargo')?.value]" value="{{empleado.nombre}}"> {{empleado.nombre}} </option>
                             </select>
-                            <button type="button" class="bg-Primario text-white rounded-full w-8 h-8 flex items-center justify-center absolute top-3 right-2" >-</button>
+                            <button type="button" class="bg-Primario text-white rounded-full w-8 h-8 flex items-center justify-center absolute top-3 right-2" (click)="eliminarEmpleado(i,j)">-</button>
                         </td>
                     </tr>
                   </table>
