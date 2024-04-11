@@ -4,7 +4,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormArray, FormBuilder, FormGroup, FormsModule } from '@angular/forms';
 import { NgIf, NgFor } from '@angular/common';
-import { EmpleadosPreoperativoG, PreoperativoG } from '../../../core/models/modelGetPreo';
+import { Preoperativo } from '../../../core/models/preoperativo.model';
+import { EmpleadosPreoperativo } from '../../../core/models/empleados_preoperativo.model';
 
 @Component({
   selector: 'app-preoperativos',
@@ -14,9 +15,9 @@ import { EmpleadosPreoperativoG, PreoperativoG } from '../../../core/models/mode
   styleUrls: ['./mostrar-preoperativos.component.css']
 })
 export class MostrarPreoperativosComponent {
-  preoperativos: PreoperativoG[] = [];
+  preoperativos: Preoperativo[] = [];
 
-  empleadosPreoperativo: EmpleadosPreoperativoG[] = [];
+  empleadosPreoperativo: EmpleadosPreoperativo[] = [];
 
   preoperativoSeleccionado: any;
   preoperativoForm: FormGroup;
@@ -49,7 +50,7 @@ export class MostrarPreoperativosComponent {
   }
 
   procesarDatosBackend(data: any) {
-    const preoperativo: PreoperativoG = {
+    const preoperativo: Preoperativo = {
       fecha: data.preoperativo.fecha,
       encargado: data.preoperativo.encargado,
       turno: data.preoperativo.turno,
@@ -66,7 +67,7 @@ export class MostrarPreoperativosComponent {
     this.preoperativos.push(preoperativo);
   }
 
-  filtrarPreoperativos(): PreoperativoG[] {
+  filtrarPreoperativos(): Preoperativo[] {
     if (!this.fechaBusqueda) {
       return this.preoperativos.slice(0, 9);
     }
