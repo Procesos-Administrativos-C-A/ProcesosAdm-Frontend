@@ -1,1 +1,108 @@
-<p>mostrar-preoperativos works!</p>
+<nav class="relative w-screen flex h-16 items-center justify-stretch bg-Primario text-white shadow-lg shadow-Primario">
+  <div class="flex items-center sm:justify-start telefono:justify-between  sm:w-1/2 telefono:w-4/6">
+    <div class="sm:hidden telefono:block">
+      <a>A</a>
+    </div>
+    <div class="w-28 flex-shrink-0 sm:block telefono:relative telefono:-right-0">
+      <img src="../../../assets/logo_cable_aereo_color_dos.png" alt="Logo" class="bg-contain h-[4rem] object-cover">
+    </div>
+
+    <div class="nav-links sm:block telefono:hidden ">
+      <ul class="flex items-center ">
+        <li class=" mx-10"><a href="#">Inicio</a></li>
+        <li class=" mx-10">
+          <button type="button" class="bg-transparent  rounded-md h-12 w-32 focus:shadow-lg focus:shadow-white/10"
+            (click)="dropDownPre()">Preoperativos</button>
+          <div
+            class="animate-fade-right absolute  mt-2 w-56 z-10   rounded-md bg-white shadow-lg shadow-gray-400  focus:outline-none"
+            (mouseleave)="dropDownPre()" *ngIf="dropdown_preoperativos()">
+            <div class="" role="none">
+              <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+              <a href="#"
+                class="text-gray-700 block px-4 py-2 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white"
+                role="menuitem" tabindex="-1" id="menu-item-0">Crear Preoperativo</a>
+              <a href="#"
+                class="text-gray-700 block px-4 py-2 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white"
+                role="menuitem" tabindex="-1" id="menu-item-1">Editar ultimo registro</a>
+              <a href="#"
+                class="text-gray-700 block px-4 py-2 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white"
+                role="menuitem" tabindex="-1" id="menu-item-2">Mostrar todos</a>
+            </div>
+          </div>
+        </li>
+        <li class="mx-10">
+          <button type="button" class="bg-transparent  rounded-md" (click)="dropDownTram()">Tramites</button>
+          <div
+            class="animate-fade-right absolute  mt-2 w-56 z-10  rounded-md bg-white shadow-lg shadow-gray-400 focus:outline-none transition-all duration-500"
+            (mouseleave)="dropDownTram()" *ngIf="dropdown_tramites()">
+            <div class="">
+              <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+              <a href="#"
+                class="text-gray-700 block px-4 py-2 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white">Solicitar
+                vacaciones</a>
+              <a href="#"
+                class="text-gray-700 block px-4 py-2 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white">Generear
+                certificaco</a>
+              <a href="#"
+                class="text-gray-700 block px-4 py-2 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white">Retiro
+                de cesantias</a>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class=" flex justify-end sm:w-1/2 telefono:w-2/6">
+    <div>
+      <p>A</p>
+      <!--<img src="../../../assets/user_icon.png" alt="Usuario" class="bg-contain h-[4rem]">  -->
+    </div>
+  </div>
+</nav>
+<main class=" w-screen pb-14 relative min-h-[760px] ">
+  <div class="pantalla-principal min-h-screen flex flex-col items-center justify-center">
+    <input type="date" [(ngModel)]="fechaBusqueda" placeholder="Buscar por fecha"
+      class="w-3/4 sm:w-1/2 md:w-1/3 lg:w-1/4 mb-4 ml-auto mr-auto sm:ml-4 md:ml-8 lg:ml-12" />
+
+    <table class="w-3/4 bg-white shadow-md rounded">
+      <thead>
+        <tr class="bg-Primario text-white">
+          <th class="py-3 px-6">Fecha</th>
+          <th class="py-3 px-6">Encargado</th>
+          <th class="py-3 px-6">Turno</th>
+          <th class="py-3 px-6">Lugar</th>
+          <th class="py-3 px-6">Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let preoperativo of filtrarPreoperativos()" class="hover:bg-gray-100">
+          <td class="py-3 px-6">{{ preoperativo.fecha }}</td>
+          <td class="py-3 px-6">{{ preoperativo.encargado }}</td>
+          <td class="py-3 px-6">{{ preoperativo.turno }}</td>
+          <td class="py-3 px-6">{{ preoperativo.lugar }}</td>
+          <td class="py-3 px-6">
+            <button class="bg-Primario text-white px-4 py-2 rounded" (click)="verDetalles(preoperativo)">Ver</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="preoperativoSeleccionado" class="w-3/4 bg-white shadow-md rounded mt-8 p-6">
+      <h2 class="text-2xl font-semibold mb-4">Detalles del Preoperativo</h2>
+      <p>Fecha: {{ preoperativoSeleccionado.fecha }}</p>
+      <p>Encargado: {{ preoperativoSeleccionado.encargado }}</p>
+      <p>Turno: {{ preoperativoSeleccionado.turno }}</p>
+      <p>Lugar: {{ preoperativoSeleccionado.lugar }}</p>
+      <p>Festivo: {{ preoperativoSeleccionado.festivo }}</p>
+
+      <h3>Empleados Preoperativos</h3>
+      <ul>
+        <li *ngFor="let empleado of preoperativoSeleccionado.empleados_preoperativos">
+          Cédula: {{ empleado.cedula }} - Horas diarias: {{ empleado.horas_diarias }} - Horas adicionales: {{
+          empleado.horas_adicionales }} - Estación: {{ empleado.estacion }}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</main>
