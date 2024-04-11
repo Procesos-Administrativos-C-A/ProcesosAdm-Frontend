@@ -13,7 +13,7 @@ export class BackendService {
 
   constructor(private http: HttpClient) { }
 
-  crearPreoperativo(preoperativo: Preoperativo, empleadosPreoperativos: EmpleadosPreoperativo[]): Observable<Preoperativo> {
+  crearPreoperativo(preoperativo: Preoperativo, empleadosPreoperativos: Array<EmpleadosPreoperativo>): Observable<Preoperativo> {
     const url = `${this.apiUrl}/preoperativos/preoperativos/`;
     const body = {
       preoperativo,

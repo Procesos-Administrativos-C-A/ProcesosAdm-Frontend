@@ -254,21 +254,13 @@ export class PreoperativosComponent implements OnInit {
       }
     }
     
-    console.log(empleado)
-    //console.log(this.preoperativoForm.get('estaciones') as FormArray)
-    /*
-    const estacionesArray = this.preoperativoForm.get('estaciones') as FormArray;
-    const mantenimientoArray = estacionesArray.at(estacionesIndex).get('mantenimiento') as FormArray;
-    mantenimientoArray.push(empleadoFormGroup);
-
-    (this.preoperativoForm.get('empleados') as FormArray).push(empleadoFormGroup); */
   }
 
   eliminarEmpleado(i : number, j: number) {
     (this.estacionesesArray.at(i).get('empleados') as FormArray).removeAt(j);
   }
 
-  mostrarInfon(){
+  guardarInformacion(){
     console.log(this.preoperativoForm.valid)
     console.log(this.preoperativoForm.value)
   }
