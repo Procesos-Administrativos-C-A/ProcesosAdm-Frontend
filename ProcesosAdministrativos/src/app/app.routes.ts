@@ -8,6 +8,10 @@ export const routes: Routes = [
     {
         path: 'Preoperativos',
         loadChildren: () => import('./pages/operador_y_mantenimiento/operador_y_mantenimeinto.routes').then(m => m.OMRoutes)
-    }   
+    },
+    {
+        path: 'MostrarPreo',
+        loadChildren: () => import('./pages/talento_humano/talento_humano.routes').then(m => m.OMRoutes)
+    } 
 
 ];
