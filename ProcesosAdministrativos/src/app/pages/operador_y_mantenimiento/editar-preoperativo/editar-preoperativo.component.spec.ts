@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditarPreoperativoComponent } from './editar-preoperativo.component';
+import { EditarPreoperativoComponent } from './EditarPreoperativoComponent';
 
 describe('EditarPreoperativoComponent', () => {
   let component: EditarPreoperativoComponent;
