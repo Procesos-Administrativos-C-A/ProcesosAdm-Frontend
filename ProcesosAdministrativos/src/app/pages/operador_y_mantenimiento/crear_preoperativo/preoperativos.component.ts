@@ -8,6 +8,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 import { Empleado } from '../../../core/models/empleados.model';
 import { BackendService } from '../../../core/services/backend.service';
+import { environment } from '../../../../environments/environment';
+import Swal from 'sweetalert2';
 
 
 
@@ -19,47 +21,25 @@ import { BackendService } from '../../../core/services/backend.service';
   styleUrl: './preoperativos.component.css'
 })
 export class PreoperativosComponent implements OnInit {
-  preoperativo: Preoperativo | null = null;
-  empleadosPreoperativos: EmpleadosPreoperativo[] = [];
-  empleados: Array<Empleado> = [];
+  
+  preoperativoForm: FormGroup = new FormGroup({
+    lugar: new FormControl("",[Validators.required, Validators.nullValidator]) ,
+    fecha: new FormControl(new Date().toISOString().substring(0, 10), [Validators.required]),
+    turno: new FormControl("",[Validators.required, Validators.nullValidator]),
+    festivo: new FormControl(false),
+    extra: new FormControl(false),
+    estaciones: new FormArray([])
+  });
 
-
-  preoperativoForm!: FormGroup;
   fecha_hoy = '';
-  empl: any =  {
-    
-  };
 
-  constructor(private fb: FormBuilder , private backendService: BackendService) { }
+  empleados: any =  {};
+
+  constructor(private fb: FormBuilder , private backendService: BackendService) {}
 
   ngOnInit(): void {
 
-    this.preoperativoForm = new FormGroup({
-      lugar: new FormControl("",[Validators.required, Validators.nullValidator]) ,
-      fecha: new FormControl(new Date().toISOString().substring(0, 10), [Validators.required]),
-      turno: new FormControl("",[Validators.required, Validators.nullValidator]),
-      festivo: new FormControl(false),
-      extra: new FormControl(false),
-      estaciones: new FormArray([
-        
-      ])
-    });
-
     this.obtenerNombresEmpleados('Operador')
-
-    /*
-    this.backendService.getEmpleados()
-      .subscribe(
-        (empleadosList) => {
-  
-            console.log(empleadosList)
-          
-        },
-        (error) => {
-          console.error('Error al obtener los empleados:', error);
-        }
-      );
-    */
     
     this.fecha_hoy = new Date().toISOString().substring(0, 10);
   }
@@ -68,32 +48,22 @@ export class PreoperativosComponent implements OnInit {
   get estacionesesArray() {
     return this.preoperativoForm.get('estaciones') as FormArray;
   }
+  nombre = environment.nombre
   empleadosArray(estacion : number): FormArray {
     return this.estacionesesArray.at(estacion).get('empleados') as FormArray ;
     
   }
 
-  selectRequiredValidator(control: FormControl): { [key: string]: any } | null {
-    console.log(control.value)
-    if (control.value === '' || control.value === null ) {
-      return { 'requiredSelect': true }; // Custom error key
-    }
-    return null;
-  }
-
-
   obtenerNombresEmpleados(cargo: string) {
-    this.empleados.splice(0, this.empleados.length);
+    if(cargo in this.empleados){
+      return
+    }
     this.backendService.getObtenerNombresEmpleadosCargo(cargo)
       .subscribe({
         next: (empleados) => {
-          console.log(empleados)
-          this.empl[cargo] = empleados;
-          console.log(this.empl);
-          empleados.forEach(element => {
-            this.empleados.push(element);
-            
-          });
+          
+          this.empleados[cargo] = empleados;
+          
         },
         error: (error) => {
           console.error('Error al obtener los nombres de empleados:', error);
@@ -101,64 +71,43 @@ export class PreoperativosComponent implements OnInit {
       });
   }
 
-  /*
-  onSubmit() {
-    if (this.preoperativoForm.valid) {
-      const preoperativo: Preoperativo = this.preoperativoForm.get('preoperativo')?.value;
-      const empleadosPreoperativos: EmpleadoPreoperativo[] = this.getEmpleadosPreoperativos();
-
-      this.backendService.crearPreoperativo(preoperativo, empleadosPreoperativos)
-        .subscribe(
-          (preoperativoInsertado) => {
-            console.log('Registro preoperativo insertado:', preoperativoInsertado);
-            // Realiza cualquier otra acción necesaria
-          },
-          (error) => {
-            console.error('Error al insertar registro preoperativo:', error);
-            // Maneja el error según sea necesario
-          }
-        );
-    }
-  }
-
-  ngOnInit(): void {
-    // Obtener un registro de preoperativo por su ID
-    const idPreoperativo = 1; // Reemplaza con el ID deseado
-    this.backendService.getPreoperativoPorId(idPreoperativo).subscribe(
-      (preoperativo) => {
-        this.preoperativo = preoperativo;
-        this.empleadosPreoperativos = preoperativo.empleados_preoperativos;
-      },
-      (error) => {
-        console.error('Error al obtener el registro de preoperativo:', error);
-      }
-    );
-  }
-
-  actualizarPreoperativo(): void {
-    if (this.preoperativo) {
-      const idPreoperativo = this.preoperativo.id;
-      this.backendService.actualizarPreoperativo(idPreoperativo, this.preoperativo, this.empleadosPreoperativos).subscribe(
-        (preoperativoActualizado) => {
-          console.log('Registro de preoperativo actualizado:', preoperativoActualizado);
-          // Realiza cualquier otra acción necesaria después de actualizar el registro
+  guardarRegistroPreoperativo(preoperativo : Preoperativo , empleados_preoperativo: Array<EmpleadosPreoperativo>) {
+    this.backendService.crearPreoperativo(preoperativo, empleados_preoperativo)
+      .subscribe(
+        (preoperativoInsertado) => {
+          console.log('Registro preoperativo insertado:', preoperativoInsertado.id);
+          Swal.fire({
+            title: '¡Guardado!',
+            text: 'El preoperativo se ha almacenado correctamente.',
+            icon: 'success',
+            confirmButtonColor: '#002252',
+            confirmButtonText: 'Aceptar'
+          }).then((result) => {
+            environment.preoperativoId= preoperativoInsertado.id
+            window.location.reload();
+          });
+          
         },
         (error) => {
-          console.error('Error al actualizar el registro de preoperativo:', error);
+          console.error('Error al insertar registro preoperativo:', error);
+          Swal.fire({
+            title: '¡Error!',
+            text: 'No se pudo registrar el preoperativo, intente nuevamenete.',
+            icon: 'error',
+            confirmButtonColor: '#002252',
+            confirmButtonText: 'Aceptar'
+          });
         }
       );
-    }
+    
   }
-  
-*/
+
   dropdown_preoperativos = signal(false);
   dropdown_tramites = signal(false);
   
 
   dropDownPre(): void {
     this.dropdown_preoperativos.set(!this.dropdown_preoperativos()) ;
-    console.log(this.obtenerNombresEmpleados('Operador'));
-    console.log(this.empleados);
   }
 
   dropDownTram(): void {
@@ -198,16 +147,19 @@ export class PreoperativosComponent implements OnInit {
             hora_extra: new FormControl('0',[Validators.pattern(/^[0-9]$/),Validators.maxLength(1)]),
             cargo: new FormControl('Operador',[Validators.required, Validators.nullValidator]),
             nombre: new FormControl ('',[Validators.required, Validators.nullValidator]),
+            cedula: new FormControl ('',[Validators.required, Validators.nullValidator]),
           }),
           new FormGroup({
             hora_extra: new FormControl('0',[Validators.pattern(/^[0-9]$/),Validators.maxLength(1)]),
             cargo: new FormControl('Operador',[Validators.required, Validators.nullValidator]),
             nombre: new FormControl ('',[Validators.required, Validators.nullValidator]),
+            cedula: new FormControl ('',[Validators.required, Validators.nullValidator]),
           }),
           new FormGroup({
             hora_extra: new FormControl('0',[Validators.pattern(/^[0-9]$/),Validators.maxLength(1)]),
             cargo: new FormControl('Operador',[Validators.required, Validators.nullValidator]),
             nombre: new FormControl ('',[Validators.required, Validators.nullValidator]),
+            cedula: new FormControl ('',[Validators.required, Validators.nullValidator]),
           })
         ]) 
       })
@@ -224,12 +176,13 @@ export class PreoperativosComponent implements OnInit {
     (this.estacionesesArray.at(i).get('empleados') as FormArray).at(j).get('hora_extra')?.setValue("0") ;
     (this.estacionesesArray.at(i).get('empleados') as FormArray).at(j).get('nombre')?.setValue("");
     (this.estacionesesArray.at(i).get('empleados') as FormArray).at(j).get('cargo')?.setValue(elementInput.value);
-    
   }
 
-  asignarNombreEmpleado(i : number, j: number,event: Event){
+  asignarNombreEmpleado(cargo : string , i : number, j: number,event: Event){
     const elementInput = event.target as HTMLInputElement;
     (this.estacionesesArray.at(i).get('empleados') as FormArray).at(j).get('nombre')?.setValue(elementInput.value);
+    const cedula: string = this.empleados[cargo].find((objeto: { nombre: any; }) => objeto.nombre === elementInput.value)['cedula'];
+    (this.estacionesesArray.at(i).get('empleados') as FormArray).at(j).get('cedula')?.setValue(cedula);
   }
 
   asignarHorasEmpleado(i : number, j: number,event: Event){
@@ -237,40 +190,66 @@ export class PreoperativosComponent implements OnInit {
     (this.estacionesesArray.at(i).get('empleados') as FormArray).at(j).get('hora_extra')?.setValue(elementInput.value) ;
   }
   
-  agregarEmpleado(estacion : string) {
+  agregarEmpleado(estacionEmp : string) {
     const empleadoFormGroup = new FormGroup({
       hora_extra: new FormControl ('0',[Validators.pattern(/^[0-9]$/),Validators.maxLength(1)]),
-      cargo: new FormControl ('',[Validators.required, Validators.nullValidator]),
-      nombre: new FormControl (['',Validators.required, Validators.nullValidator]),
-      cedula: new FormControl (['']),
+      cargo: new FormControl ('Operador',[Validators.required, Validators.nullValidator]),
+      nombre: new FormControl ('',[Validators.required, Validators.nullValidator]),
+      cedula: new FormControl ('',[Validators.required, Validators.nullValidator]),
     });
-    const empleado = this.preoperativoForm.get('estaciones') as FormArray;
-    for (const empleados of empleado.controls) {
-      console.log(empleados.get('nombre')?.value[0]);
-      if (empleados.get('nombre')?.value[0] === estacion) {
-        const evn = empleados.get('empleados') as FormArray;
-        evn.push(empleadoFormGroup);
-        console.log('ingerido');
+    const estaciones = this.preoperativoForm.get('estaciones') as FormArray;
+    for (const estacion of estaciones.controls) {
+      if (estacion.get('nombre')?.value[0] === estacionEmp) {
+        const empleados = estacion.get('empleados') as FormArray;
+        empleados.push(empleadoFormGroup);
+        break;
       }
     }
-    
-    console.log(empleado)
-    //console.log(this.preoperativoForm.get('estaciones') as FormArray)
-    /*
-    const estacionesArray = this.preoperativoForm.get('estaciones') as FormArray;
-    const mantenimientoArray = estacionesArray.at(estacionesIndex).get('mantenimiento') as FormArray;
-    mantenimientoArray.push(empleadoFormGroup);
-
-    (this.preoperativoForm.get('empleados') as FormArray).push(empleadoFormGroup); */
   }
 
   eliminarEmpleado(i : number, j: number) {
     (this.estacionesesArray.at(i).get('empleados') as FormArray).removeAt(j);
   }
 
-  mostrarInfon(){
+  guardarInformacion(){
+    const preoperativo: Preoperativo ={
+      fecha: this.preoperativoForm.get("fecha")?.value,
+      encargado: environment.nombre + " - " + environment.cedula,
+      turno: this.preoperativoForm.get("turno")?.value,
+      lugar: this.preoperativoForm.get("lugar")?.value,
+      festivo: this.preoperativoForm.get("festivo")?.value
+    }
+    
+    const empleados_preoperativo : Array<EmpleadosPreoperativo> = [
+
+    ]
+
+    this.estacionesesArray.controls.forEach((element: any) => {
+      const lugar = element.get('nombre')?.value[0];
+
+      (element.get('empleados') as FormArray).controls.forEach((element2: any) => {
+        
+        const cedula = element2.get('cedula').value
+        const hora_extra = !this.preoperativoForm.get("extra")?.value ? 0 : element2.get('hora_extra').value ;
+        
+        const emp : EmpleadosPreoperativo = {
+          cedula: cedula,
+          horas_diarias: 8,
+          horas_adicionales:parseInt(hora_extra),
+          estacion: lugar
+        }
+        empleados_preoperativo.push(emp);
+      })
+      
+    });
+
+    console.log(preoperativo)
+    console.log(empleados_preoperativo)
     console.log(this.preoperativoForm.valid)
     console.log(this.preoperativoForm.value)
+
+    this.guardarRegistroPreoperativo(preoperativo  , empleados_preoperativo)
+
   }
 
 }

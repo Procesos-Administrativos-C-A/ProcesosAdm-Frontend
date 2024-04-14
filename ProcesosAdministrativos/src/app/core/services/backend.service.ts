@@ -1,36 +1,57 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 import { Empleado } from '../models/empleados.model';
 import { Preoperativo } from '../models/preoperativo.model';
 import { EmpleadosPreoperativo } from '../models/empleados_preoperativo.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BackendService {
-  private apiUrl = 'http://127.0.0.1:8000'; // Reemplaza con la URL de tu backend
+  private apiUrl = 'http://localhost:8000'; // Reemplaza con la URL de tu backend
 
   constructor(private http: HttpClient) { }
 
-  crearPreoperativo(preoperativo: Preoperativo, empleadosPreoperativos: EmpleadosPreoperativo[]): Observable<Preoperativo> {
+  crearPreoperativo(preoperativo: Preoperativo, empleadosPreoperativos: Array<EmpleadosPreoperativo>): Observable<any> {
     const url = `${this.apiUrl}/preoperativos/preoperativos/`;
     const body = {
       preoperativo,
       empleados_preoperativos: empleadosPreoperativos
     };
 
-    return this.http.post<Preoperativo>(url, body);
+    return this.http.post<any>(url, body);
+  }
+
+  ingresar(username: string, password: string): Observable<{}> {
+    const url = `${this.apiUrl}/login/ingresar/`;
+    const formData = new FormData();
+    formData.append('username', username);
+    formData.append('password', password);
+
+    return this.http.post<{}>(url, formData);
+  }
+
+  getInformacion(): Observable<any> {
+    const url = `${this.apiUrl}/login/user/me`;
+    const token = environment.token
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    return this.http.get<any>(url, { headers });
   }
 
   // Método para obtener un registro de preoperativo por su ID junto con sus empleados preoperativos
-  getPreoperativoPorId(id: number): Observable<Preoperativo> {
-    const url = `${this.apiUrl}/preoperativos/idPreoperativos/${id}`;
-    return this.http.get<Preoperativo>(url);
+  getPreoperativoPorId(id: number): Observable<any> {
+    const url = `${this.apiUrl}/preoperativos/preoperativos_por_id/25`;
+    return this.http.get<any>(url);
   }
 
   // Método para actualizar un registro de preoperativo por su ID junto con sus empleados preoperativos
-  actualizarPreoperativo(id: number, preoperativo: Preoperativo, empleadosPreoperativos: EmpleadosPreoperativo[]): Observable<Preoperativo> {
+  actualizarPreoperativo(id: number, preoperativo: Preoperativo, empleadosPreoperativos: Array<EmpleadosPreoperativo>): Observable<Preoperativo> {
     const url = `${this.apiUrl}/preoperativos/putPreoperativos/${id}`;
     const body = {
       preoperativo,
