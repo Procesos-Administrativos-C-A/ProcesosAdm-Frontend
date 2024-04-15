@@ -85,4 +85,9 @@ export class BackendService {
       );
   }
 
+  getPreoperativosPorFecha(fecha: string): Observable<any[]> {
+    const url = `${this.apiUrl}/preoperativos/preoperativos_por_fecha/?fecha=${fecha}`;
+    return this.http.get<any[]>(url);
+  }
+
 }

@@ -6,6 +6,7 @@ import { FormArray, FormBuilder, FormGroup, FormsModule } from '@angular/forms';
 import { NgIf, NgFor } from '@angular/common';
 import { Preoperativo } from '../../../core/models/preoperativo.model';
 import { EmpleadosPreoperativo } from '../../../core/models/empleados_preoperativo.model';
+import { BackendService } from '../../../core/services/backend.service';
 
 @Component({
   selector: 'app-preoperativos',
@@ -24,7 +25,7 @@ export class MostrarPreoperativosComponent implements OnInit {
   fechaBusqueda: string = '';
   private fechaBusquedaAnterior: string = '';
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private backendService: BackendService) {
     this.preoperativoForm = this.fb.group({
       // Agrega los controles necesarios para los detalles del preoperativo
     });
@@ -34,109 +35,38 @@ export class MostrarPreoperativosComponent implements OnInit {
 
   ngOnInit() {
     console.log('Componente inicializado');
-    this.simularDatosBackend();
+    // this.simularDatosBackend(); // Puedes comentar o eliminar esta línea
+    this.obtenerPreoperativosPorFecha(this.fechaBusqueda);
   }
 
-  simularDatosBackend() {
-    const datosSimulados: any[] = [
-      {
-        "preoperativo": {
-          "fecha": "2024-04-11", 
-          "encargado": "Alejandro Posada",
-          "turno": "Turno 1",
-          "lugar": "Estación A",
-          "festivo": 1
+  obtenerPreoperativosPorFecha(fecha: string) {
+    this.backendService.getPreoperativosPorFecha(fecha)
+      .subscribe({
+        next: (preoperativos: Preoperativo[]) => {
+          this.preoperativos = preoperativos.map((preoperativo) => ({
+            id: preoperativo.id,
+            fecha: preoperativo.fecha,
+            encargado: preoperativo.encargado,
+            turno: preoperativo.turno,
+            lugar: preoperativo.lugar,
+            festivo: Boolean(preoperativo.festivo), // Cambiar esta línea
+            empleados_preoperativos: preoperativo.empleados_preoperativos?.map((empleado: EmpleadosPreoperativo) => ({
+              id: empleado.id,
+              id_preoperativo: empleado.id_preoperativo,
+              cedula: empleado.cedula.toString(),
+              horas_diarias: empleado.horas_diarias,
+              horas_adicionales: empleado.horas_adicionales,
+              estacion: empleado.estacion
+            }))
+          }));
         },
-        "empleados_preoperativos": [
-          {
-            "cedula": 75066500,
-            "horas_diarias": 8,
-            "horas_adicionales": 2,
-            "estacion": "Estación A"
-          },
-          {
-            "cedula": 1053783963,
-            "horas_diarias": 7,
-            "horas_adicionales": 1,
-            "estacion": "Estación B"
-          }
-        ]
-      },
-      {
-        "preoperativo": {
-          "fecha": "2024-04-10", 
-          "encargado": "Jhonatan Garcia",
-          "turno": "Turno 1",
-          "lugar": "Estación A",
-          "festivo": 1
-        },
-        "empleados_preoperativos": [
-          {
-            "cedula": 75066500,
-            "horas_diarias": 8,
-            "horas_adicionales": 2,
-            "estacion": "Estación A"
-          },
-          {
-            "cedula": 1053783963,
-            "horas_diarias": 7,
-            "horas_adicionales": 1,
-            "estacion": "Estación B"
-          }
-        ]
-      },
-      {
-        "preoperativo": {
-          "fecha": "2024-04-11", 
-          "encargado": "Alejandro Posada",
-          "turno": "Turno 2",
-          "lugar": "Estación A",
-          "festivo": 0
-        },
-        "empleados_preoperativos": [
-          {
-            "cedula": 75066500,
-            "horas_diarias": 8,
-            "horas_adicionales": 2,
-            "estacion": "Estación A"
-          },
-          {
-            "cedula": 1053783963,
-            "horas_diarias": 7,
-            "horas_adicionales": 1,
-            "estacion": "Estación B"
-          }
-        ]
-      },
-      {
-        "preoperativo": {
-          "fecha": "2024-04-10", 
-          "encargado": "Jhonatan Garcia",
-          "turno": "Turno 3",
-          "lugar": "Estación A",
-          "festivo": 0
-        },
-        "empleados_preoperativos": [
-          {
-            "cedula": 75066500,
-            "horas_diarias": 8,
-            "horas_adicionales": 2,
-            "estacion": "Estación A"
-          },
-          {
-            "cedula": 1053783963,
-            "horas_diarias": 7,
-            "horas_adicionales": 1,
-            "estacion": "Estación B"
-          }
-        ]
-      }
-    ];
-    console.log('Datos simulados:', datosSimulados);
-    datosSimulados.forEach(data => {
-      this.procesarDatosBackend(data);
-    });
+        error: (error) => {
+          console.error('Error al obtener los preoperativos:', error);
+        }
+      });
   }
+
+
 
   dropdown_preoperativos = signal(false);
   dropdown_tramites = signal(false);
@@ -179,18 +109,19 @@ export class MostrarPreoperativosComponent implements OnInit {
       this.preoperativoSeleccionado = null;
       return this.preoperativos.slice(0, 9);
     }
-  
+
     // Si la fecha de búsqueda cambió, restablece el preoperativoSeleccionado
     if (this.fechaBusqueda !== this.fechaBusquedaAnterior) {
       this.preoperativoSeleccionado = null;
+      this.obtenerPreoperativosPorFecha(this.fechaBusqueda);
     }
     this.fechaBusquedaAnterior = this.fechaBusqueda;
-  
+
     const preoperativosFiltrados = this.preoperativos.filter(preoperativo => preoperativo.fecha === this.fechaBusqueda);
     console.log('Preoperativos filtrados:', preoperativosFiltrados);
     return preoperativosFiltrados.slice(0, 9);
   }
-  
+
   verDetalles(preoperativo: Preoperativo) {
     this.preoperativoSeleccionado = preoperativo;
     console.log('Preoperativo seleccionado:', preoperativo);
