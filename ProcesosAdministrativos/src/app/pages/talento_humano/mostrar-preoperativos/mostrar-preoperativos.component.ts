@@ -24,6 +24,7 @@ export class MostrarPreoperativosComponent implements OnInit {
   preoperativoForm: FormGroup;
   fechaBusqueda: string = '';
   private fechaBusquedaAnterior: string = '';
+  modalVisible = false;
 
   constructor(private fb: FormBuilder, private backendService: BackendService) {
     this.preoperativoForm = this.fb.group({
@@ -122,8 +123,27 @@ export class MostrarPreoperativosComponent implements OnInit {
     return preoperativosFiltrados.slice(0, 9);
   }
 
+  agruparEmpleadosPorEstacion(preoperativo: Preoperativo): { [estacion: string]: EmpleadosPreoperativo[] } {
+    if (!preoperativo.empleados_preoperativos) {
+      return {};
+    }
+  
+    return preoperativo.empleados_preoperativos.reduce((grupos, empleado) => {
+      const estacion = empleado.estacion;
+      if (!grupos[estacion]) {
+        grupos[estacion] = [];
+      }
+      grupos[estacion].push(empleado);
+      return grupos;
+    }, {} as { [estacion: string]: EmpleadosPreoperativo[] });
+  }
+
+  empleadosAgrupadosPorEstacion: { [estacion: string]: EmpleadosPreoperativo[] } = {};
+
   verDetalles(preoperativo: Preoperativo) {
     this.preoperativoSeleccionado = preoperativo;
+    this.empleadosAgrupadosPorEstacion = this.agruparEmpleadosPorEstacion(preoperativo);
     console.log('Preoperativo seleccionado:', preoperativo);
+    this.modalVisible = true;
   }
 }
