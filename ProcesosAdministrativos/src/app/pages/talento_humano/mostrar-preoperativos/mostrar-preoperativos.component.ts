@@ -127,7 +127,7 @@ export class MostrarPreoperativosComponent implements OnInit {
     if (!preoperativo.empleados_preoperativos) {
       return {};
     }
-  
+
     return preoperativo.empleados_preoperativos.reduce((grupos, empleado) => {
       const estacion = empleado.estacion;
       if (!grupos[estacion]) {
@@ -145,5 +145,25 @@ export class MostrarPreoperativosComponent implements OnInit {
     this.empleadosAgrupadosPorEstacion = this.agruparEmpleadosPorEstacion(preoperativo);
     console.log('Preoperativo seleccionado:', preoperativo);
     this.modalVisible = true;
+  }
+
+  generarPDF() {
+    if (this.fechaBusqueda) {
+      this.backendService.generarPDFPreoperativosPorFecha(this.fechaBusqueda)
+        .subscribe({
+          next: ({ blob, fileName }) => {
+            // Descargar el archivo directamente
+            const anclaDescarga = document.createElement('a');
+            anclaDescarga.href = window.URL.createObjectURL(blob);
+            anclaDescarga.download = fileName;
+            anclaDescarga.click();
+          },
+          error: (error) => {
+            console.error('Error al generar el PDF:', error);
+          }
+        });
+    } else {
+      console.error('No se ha seleccionado una fecha');
+    }
   }
 }

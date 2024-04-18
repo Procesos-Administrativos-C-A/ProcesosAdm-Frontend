@@ -104,6 +104,7 @@
           </tr>
         </tbody>
       </table>
+      <button *ngIf="fechaBusqueda" class="bg-Primario descargar-pdf-button mt-4" (click)="generarPDF()">Descargar PDF</button>
 
       <!-- Modal -->
       <div *ngIf="modalVisible" class="modal">
