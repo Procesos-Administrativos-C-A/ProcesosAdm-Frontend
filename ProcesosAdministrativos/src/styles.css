@@ -19,7 +19,7 @@ body {
 }
 
 .pantalla-principal{
-    background-image: url('./assets/fondo-web.png');
+    background-image: url('./assets/fondo.png');
     background-size: cover;
     background-position: center;   
 }
