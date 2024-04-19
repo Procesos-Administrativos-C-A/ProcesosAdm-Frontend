@@ -69,6 +69,9 @@
     border: 1px solid #888;
     width: 80%;
     overflow-y: auto;
+
+/* Agregar scroll vertical si el contenido excede la altura del modal */
+
 }
 
 .preoperativos__modal-header {
@@ -99,4 +102,5 @@
     border-radius: 0.375rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease;
+
 }

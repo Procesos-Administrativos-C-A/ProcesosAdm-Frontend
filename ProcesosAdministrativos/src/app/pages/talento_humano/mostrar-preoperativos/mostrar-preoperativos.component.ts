@@ -127,7 +127,7 @@ export class MostrarPreoperativosComponent implements OnInit {
     if (!preoperativo.empleados_preoperativos) {
       return {};
     }
-  
+
     return preoperativo.empleados_preoperativos.reduce((grupos, empleado) => {
       const estacion = empleado.estacion;
       if (!grupos[estacion]) {
