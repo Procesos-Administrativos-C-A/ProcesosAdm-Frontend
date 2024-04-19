@@ -1,5 +1,6 @@
 <div class="flex flex-col min-h-screen">
-  <nav class="relative w-screen flex h-16 items-center justify-stretch bg-Primario text-white shadow-lg shadow-Primario">
+  <nav
+    class="relative w-screen flex h-16 items-center justify-stretch bg-Primario text-white shadow-lg shadow-Primario">
     <div class="flex items-center sm:justify-start telefono:justify-between  sm:w-1/2 telefono:w-4/6">
       <div class="sm:hidden telefono:block">
         <a>A</a>
@@ -103,24 +104,49 @@
           </tr>
         </tbody>
       </table>
+      <button *ngIf="fechaBusqueda" class="bg-Primario descargar-pdf-button mt-4" (click)="generarPDF()">Descargar PDF</button>
 
-      <div *ngIf="preoperativoSeleccionado" class="w-3/4 bg-white shadow-md rounded mt-8 p-6">
-        <h2 class="text-2xl font-semibold mb-4">Detalles del Preoperativo</h2>
-        <p>Fecha: {{ preoperativoSeleccionado.fecha }}</p>
-        <p>Encargado: {{ preoperativoSeleccionado.encargado }}</p>
-        <p>Turno: {{ preoperativoSeleccionado.turno }}</p>
-        <p>Lugar: {{ preoperativoSeleccionado.lugar }}</p>
-        <p>Festivo: {{ preoperativoSeleccionado.festivo }}</p>
-
-        <h3>Empleados Preoperativos</h3>
-        <ul>
-          <li *ngFor="let empleado of preoperativoSeleccionado.empleados_preoperativos">
-            Cédula: {{ empleado.cedula }} - Horas diarias: {{ empleado.horas_diarias }} - Horas adicionales: {{
-            empleado.horas_adicionales }} - Estación: {{ empleado.estacion }}
-          </li>
-        </ul>
+      <!-- Modal -->
+      <div *ngIf="modalVisible" class="modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="details-title">Detalles del Preoperativo</h2>
+            <button class="close-button" (click)="modalVisible = false">×</button>
+          </div>
+          <div class="modal-body">
+            <div class="details-info">
+              <p><strong>Fecha:</strong> {{ preoperativoSeleccionado?.fecha }}</p>
+              <p><strong>Encargado:</strong> {{ preoperativoSeleccionado?.encargado }}</p>
+              <p><strong>Turno:</strong> {{ preoperativoSeleccionado?.turno }}</p>
+              <p><strong>Lugar:</strong> {{ preoperativoSeleccionado?.lugar }}</p>
+              <p><strong>Festivo:</strong>
+                <span *ngIf="preoperativoSeleccionado?.festivo; else noFestivo">Verdadero</span>
+                <ng-template #noFestivo>Falso</ng-template>
+              </p>
+            </div>
+            <h3 class="details-subtitle">Empleados Preoperativos</h3>
+            <table class="employees-table" *ngFor="let estacion of empleadosAgrupadosPorEstacion | keyvalue">
+              <thead>
+                <tr>
+                  <th colspan="4">{{ estacion.key }}</th>
+                </tr>
+                <tr>
+                  <th>Cédula</th>
+                  <th>Horas diarias</th>
+                  <th>Horas adicionales</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let empleado of estacion.value" class="employee-row">
+                  <td>{{ empleado.cedula }}</td>
+                  <td>{{ empleado.horas_diarias }}</td>
+                  <td>{{ empleado.horas_adicionales }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
-
   </main>
 </div>

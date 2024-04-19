@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, catchError, map, throwError } from 'rxjs';
 import { Empleado } from '../models/empleados.model';
 import { Preoperativo } from '../models/preoperativo.model';
 import { EmpleadosPreoperativo } from '../models/empleados_preoperativo.model';
@@ -81,6 +81,23 @@ export class BackendService {
             console.error('Error al obtener los nombres de empleados:', error);
           }
           return throwError(() => error);
+        })
+      );
+  }
+
+  getPreoperativosPorFecha(fecha: string): Observable<any[]> {
+    const url = `${this.apiUrl}/preoperativos/preoperativos_por_fecha/?fecha=${fecha}`;
+    return this.http.get<any[]>(url);
+  }
+
+  generarPDFPreoperativosPorFecha(fecha: string): Observable<{ blob: Blob, fileName: string }> {
+    const url = `${this.apiUrl}/preoperativos/generar_pdf_preoperativos_fecha/?fecha=${fecha}`;
+    return this.http.get(url, { responseType: 'blob' })
+      .pipe(
+        map((blob: Blob) => {
+          // Aquí puedes determinar el nombre del archivo según tus necesidades
+          const fileName = `preoperativos_${fecha}.pdf`;
+          return { blob, fileName };
         })
       );
   }
