@@ -22,7 +22,7 @@
                 <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
                 <a href="#"
                   class="text-gray-700 block px-4 py-2 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white"
-                  role="menuitem" tabindex="-1" id="menu-item-2">Mostrar todos</a>
+                  role="menuitem" tabindex="-1" id="menu-item-2">Filtrado por fecha</a>
               </div>
             </div>
           </li>
@@ -104,6 +104,8 @@
           </tr>
         </tbody>
       </table>
+
+      <button *ngIf="fechaBusqueda" class="bg-Primario descargar-pdf-button mt-4" (click)="generarPDF()">Descargar PDF</button>
 
       <!-- Modal -->
       <div *ngIf="modalVisible" class="preoperativos__modal">
