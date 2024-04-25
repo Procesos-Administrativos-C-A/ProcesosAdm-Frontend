@@ -4,11 +4,11 @@ import {Preoperativo} from '../../../core/models/preoperativo.model';
 import {EmpleadosPreoperativo} from '../../../core/models/empleados_preoperativo.model';
 import { FormArray, FormBuilder, FormsModule } from '@angular/forms';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faCoffee } from '@fortawesome/free-solid-svg-icons';
-import { Empleado } from '../../../core/models/empleados.model';
 import { BackendService } from '../../../core/services/backend.service';
 import { environment } from '../../../../environments/environment';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faCircleUser, faCircleXmark  } from '@fortawesome/free-regular-svg-icons';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
 
 
@@ -22,6 +22,10 @@ import Swal from 'sweetalert2';
 })
 export class PreoperativosComponent implements OnInit {
   
+  faCircleXmark = faCircleXmark;
+  faCircleUser = faCircleUser;
+  faBars = faBars;
+
   preoperativoForm: FormGroup = new FormGroup({
     lugar: new FormControl("",[Validators.required, Validators.nullValidator]) ,
     fecha: new FormControl(new Date().toISOString().substring(0, 10), [Validators.required]),
@@ -63,7 +67,7 @@ export class PreoperativosComponent implements OnInit {
         next: (empleados) => {
           
           this.empleados[cargo] = empleados;
-          
+          console.log(this.empleados)
         },
         error: (error) => {
           console.error('Error al obtener los nombres de empleados:', error);
@@ -83,7 +87,7 @@ export class PreoperativosComponent implements OnInit {
             confirmButtonColor: '#002252',
             confirmButtonText: 'Aceptar'
           }).then((result) => {
-            environment.preoperativoId= preoperativoInsertado.id
+            localStorage.setItem('ultimo_registro',preoperativoInsertado.id)
             window.location.reload();
           });
           
@@ -104,6 +108,7 @@ export class PreoperativosComponent implements OnInit {
 
   dropdown_preoperativos = signal(false);
   dropdown_tramites = signal(false);
+  dropdown_menu = signal(false);
   
 
   dropDownPre(): void {
@@ -112,6 +117,10 @@ export class PreoperativosComponent implements OnInit {
 
   dropDownTram(): void {
     this.dropdown_tramites.set(!this.dropdown_tramites()) ;
+  }
+
+  dropDownMenu(): void {
+    this.dropdown_menu.set(!this.dropdown_menu()) ;
   }
 
 
@@ -212,12 +221,14 @@ export class PreoperativosComponent implements OnInit {
   }
 
   guardarInformacion(){
+    const nombres: any = localStorage.getItem("nombre")
     const preoperativo: Preoperativo ={
       fecha: this.preoperativoForm.get("fecha")?.value,
-      encargado: environment.nombre + " - " + environment.cedula,
+      encargado: nombres,
       turno: this.preoperativoForm.get("turno")?.value,
       lugar: this.preoperativoForm.get("lugar")?.value,
-      festivo: this.preoperativoForm.get("festivo")?.value
+      festivo: this.preoperativoForm.get("festivo")?.value,
+      horas_extra: this.preoperativoForm.get("extra")?.value,
     }
     
     const empleados_preoperativo : Array<EmpleadosPreoperativo> = [

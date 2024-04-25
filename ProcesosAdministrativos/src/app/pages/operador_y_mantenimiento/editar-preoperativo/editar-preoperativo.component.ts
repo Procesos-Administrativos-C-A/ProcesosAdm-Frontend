@@ -35,7 +35,9 @@ export class EditarPreoperativoComponent implements OnInit {
   constructor(private fb: FormBuilder , private backendService: BackendService) {}
 
   ngOnInit(): void {
-    this.backendService.getPreoperativoPorId(25)
+    const numero_registro = parseInt(localStorage.getItem('ultimo_registro') ?? '-1')
+    console.log(numero_registro)
+    this.backendService.getPreoperativoPorId(numero_registro)
       .subscribe({
         next: (preoperativo) => {
           const preoperative : Preoperativo = {
@@ -157,7 +159,10 @@ export class EditarPreoperativoComponent implements OnInit {
   }
 
   guardarRegistroPreoperativo(preoperativo : Preoperativo , empleados_preoperativo: Array<EmpleadosPreoperativo>) {
-    this.backendService.actualizarPreoperativo(25, preoperativo, empleados_preoperativo)
+    const numero_registro = parseInt(localStorage.getItem('ultimo_registro') ?? '-1')
+    console.log(preoperativo)
+    console.log(empleados_preoperativo)
+    this.backendService.actualizarPreoperativo(numero_registro, preoperativo, empleados_preoperativo)
       .subscribe(
         (preoperativoInsertado) => {
           console.log('Registro preoperativo insertado:', preoperativoInsertado);
@@ -304,7 +309,8 @@ export class EditarPreoperativoComponent implements OnInit {
       encargado: this.preoperativoBd.preoperativo.encargado,
       turno: this.preoperativoForm.get("turno")?.value,
       lugar: this.preoperativoForm.get("lugar")?.value,
-      festivo: this.preoperativoForm.get("festivo")?.value
+      festivo: this.preoperativoForm.get("festivo")?.value,
+      horas_extra: this.preoperativoForm.get("extra")?.value,
     }
     
     const empleados_preoperativo : Array<EmpleadosPreoperativo> = [

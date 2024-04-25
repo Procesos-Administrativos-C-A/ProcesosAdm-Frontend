@@ -7,5 +7,6 @@ export interface Preoperativo {
   turno: string;
   lugar: string;
   festivo: boolean;
+  horas_extra?: boolean;
   empleados_preoperativos?: EmpleadosPreoperativo[];
 }

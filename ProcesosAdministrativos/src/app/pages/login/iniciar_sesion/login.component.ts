@@ -1,18 +1,22 @@
 import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BackendService } from '../../../core/services/backend.service';
 import { Router } from '@angular/router';
 import { environment } from '../../../../environments/environment';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faEyeSlash, faAddressCard,  } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule,ReactiveFormsModule],
+  imports: [CommonModule,ReactiveFormsModule,FontAwesomeModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
+  faUser = faAddressCard;
+  faLock = faEyeSlash;
   credenciales: any =  {};
   constructor(private router: Router , private backendService: BackendService) { }
   
@@ -21,6 +25,7 @@ export class LoginComponent {
       .subscribe({
         next: (credenciales) => {
           this.credenciales = credenciales
+          localStorage.setItem('token',this.credenciales.access_token)
           environment.token = this.credenciales.access_token
           this.obtenerInformacion();
         },
@@ -34,11 +39,19 @@ export class LoginComponent {
     this.backendService.getInformacion()
       .subscribe({
         next: (credenciales) => {
+          localStorage.setItem('nombre',credenciales.nombre)
+          localStorage.setItem('cedula',credenciales.cedula)
+          localStorage.setItem('rol',credenciales.rol)
           environment.nombre = credenciales.nombre
           environment.cedula = credenciales.cedula
           environment.rol = credenciales.rol
-          console.log(environment)
-          this.router.navigate(['/Preoperativos']);
+          console.log(localStorage)
+          if(credenciales.rol === 2){
+            this.router.navigate(['/Reportes']);
+          }else{
+            this.router.navigate(['/Preoperativos']);
+          }
+          
         },
         error: (error) => {
           console.error('Error al obtener los nombres de empleados:', error);
