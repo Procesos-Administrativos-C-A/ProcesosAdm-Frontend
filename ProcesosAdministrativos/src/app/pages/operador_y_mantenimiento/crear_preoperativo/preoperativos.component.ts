@@ -67,7 +67,7 @@ export class PreoperativosComponent implements OnInit {
         next: (empleados) => {
           
           this.empleados[cargo] = empleados;
-          
+          console.log(this.empleados)
         },
         error: (error) => {
           console.error('Error al obtener los nombres de empleados:', error);
@@ -87,7 +87,7 @@ export class PreoperativosComponent implements OnInit {
             confirmButtonColor: '#002252',
             confirmButtonText: 'Aceptar'
           }).then((result) => {
-            environment.preoperativoId= preoperativoInsertado.id
+            localStorage.setItem('ultimo_registro',preoperativoInsertado.id)
             window.location.reload();
           });
           
@@ -221,12 +221,14 @@ export class PreoperativosComponent implements OnInit {
   }
 
   guardarInformacion(){
+    const nombres: any = localStorage.getItem("nombre")
     const preoperativo: Preoperativo ={
       fecha: this.preoperativoForm.get("fecha")?.value,
-      encargado: environment.nombre + " - " + environment.cedula,
+      encargado: nombres,
       turno: this.preoperativoForm.get("turno")?.value,
       lugar: this.preoperativoForm.get("lugar")?.value,
-      festivo: this.preoperativoForm.get("festivo")?.value
+      festivo: this.preoperativoForm.get("festivo")?.value,
+      horas_extra: this.preoperativoForm.get("extra")?.value,
     }
     
     const empleados_preoperativo : Array<EmpleadosPreoperativo> = [
