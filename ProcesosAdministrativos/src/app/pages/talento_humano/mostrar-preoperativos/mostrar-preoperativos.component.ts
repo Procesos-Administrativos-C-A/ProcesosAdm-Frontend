@@ -8,6 +8,7 @@ import { Preoperativo } from '../../../core/models/preoperativo.model';
 import { EmpleadosPreoperativo } from '../../../core/models/empleados_preoperativo.model';
 import { BackendService } from '../../../core/services/backend.service';
 
+
 @Component({
   selector: 'app-preoperativos',
   standalone: true,
@@ -55,6 +56,7 @@ export class MostrarPreoperativosComponent implements OnInit {
               id: empleado.id,
               id_preoperativo: empleado.id_preoperativo,
               cedula: empleado.cedula.toString(),
+              nombre: empleado.nombre,
               horas_diarias: empleado.horas_diarias,
               horas_adicionales: empleado.horas_adicionales,
               estacion: empleado.estacion
@@ -94,19 +96,17 @@ export class MostrarPreoperativosComponent implements OnInit {
       festivo: data.preoperativo.festivo === 1,
       empleados_preoperativos: data.empleados_preoperativos.map((empleado: any) => ({
         cedula: empleado.cedula.toString(),
+        nombre: empleado.nombre,
         horas_diarias: empleado.horas_diarias,
         horas_adicionales: empleado.horas_adicionales,
         estacion: empleado.estacion
       }))
     };
     this.preoperativos.push(preoperativo);
-    console.log('Preoperativos actualizados:', this.preoperativos);
   }
 
   filtrarPreoperativos(): Preoperativo[] {
-    console.log('Fecha de búsqueda:', this.fechaBusqueda);
     if (!this.fechaBusqueda) {
-      console.log('No hay fecha de búsqueda, mostrando los primeros 9 preoperativos');
       this.preoperativoSeleccionado = null;
       return this.preoperativos.slice(0, 9);
     }
@@ -119,7 +119,6 @@ export class MostrarPreoperativosComponent implements OnInit {
     this.fechaBusquedaAnterior = this.fechaBusqueda;
 
     const preoperativosFiltrados = this.preoperativos.filter(preoperativo => preoperativo.fecha === this.fechaBusqueda);
-    console.log('Preoperativos filtrados:', preoperativosFiltrados);
     return preoperativosFiltrados.slice(0, 9);
   }
 
@@ -143,7 +142,6 @@ export class MostrarPreoperativosComponent implements OnInit {
   verDetalles(preoperativo: Preoperativo) {
     this.preoperativoSeleccionado = preoperativo;
     this.empleadosAgrupadosPorEstacion = this.agruparEmpleadosPorEstacion(preoperativo);
-    console.log('Preoperativo seleccionado:', preoperativo);
     this.modalVisible = true;
   }
 
