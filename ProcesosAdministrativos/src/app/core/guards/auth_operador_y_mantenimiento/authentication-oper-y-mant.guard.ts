@@ -11,10 +11,10 @@ export class AuthenticationOperYMantGuard implements CanActivate {
   canActivate(route: any, state: any): Observable<boolean> {
     return this.authService.getInformacion().pipe(
       map((credenciales) => {
-        if(credenciales.rol !== 3 && credenciales.rol !== 4){
+        if(credenciales.rol < 3 || credenciales.rol > 6){
           this.router.navigateByUrl('');
         }
-        return credenciales.rol === 3 || credenciales.rol === 4;
+        return credenciales.rol >= 3 && credenciales.rol <= 6;
       }),
       catchError((error) => {
         console.error('Error al recuperar credenciales:', error);

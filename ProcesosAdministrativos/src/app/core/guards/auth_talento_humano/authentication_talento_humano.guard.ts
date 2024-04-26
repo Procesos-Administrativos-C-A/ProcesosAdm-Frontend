@@ -11,10 +11,10 @@ export class AuthenticationTalentoHumanoGuard implements CanActivate {
   canActivate(route: any, state: any): Observable<boolean> {
     return this.authService.getInformacion().pipe(
       map((credenciales) => {
-        if(credenciales.rol !== 2){
+        if(credenciales.rol !== 7){
           this.router.navigateByUrl('');
         }
-        return credenciales.rol === 2;
+        return credenciales.rol === 7;
       }),
       catchError((error) => {
         console.error('Error al recuperar credenciales:', error);

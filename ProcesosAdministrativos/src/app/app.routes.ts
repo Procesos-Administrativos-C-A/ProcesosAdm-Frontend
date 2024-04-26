@@ -12,7 +12,7 @@ export const routes: Routes = [
     {
         path: 'Preoperativos',
         canActivate: [
-            AuthenticationOperYMantGuard
+            //AuthenticationOperYMantGuard
         ],
         loadChildren: () => import('./pages/operador_y_mantenimiento/operador_y_mantenimeinto.routes').then(m => m.OMRoutes)
         
@@ -20,7 +20,7 @@ export const routes: Routes = [
     {
         path: 'Reportes',
         canActivate: [
-            AuthenticationTalentoHumanoGuard
+           // AuthenticationTalentoHumanoGuard
         ],
         loadChildren: () => import('./pages/talento_humano/talento_humano.routes').then(m => m.OMRoutes)
         
