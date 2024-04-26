@@ -14,6 +14,7 @@ export class BackendService {
 
   constructor(private http: HttpClient) { }
 
+  // Método para crear un nuevo preoperativo junto con sus empleados preoperativos
   crearPreoperativo(preoperativo: Preoperativo, empleadosPreoperativos: Array<EmpleadosPreoperativo>): Observable<any> {
     const url = `${this.apiUrl}/preoperativos/preoperativos/`;
     const body = {
@@ -24,6 +25,7 @@ export class BackendService {
     return this.http.post<any>(url, body);
   }
 
+  // Método para ingresar al sistema
   ingresar(username: string, password: string): Observable<{}> {
     const url = `${this.apiUrl}/login/ingresar/`;
     const formData = new FormData();
@@ -33,6 +35,7 @@ export class BackendService {
     return this.http.post<{}>(url, formData);
   }
 
+  // Método para obtener información del usuario autenticado
   getInformacion(): Observable<any> {
     const url = `${this.apiUrl}/login/user/me`;
     const token = localStorage.getItem('token')
@@ -61,6 +64,7 @@ export class BackendService {
     return this.http.put<Preoperativo>(url, body);
   }
 
+  // Método para obtener la lista de empleados
   getEmpleados(): Observable<any[]> {
     const url = `${this.apiUrl}/empleados/getEmpleados`;
     return this.http.get<any[]>(url)
@@ -72,6 +76,7 @@ export class BackendService {
       );
   }
 
+  // Método para obtener los nombres de empleados por cargo
   getObtenerNombresEmpleadosCargo(cargo: string): Observable<Empleado[]> {
     return this.http.get<Empleado[]>(`${this.apiUrl}/empleados/getEmpleados/${cargo}`)
       .pipe(
@@ -86,16 +91,19 @@ export class BackendService {
       );
   }
 
+  // Método para obtener preoperativos por fecha
   getPreoperativosPorFecha(fecha: string): Observable<any[]> {
     const url = `${this.apiUrl}/preoperativos/preoperativos_por_fecha/?fecha=${fecha}`;
     return this.http.get<any[]>(url);
   }
+  
 
   getPreoperativosConsolidado(fecha_inicio: string , fecha_fin: string): Observable<any[]> {
     const url = `${this.apiUrl}/horas_empleados/consolidado_horas/?fecha_inicio=${fecha_inicio}&fecha_fin=${fecha_fin}`; 
     return this.http.get<any[]>(url);
   }
   
+// Método para generar un PDF de preoperativos por fecha
   generarPDFPreoperativosPorFecha(fecha: string): Observable<{ blob: Blob, fileName: string }> {
     const url = `${this.apiUrl}/preoperativos/generar_pdf_preoperativos_fecha/?fecha=${fecha}`;
     return this.http.get(url, { responseType: 'blob' })
@@ -107,6 +115,7 @@ export class BackendService {
         })
       );
   }
+
   generarPDFConsolidado(fecha_incio: string, fecha_fin: string): Observable<{ blob: Blob, fileName: string }> {
     const url = `${this.apiUrl}/horas_empleados/generar_pdf_consolidado_horas/?fecha_inicio=${fecha_incio}&fecha_fin=${fecha_fin}`;
     return this.http.get(url, { responseType: 'blob' })
@@ -120,3 +129,4 @@ export class BackendService {
   }
   
 }
+
