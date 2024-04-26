@@ -7,13 +7,14 @@ import { NgIf, NgFor } from '@angular/common';
 import { Preoperativo } from '../../../core/models/preoperativo.model';
 import { EmpleadosPreoperativo } from '../../../core/models/empleados_preoperativo.model';
 import { BackendService } from '../../../core/services/backend.service';
+import { NavbarComponent } from "../../../shared/components/navbar/navbar.component";
 
 @Component({
-  selector: 'app-preoperativos',
-  standalone: true,
-  imports: [CommonModule, FormsModule, FontAwesomeModule, ReactiveFormsModule],
-  templateUrl: './mostrar-preoperativos.component.html',
-  styleUrls: ['./mostrar-preoperativos.component.css']
+    selector: 'app-preoperativos',
+    standalone: true,
+    templateUrl: './mostrar-preoperativos.component.html',
+    styleUrls: ['./mostrar-preoperativos.component.css'],
+    imports: [CommonModule, FormsModule, FontAwesomeModule, ReactiveFormsModule, NavbarComponent]
 })
 export class MostrarPreoperativosComponent implements OnInit {
   preoperativos: Preoperativo[] = [];

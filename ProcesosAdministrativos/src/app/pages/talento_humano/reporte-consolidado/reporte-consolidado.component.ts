@@ -6,16 +6,17 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { BackendService } from '../../../core/services/backend.service';
 import Swal from 'sweetalert2';
 import { Chart } from 'chart.js/auto';
+import { NavbarComponent } from "../../../shared/components/navbar/navbar.component";
 
 @Component({
-  selector: 'app-reporte-consolidado',
-  standalone: true,
-  imports: [CommonModule ,FontAwesomeModule],
-  templateUrl: './reporte-consolidado.component.html',
-  styleUrl: './reporte-consolidado.component.css'
+    selector: 'app-reporte-consolidado',
+    standalone: true,
+    templateUrl: './reporte-consolidado.component.html',
+    styleUrl: './reporte-consolidado.component.css',
+    imports: [CommonModule, FontAwesomeModule, NavbarComponent]
 })
 export class ReporteConsolidadoComponent {
-
+  
   empleados : Array<any> =[];
   stackedBarChart: any;
   pieChart: any;
@@ -38,6 +39,7 @@ export class ReporteConsolidadoComponent {
           console.log(this.empleados)
           this.crearGrafico();
           if(consolidado.length == 0 ){
+            
             Swal.fire({
               title: 'El mes elegido no tiene registros!',
               text: 'No se encontraron registros para el mes seleccionado, verifique e intente nuevamente.',

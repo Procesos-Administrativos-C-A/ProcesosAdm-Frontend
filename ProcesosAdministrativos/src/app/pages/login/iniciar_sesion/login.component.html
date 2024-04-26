@@ -1,4 +1,4 @@
-<main class=" w-screen relative  "> 
+<main class=" w-screen relative "> 
     <div class="pantalla-principal w-screen h-screen min-h-[760px] flex flex-col items-center justify-start ">
         <div class="my-8 ">
             <img src="../../../../assets/logo_cable_aereo_color_dos.png" alt="Logo" class="bg-contain h-[11rem]">
@@ -40,7 +40,8 @@
                     </div>
                     <button type="submit" class="flex items-center justify-center p-3 sm:w-3/5 telefono:w-3/4 mx-auto mt-8 rounded-md bg-Primario text-TextoBlanco hover:bg-Secundario active:bg-gray-500">Enviar enlace de acceso</button>
                 </form>
-               </ng-template>
+            </ng-template>
+            <!-- Botones de cambio de menu-->
             <div class="animate-flip-up h-12 flex  flex-col justify-center bg-Primario rounded-t-full text-TextoBlanco "
                 *ngIf="!menuRecuperacion() ; else elseBlock">
                 <span class="text-center cursor-pointer w-40 m-auto" (click)="cambiarMenu()">

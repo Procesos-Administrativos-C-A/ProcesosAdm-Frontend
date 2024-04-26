@@ -10,15 +10,16 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCircleUser, faCircleXmark  } from '@fortawesome/free-regular-svg-icons';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
+import { NavbarComponent } from "../../../shared/components/navbar/navbar.component";
 
 
 
 @Component({
-  selector: 'app-preoperativos',
-  standalone: true,
-  imports: [CommonModule, FormsModule,FontAwesomeModule,ReactiveFormsModule],
-  templateUrl: './preoperativos.component.html',
-  styleUrl: './preoperativos.component.css'
+    selector: 'app-preoperativos',
+    standalone: true,
+    templateUrl: './preoperativos.component.html',
+    styleUrl: './preoperativos.component.css',
+    imports: [CommonModule, FormsModule, FontAwesomeModule, ReactiveFormsModule, NavbarComponent]
 })
 export class PreoperativosComponent implements OnInit {
   
