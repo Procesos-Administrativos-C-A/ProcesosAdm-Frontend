@@ -20,9 +20,9 @@
               (mouseleave)="dropDownPre()" *ngIf="dropdown_preoperativos()">
               <div class="" role="none">
                 <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                <a href="#"
-                  class="text-gray-700 block px-4 py-2 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white"
-                  role="menuitem" tabindex="-1" id="menu-item-2">Filtrado por fecha</a>
+                <a href="/Reportes" class="text-gray-700 block px-4 py-2 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white" role="menuitem" tabindex="-1" >Lista de Preoperativos</a>
+                <a href="/Reportes/Consolidado" class="text-gray-700 block px-4 py-2 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white" role="menuitem" tabindex="-1" >Reporte por mes</a>
+                <a href="/Reportes/Asistencia" class="text-gray-700 block px-4 py-2 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white" role="menuitem" tabindex="-1" >Reporte por empleado</a>
               </div>
             </div>
           </li>
@@ -103,7 +103,7 @@
           </tr>
         </tbody>
       </table>
-      <button *ngIf="fechaBusqueda" class="bg-Primario mt-4 text-white px-4 py-2 rounded shadow">Descargar PDF</button>
+      <button *ngIf="fechaBusqueda" class="bg-Primario descargar-pdf-button mt-4" (click)="generarPDF()">Descargar PDF</button>
       <!-- Modal -->
       <div *ngIf="modalVisible" class="fixed z-10 inset-0 overflow-y-auto">
         <div class="flex items-center justify-center min-h-screen">

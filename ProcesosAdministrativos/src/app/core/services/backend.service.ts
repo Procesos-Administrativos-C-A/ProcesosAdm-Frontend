@@ -38,7 +38,7 @@ export class BackendService {
   // Método para obtener información del usuario autenticado
   getInformacion(): Observable<any> {
     const url = `${this.apiUrl}/login/user/me`;
-    const token = environment.token
+    const token = localStorage.getItem('token')
 
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`
@@ -47,9 +47,10 @@ export class BackendService {
     return this.http.get<any>(url, { headers });
   }
 
+
   // Método para obtener un registro de preoperativo por su ID junto con sus empleados preoperativos
   getPreoperativoPorId(id: number): Observable<any> {
-    const url = `${this.apiUrl}/preoperativos/preoperativos_por_id/25`;
+    const url = `${this.apiUrl}/preoperativos/preoperativos_por_id/${id}`;
     return this.http.get<any>(url);
   }
 
@@ -95,8 +96,14 @@ export class BackendService {
     const url = `${this.apiUrl}/preoperativos/preoperativos_por_fecha/?fecha=${fecha}`;
     return this.http.get<any[]>(url);
   }
+  
 
-  // Método para generar un PDF de preoperativos por fecha
+  getPreoperativosConsolidado(fecha_inicio: string , fecha_fin: string): Observable<any[]> {
+    const url = `${this.apiUrl}/horas_empleados/consolidado_horas/?fecha_inicio=${fecha_inicio}&fecha_fin=${fecha_fin}`; 
+    return this.http.get<any[]>(url);
+  }
+  
+// Método para generar un PDF de preoperativos por fecha
   generarPDFPreoperativosPorFecha(fecha: string): Observable<{ blob: Blob, fileName: string }> {
     const url = `${this.apiUrl}/preoperativos/generar_pdf_preoperativos_fecha/?fecha=${fecha}`;
     return this.http.get(url, { responseType: 'blob' })
@@ -108,4 +115,18 @@ export class BackendService {
         })
       );
   }
+
+  generarPDFConsolidado(fecha_incio: string, fecha_fin: string): Observable<{ blob: Blob, fileName: string }> {
+    const url = `${this.apiUrl}/horas_empleados/generar_pdf_consolidado_horas/?fecha_inicio=${fecha_incio}&fecha_fin=${fecha_fin}`;
+    return this.http.get(url, { responseType: 'blob' })
+      .pipe(
+        map((blob: Blob) => {
+          // Aquí puedes determinar el nombre del archivo según tus necesidades
+          const fileName = `Consolidado_Horas_${fecha_incio} - ${fecha_fin}.pdf`;
+          return { blob, fileName };
+        })
+      );
+  }
+  
 }
+
