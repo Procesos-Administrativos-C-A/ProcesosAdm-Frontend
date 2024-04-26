@@ -43,3 +43,5 @@ export class NavbarComponent {
     this.dropdown_solicitudes.set(!this.dropdown_solicitudes()) ;
   }
 }
+
+

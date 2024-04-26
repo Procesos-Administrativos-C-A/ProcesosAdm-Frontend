@@ -27,13 +27,11 @@
         </tr>
       </tbody>
     </table>
-    <button *ngIf="fechaBusqueda"
-      class="flex items-center justify-center p-3 w-36  my-8 rounded-md bg-Primario text-TextoBlanco hover:bg-Secundario active:bg-gray-500 "
-      (click)="generarPDF()">Descargar PDF</button>
+    <button *ngIf="fechaBusqueda" class="flex items-center justify-center p-3 w-36  my-8 rounded-md bg-Primario text-TextoBlanco hover:bg-Secundario active:bg-gray-500 " (click)="generarPDF()">Descargar PDF</button>
     <!-- Modal -->
-    <div *ngIf="modalVisible" class="fixed inset-0 z-50 bg-black bg-opacity-50 overflow-y-auto">
-      <div class="bg-white rounded-lg shadow-lg max-w-full mt-20 md:mt-32 lg:mt-40 xl:mt-48 p-6 Preo-modal-container">
-        <div class="p-6">
+    <div *ngIf="modalVisible" class="fixed z-10 inset-0 overflow-y-auto">
+      <div class="flex items-center justify-center min-h-screen">
+        <div class="bg-white rounded-lg shadow-lg p-6 max-w-3xl mx-auto">
           <div class="flex justify-between items-center mb-4">
             <h2 class="text-xl font-bold">Detalles del Preoperativo</h2>
             <button class="text-gray-500 hover:text-gray-700" (click)="modalVisible = false">×</button>
@@ -43,8 +41,10 @@
             <p><strong>Encargado:</strong> {{ preoperativoSeleccionado?.encargado }}</p>
             <p><strong>Turno:</strong> {{ preoperativoSeleccionado?.turno }}</p>
             <p><strong>Lugar:</strong> {{ preoperativoSeleccionado?.lugar }}</p>
-            <p><strong>Festivo:</strong> <span *ngIf="preoperativoSeleccionado?.festivo; else noFestivo"> SI</span>
-              <ng-template #noFestivo> NO </ng-template> </p>
+            <p><strong>Festivo:</strong> <span
+                *ngIf="preoperativoSeleccionado?.festivo; else noFestivo"> SI</span>
+              <ng-template #noFestivo> NO </ng-template>
+            </p>
           </div>
           <h3 class="text-lg font-bold mt-4 mb-2">Empleados Preoperativos</h3>
           <table class="w-full border-collapse" *ngFor="let estacion of empleadosAgrupadosPorEstacion | keyvalue">
@@ -54,24 +54,22 @@
               </tr>
               <tr>
                 <th class="py-2 px-4 border">Nombre</th>
-                <th class="py-2 px-4 border">Apellidos</th>
                 <th class="py-2 px-4 border">Horas diarias</th>
                 <th class="py-2 px-4 border">Horas adicionales</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let empleado of estacion.value" class="hover:bg-gray-100">
-                <td class="py-2 px-4 border">{{ empleado.nombre }}</td>
-                <td class="py-2 px-4 border">{{ empleado.apellidos }}</td>
+                <td class="py-2 px-4 border">{{ empleado.nombre + ' '+ empleado.apellidos }}</td>
                 <td class="py-2 px-4 border">{{ empleado.horas_diarias }}</td>
                 <td class="py-2 px-4 border">{{ empleado.horas_adicionales }}</td>
               </tr>
             </tbody>
           </table>
         </div>
+        
       </div>
     </div>
-
   </div>
 
 </main>
