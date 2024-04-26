@@ -7,6 +7,7 @@ import { NgIf, NgFor } from '@angular/common';
 import { Preoperativo } from '../../../core/models/preoperativo.model';
 import { EmpleadosPreoperativo } from '../../../core/models/empleados_preoperativo.model';
 import { BackendService } from '../../../core/services/backend.service';
+import { NavbarComponent } from "../../../shared/components/navbar/navbar.component";
 
 
 @Component({

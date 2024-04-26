@@ -1,13 +1,4 @@
-<div class="flex flex-col min-h-screen">
-  <nav
-    class="relative w-screen flex h-16 items-center justify-stretch bg-Primario text-white shadow-lg shadow-Primario">
-    <div class="flex items-center sm:justify-start telefono:justify-between  sm:w-1/2 telefono:w-4/6">
-      <div class="sm:hidden telefono:block">
-        <a>A</a>
-      </div>
-      <div class="w-28 flex-shrink-0 sm:block telefono:relative telefono:-right-0">
-        <img src="../../../assets/logo_cable_aereo_color_dos.png" alt="Logo" class="bg-contain h-[4rem] object-cover">
-      </div>
+
 
       <div class="nav-links sm:block telefono:hidden ">
         <ul class="flex items-center ">
@@ -143,8 +134,29 @@
               </tbody>
             </table>
           </div>
+          <h3 class="preoperativos__details-subtitle">Empleados Preoperativos</h3>
+          <table class="preoperativos__employees-table"
+            *ngFor="let estacion of empleadosAgrupadosPorEstacion | keyvalue">
+            <thead>
+              <tr>
+                <th colspan="4">{{ estacion.key }}</th>
+              </tr>
+              <tr>
+                <th>Cédula</th>
+                <th>Horas diarias</th>
+                <th>Horas adicionales</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let empleado of estacion.value" class="preoperativos__employee-row">
+                <td>{{ empleado.cedula }}</td>
+                <td>{{ empleado.horas_diarias }}</td>
+                <td>{{ empleado.horas_adicionales }}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
-  </main>
-</div>
+  </div>
+</main>

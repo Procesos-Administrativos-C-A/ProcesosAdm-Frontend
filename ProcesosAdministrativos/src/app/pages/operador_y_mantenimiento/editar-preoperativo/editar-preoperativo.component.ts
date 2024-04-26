@@ -8,13 +8,14 @@ import { Empleado } from '../../../core/models/empleados.model';
 import { environment } from '../../../../environments/environment';
 import { EmpleadosPreoperativo } from '../../../core/models/empleados_preoperativo.model';
 import Swal from 'sweetalert2';
+import { NavbarComponent } from "../../../shared/components/navbar/navbar.component";
 
 @Component({
-  selector: 'app-editar-preoperativo',
-  standalone: true,
-  imports: [CommonModule, FormsModule,FontAwesomeModule,ReactiveFormsModule],
-  templateUrl: './editar-preoperativo.component.html',
-  styleUrl: './editar-preoperativo.component.css'
+    selector: 'app-editar-preoperativo',
+    standalone: true,
+    templateUrl: './editar-preoperativo.component.html',
+    styleUrl: './editar-preoperativo.component.css',
+    imports: [CommonModule, FormsModule, FontAwesomeModule, ReactiveFormsModule, NavbarComponent]
 })
 export class EditarPreoperativoComponent implements OnInit {
 

@@ -2,13 +2,14 @@ import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NavbarComponent } from "../../../shared/components/navbar/navbar.component";
 
 @Component({
-  selector: 'app-reporte-asistencia',
-  standalone: true,
-  imports: [CommonModule, FormsModule, FontAwesomeModule, ReactiveFormsModule],
-  templateUrl: './reporte-asistencia.component.html',
-  styleUrls: ['./reporte-asistencia.component.css']
+    selector: 'app-reporte-asistencia',
+    standalone: true,
+    templateUrl: './reporte-asistencia.component.html',
+    styleUrls: ['./reporte-asistencia.component.css'],
+    imports: [CommonModule, FormsModule, FontAwesomeModule, ReactiveFormsModule, NavbarComponent]
 })
 export class ReporteAsistenciaComponent {
   // Signals para controlar los dropdown

@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { MostrarPreoperativosComponent } from './pages/talento_humano/mostrar-preoperativos/mostrar-preoperativos.component';
 import {  AuthenticationTalentoHumanoGuard } from './core/guards/auth_talento_humano/authentication_talento_humano.guard';
 import { AuthenticationOperYMantGuard } from './core/guards/auth_operador_y_mantenimiento/authentication-oper-y-mant.guard';
+import { NavbarComponent } from './shared/components/navbar/navbar.component';
 
 export const routes: Routes = [
     {
@@ -26,7 +27,7 @@ export const routes: Routes = [
     },
     {
         path: '**',
-        component: MostrarPreoperativosComponent
+        component: NavbarComponent
     }
 
 ];
