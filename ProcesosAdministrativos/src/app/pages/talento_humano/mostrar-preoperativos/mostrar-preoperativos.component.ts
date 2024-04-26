@@ -11,7 +11,6 @@ import { BackendService } from '../../../core/services/backend.service';
 
 @Component({
   selector: 'app-preoperativos',
-  standalone: true,
   imports: [CommonModule, FormsModule, FontAwesomeModule, ReactiveFormsModule],
   templateUrl: './mostrar-preoperativos.component.html',
   styleUrls: ['./mostrar-preoperativos.component.css']
@@ -28,19 +27,17 @@ export class MostrarPreoperativosComponent implements OnInit {
   modalVisible = false;
 
   constructor(private fb: FormBuilder, private backendService: BackendService) {
-    this.preoperativoForm = this.fb.group({
-      // Agrega los controles necesarios para los detalles del preoperativo
-    });
+    this.preoperativoForm = this.fb.group({});
     const fechaActual = new Date().toISOString().split('T')[0];
     this.fechaBusqueda = fechaActual;
   }
 
   ngOnInit() {
     console.log('Componente inicializado');
-    // this.simularDatosBackend(); // Puedes comentar o eliminar esta línea
     this.obtenerPreoperativosPorFecha(this.fechaBusqueda);
   }
 
+  // Mapea y asigna los preoperativos obtenidos a la propiedad preoperativos
   obtenerPreoperativosPorFecha(fecha: string) {
     this.backendService.getPreoperativosPorFecha(fecha)
       .subscribe({
@@ -70,24 +67,29 @@ export class MostrarPreoperativosComponent implements OnInit {
   }
 
 
-
+  // Define métodos para manejar dropdowns
   dropdown_preoperativos = signal(false);
   dropdown_tramites = signal(false);
   dropdown_solicitudes = signal(false);
 
+  // Método para dropdown de preoperativos
   dropDownPre(): void {
     this.dropdown_preoperativos.set(!this.dropdown_preoperativos());
   }
 
+  // Método para dropdown de tramites
   dropDownTram(): void {
     this.dropdown_tramites.set(!this.dropdown_tramites());
   }
 
+  // Método para dropdown de solicitudes
   dropDownSoli(): void {
     this.dropdown_solicitudes.set(!this.dropdown_solicitudes());
   }
 
+  // Define métodos para procesar datos recibidos del backend
   procesarDatosBackend(data: any) {
+    // Procesa los datos recibidos del backend y actualiza la lista de preoperativos
     const preoperativo: Preoperativo = {
       fecha: data.preoperativo.fecha,
       encargado: data.preoperativo.encargado,
@@ -105,6 +107,7 @@ export class MostrarPreoperativosComponent implements OnInit {
     this.preoperativos.push(preoperativo);
   }
 
+  // Define métodos para filtrar preoperativos y agrupar empleados
   filtrarPreoperativos(): Preoperativo[] {
     if (!this.fechaBusqueda) {
       this.preoperativoSeleccionado = null;
@@ -122,6 +125,7 @@ export class MostrarPreoperativosComponent implements OnInit {
     return preoperativosFiltrados.slice(0, 9);
   }
 
+  // Agrupa empleados de un preoperativo por estación
   agruparEmpleadosPorEstacion(preoperativo: Preoperativo): { [estacion: string]: EmpleadosPreoperativo[] } {
     if (!preoperativo.empleados_preoperativos) {
       return {};
@@ -139,12 +143,14 @@ export class MostrarPreoperativosComponent implements OnInit {
 
   empleadosAgrupadosPorEstacion: { [estacion: string]: EmpleadosPreoperativo[] } = {};
 
+  // Método para ver detalles de un preoperativo seleccionado
   verDetalles(preoperativo: Preoperativo) {
     this.preoperativoSeleccionado = preoperativo;
     this.empleadosAgrupadosPorEstacion = this.agruparEmpleadosPorEstacion(preoperativo);
     this.modalVisible = true;
   }
 
+  // Método para generar un PDF de preoperativos
   generarPDF() {
     if (this.fechaBusqueda) {
       this.backendService.generarPDFPreoperativosPorFecha(this.fechaBusqueda)
