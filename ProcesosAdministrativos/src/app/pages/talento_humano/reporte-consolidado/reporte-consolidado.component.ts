@@ -248,4 +248,22 @@ export class ReporteConsolidadoComponent {
   }
 
 
+  generarEXEL() {
+   
+    this.backendService.generarEXELConsolidado(this.fecha_inicio,this.fecha_fin)
+      .subscribe({
+        next: ({ blob, fileName }) => {
+          // Descargar el archivo directamente
+          const anclaDescarga = document.createElement('a');
+          anclaDescarga.href = window.URL.createObjectURL(blob);
+          anclaDescarga.download = fileName;
+          anclaDescarga.click();
+        },
+        error: (error) => {
+          console.error('Error al generar el PDF:', error);
+        }
+      });
+  }
+
+
 }

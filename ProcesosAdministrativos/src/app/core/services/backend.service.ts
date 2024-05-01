@@ -127,6 +127,18 @@ export class BackendService {
         })
       );
   }
+
+  generarEXELConsolidado(fecha_incio: string, fecha_fin: string): Observable<{ blob: Blob, fileName: string }> {
+    const url = `${this.apiUrl}/horas_empleados/generar_pdf_consolidado_horas/?fecha_inicio=${fecha_incio}&fecha_fin=${fecha_fin}`;
+    return this.http.get(url, { responseType: 'blob' })
+      .pipe(
+        map((blob: Blob) => {
+          // Aquí puedes determinar el nombre del archivo según tus necesidades
+          const fileName = `Consolidado_Horas_${fecha_incio} - ${fecha_fin}.xlsx`;
+          return { blob, fileName };
+        })
+      );
+  }
   
 }
 
