@@ -1,0 +1,9 @@
+.Preo-modal-container {
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-height: calc(100% - 2rem); /* Altura máxima del modal, ajustable según sea necesario */
+    overflow-y: auto; /* Agrega barras de desplazamiento si el contenido es demasiado grande */
+  }
+  

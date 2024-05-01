@@ -125,7 +125,7 @@ export class EditarPreoperativoComponent implements OnInit {
             new FormGroup({
               hora_extra: new FormControl(element2.horas_adicionales.toString(),[Validators.pattern(/^[0-9]$/),Validators.maxLength(1)]),
               cargo: new FormControl(element2.cargo,[Validators.required, Validators.nullValidator]),
-              nombre: new FormControl (element2.nombre,[Validators.required, Validators.nullValidator]),
+              nombre: new FormControl (element2.nombre + ' '+ element2.apellidos,[Validators.required, Validators.nullValidator]),
               cedula: new FormControl (element2.cedula,[Validators.required, Validators.nullValidator]),
             })
           )
@@ -236,19 +236,19 @@ export class EditarPreoperativoComponent implements OnInit {
         empleados: new FormArray([
           new FormGroup({
             hora_extra: new FormControl('0',[Validators.pattern(/^[0-9]$/),Validators.maxLength(1)]),
-            cargo: new FormControl('Operador',[Validators.required, Validators.nullValidator]),
+            cargo: new FormControl('OPERADOR',[Validators.required, Validators.nullValidator]),
             nombre: new FormControl ('',[Validators.required, Validators.nullValidator]),
             cedula: new FormControl ('',[Validators.required, Validators.nullValidator]),
           }),
           new FormGroup({
             hora_extra: new FormControl('0',[Validators.pattern(/^[0-9]$/),Validators.maxLength(1)]),
-            cargo: new FormControl('Operador',[Validators.required, Validators.nullValidator]),
+            cargo: new FormControl('OPERADOR',[Validators.required, Validators.nullValidator]),
             nombre: new FormControl ('',[Validators.required, Validators.nullValidator]),
             cedula: new FormControl ('',[Validators.required, Validators.nullValidator]),
           }),
           new FormGroup({
             hora_extra: new FormControl('0',[Validators.pattern(/^[0-9]$/),Validators.maxLength(1)]),
-            cargo: new FormControl('Operador',[Validators.required, Validators.nullValidator]),
+            cargo: new FormControl('OPERADOR',[Validators.required, Validators.nullValidator]),
             nombre: new FormControl ('',[Validators.required, Validators.nullValidator]),
             cedula: new FormControl ('',[Validators.required, Validators.nullValidator]),
           })
@@ -285,7 +285,7 @@ export class EditarPreoperativoComponent implements OnInit {
   agregarEmpleado(estacionEmp : string) {
     const empleadoFormGroup = new FormGroup({
       hora_extra: new FormControl ('0',[Validators.pattern(/^[0-9]$/),Validators.maxLength(1)]),
-      cargo: new FormControl ('Operador',[Validators.required, Validators.nullValidator]),
+      cargo: new FormControl ('OPERADOR',[Validators.required, Validators.nullValidator]),
       nombre: new FormControl ('',[Validators.required, Validators.nullValidator]),
       cedula: new FormControl ('',[Validators.required, Validators.nullValidator]),
     });

@@ -7,7 +7,11 @@
         <input type="month" class="w-3/4 sm:w-1/2 md:w-1/3 lg:w-1/4 mb-4 ml-auto mr-auto sm:ml-4 md:ml-8 lg:ml-12" 
         value="{{fecha}}" (change)="consultarReporte($event)"/>
         
-        <button *ngIf="empleados.length != 0" class="flex items-center justify-center p-3 w-36 ml-auto  my-4 rounded-md bg-Primario text-TextoBlanco hover:bg-Secundario active:bg-gray-500 " (click)="generarPDF()">Descargar PDF</button>
+        <div class="flex items-center justify-center p-3 w-auto ml-auto  my-4 ">
+            <button *ngIf="empleados.length != 0" class="flex items-center justify-center p-3 w-36   my-4 mr-8 rounded-md bg-Primario text-TextoBlanco hover:bg-Secundario active:bg-gray-500 " (click)="generarPDF()">Descargar PDF</button>
+            <button *ngIf="empleados.length != 0" class="flex items-center justify-center p-3 w-36 ml-auto  my-4 rounded-md bg-Primario text-TextoBlanco hover:bg-Secundario active:bg-gray-500 " (click)="generarEXEL()">Descargar Exel</button>
+        </div>
+        
 
         <table  class="table-auto w-full mt-10">
             <tr class="bg-Primario text-white text-ms">
@@ -27,13 +31,13 @@
     
             <tr *ngFor="let empleado of empleados; let i = index" class="text-xs text-center bg-white hover:bg-gray-100">
                 <td class="w-16 p-4 border">
-                    <p>{{empleado.nombre}}</p>
+                    <p>{{empleado.nombre + ' '+ empleado.apellidos}}</p>
                 </td>
                 <td class="w-16 p-4 border">
                     <p>{{empleado.cedula}}</p>
                 </td>
                 <td class="w-16 p-4 border">
-                    <p>{{empleado.horas_diurnas_ord}}</p>
+                    <p>{{empleado.total_horas}}</p>
                 </td>
                 <td class="w-16 p-4 border">
                     <p>{{empleado.horas_diurnas_ord}}</p>

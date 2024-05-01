@@ -11,10 +11,11 @@ import { NavbarComponent } from "../../../shared/components/navbar/navbar.compon
 
 
 @Component({
-  selector: 'app-preoperativos',
-  imports: [CommonModule, FormsModule, FontAwesomeModule, ReactiveFormsModule],
-  templateUrl: './mostrar-preoperativos.component.html',
-  styleUrls: ['./mostrar-preoperativos.component.css']
+    selector: 'app-preoperativos',
+    standalone: true,
+    templateUrl: './mostrar-preoperativos.component.html',
+    styleUrls: ['./mostrar-preoperativos.component.css'],
+    imports: [CommonModule, FormsModule, FontAwesomeModule, ReactiveFormsModule, NavbarComponent]
 })
 export class MostrarPreoperativosComponent implements OnInit {
   preoperativos: Preoperativo[] = [];
@@ -54,7 +55,8 @@ export class MostrarPreoperativosComponent implements OnInit {
               id: empleado.id,
               id_preoperativo: empleado.id_preoperativo,
               cedula: empleado.cedula.toString(),
-              nombre: empleado.nombre,
+              nombre: empleado.nombre ,
+              apellidos : empleado.apellidos,
               horas_diarias: empleado.horas_diarias,
               horas_adicionales: empleado.horas_adicionales,
               estacion: empleado.estacion

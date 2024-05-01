@@ -71,16 +71,16 @@
                         </td>
                         <td class="w-5/12 p-4 border">
                             <select name="cargo" class="rounded-md" (change)="asignarCargoEmpleado(i,j,$event)">
-                                <option value="Operador">Operador</option>
-                                <option value="Auxiliar de T & A">Auxiliar de T & A</option>
-                                <option value="Ingeniero MTTO">Ingeniero de MTTO</option>
-                                <option value="Tecnico MTTO">Tecnico MTTO</option>
+                                <option value="OPERADOR">Operador</option>
+                                <option value="AUXILIAR DE ABORDAJE Y TAQUILLA">Auxiliar de A & T</option>
+                                <option value="INGENIERO DE MANTENIMIENTO">Ingeniero de MTTO</option>
+                                <option value="TECNICO DE MANTENIMIENTO">Tecnico MTTO</option>
                             </select>
                         </td>
                         <td class="w-6/12 p-4 border relative">
                             <select name="empleado" class="rounded-md" (change)="asignarNombreEmpleado(empleado.get('cargo')?.value,i,j,$event)">
                                 <option value="">{{empleado.get('nombre')?.value}}</option>
-                                <option *ngFor="let empleado of empleados[empleado.get('cargo')?.value]" value="{{empleado.nombre}}"> {{empleado.nombre}} </option>
+                                <option *ngFor="let empleado of empleados[empleado.get('cargo')?.value]" value="{{empleado.nombre}}"> {{empleado.nombre +' '+ empleado.apellidos}} </option>
                             </select>
                             <button type="button" class="bg-Primario text-white rounded-full w-8 h-8 flex items-center justify-center absolute top-3 right-2" (click)="eliminarEmpleado(i,j)">-</button>
                         </td>

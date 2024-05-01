@@ -44,7 +44,7 @@ export class PreoperativosComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.obtenerNombresEmpleados('Operador')
+    this.obtenerNombresEmpleados('OPERADOR')
     
     this.fecha_hoy = new Date().toISOString().substring(0, 10);
   }
@@ -155,19 +155,19 @@ export class PreoperativosComponent implements OnInit {
         empleados: new FormArray([
           new FormGroup({
             hora_extra: new FormControl('0',[Validators.pattern(/^[0-9]$/),Validators.maxLength(1)]),
-            cargo: new FormControl('Operador',[Validators.required, Validators.nullValidator]),
+            cargo: new FormControl('OPERADOR',[Validators.required, Validators.nullValidator]),
             nombre: new FormControl ('',[Validators.required, Validators.nullValidator]),
             cedula: new FormControl ('',[Validators.required, Validators.nullValidator]),
           }),
           new FormGroup({
             hora_extra: new FormControl('0',[Validators.pattern(/^[0-9]$/),Validators.maxLength(1)]),
-            cargo: new FormControl('Operador',[Validators.required, Validators.nullValidator]),
+            cargo: new FormControl('OPERADOR',[Validators.required, Validators.nullValidator]),
             nombre: new FormControl ('',[Validators.required, Validators.nullValidator]),
             cedula: new FormControl ('',[Validators.required, Validators.nullValidator]),
           }),
           new FormGroup({
             hora_extra: new FormControl('0',[Validators.pattern(/^[0-9]$/),Validators.maxLength(1)]),
-            cargo: new FormControl('Operador',[Validators.required, Validators.nullValidator]),
+            cargo: new FormControl('OPERADOR',[Validators.required, Validators.nullValidator]),
             nombre: new FormControl ('',[Validators.required, Validators.nullValidator]),
             cedula: new FormControl ('',[Validators.required, Validators.nullValidator]),
           })
@@ -203,7 +203,7 @@ export class PreoperativosComponent implements OnInit {
   agregarEmpleado(estacionEmp : string) {
     const empleadoFormGroup = new FormGroup({
       hora_extra: new FormControl ('0',[Validators.pattern(/^[0-9]$/),Validators.maxLength(1)]),
-      cargo: new FormControl ('Operador',[Validators.required, Validators.nullValidator]),
+      cargo: new FormControl ('OPERADOR',[Validators.required, Validators.nullValidator]),
       nombre: new FormControl ('',[Validators.required, Validators.nullValidator]),
       cedula: new FormControl ('',[Validators.required, Validators.nullValidator]),
     });
@@ -222,7 +222,7 @@ export class PreoperativosComponent implements OnInit {
   }
 
   guardarInformacion(){
-    const nombres: any = localStorage.getItem("nombre")
+    const nombres: any = localStorage.getItem("nombre")+ ' '+ localStorage.getItem("apellidos")
     const preoperativo: Preoperativo ={
       fecha: this.preoperativoForm.get("fecha")?.value,
       encargado: nombres,

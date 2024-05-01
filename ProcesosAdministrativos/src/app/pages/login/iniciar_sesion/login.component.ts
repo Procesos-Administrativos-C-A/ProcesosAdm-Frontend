@@ -3,7 +3,6 @@ import { Component, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BackendService } from '../../../core/services/backend.service';
 import { Router } from '@angular/router';
-import { environment } from '../../../../environments/environment';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEyeSlash, faAddressCard,  } from '@fortawesome/free-regular-svg-icons';
 
@@ -26,7 +25,6 @@ export class LoginComponent {
         next: (credenciales) => {
           this.credenciales = credenciales
           localStorage.setItem('token',this.credenciales.access_token)
-          environment.token = this.credenciales.access_token
           this.obtenerInformacion();
         },
         error: (error) => {
@@ -40,16 +38,14 @@ export class LoginComponent {
       .subscribe({
         next: (credenciales) => {
           localStorage.setItem('nombre',credenciales.nombre)
+          localStorage.setItem('apellidos',credenciales.apellidos)
           localStorage.setItem('cedula',credenciales.cedula)
           localStorage.setItem('rol',credenciales.rol)
-          environment.nombre = credenciales.nombre
-          environment.cedula = credenciales.cedula
-          environment.rol = credenciales.rol
           console.log(localStorage)
-          if(credenciales.rol === 2){
-            this.router.navigate(['/Reportes']);
-          }else{
+          if(credenciales.rol >= 3 &&credenciales.rol <= 6 ){
             this.router.navigate(['/Preoperativos']);
+          }else{
+            this.router.navigate(['/Reportes']);
           }
           
         },

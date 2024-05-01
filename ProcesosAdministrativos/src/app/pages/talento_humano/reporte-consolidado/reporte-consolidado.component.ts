@@ -20,15 +20,15 @@ export class ReporteConsolidadoComponent {
   empleados : Array<any> =[];
   stackedBarChart: any;
   pieChart: any;
-  fecha_inicio: string = '2024-03-19';
-  fecha_fin: string = '2024-04-20';
+  fecha_inicio: string = '2024-04-19';
+  fecha_fin: string = '2024-05-20';
 
   constructor( private backendService: BackendService) {}
 
   ngOnInit(): void {
     
-    this.obtenerConsolidado('2024-03-19', '2024-04-20')
-
+    this.obtenerConsolidado('2024-03-19', '2024-05-20')
+ 
   }
 
   obtenerConsolidado(fecha_inicio : string, fecha_fin : string){
@@ -72,11 +72,12 @@ export class ReporteConsolidadoComponent {
     let horas_diurnas_festivo: Number[] =[]
     let horas_nocturnas: Number[] =[]
     let horas_nocturnas_festivo: Number[] =[]
+    let total_horas: Number[] =[]
 
     let grafico_torta: Number[] =[0,0,0,0]
 
     this.empleados.forEach(element => {
-      nombres.push(element.nombre)
+      nombres.push(element.nombre + ' '+ element.apellidos)
       horas_diurnas.push(element.horas_diurnas_ord)
       grafico_torta[0] += element.horas_diurnas_ord;
       horas_diurnas_festivo.push(element.horas_diurnas_fest)
@@ -85,6 +86,7 @@ export class ReporteConsolidadoComponent {
       grafico_torta[2] += element.horas_nocturnas;
       horas_nocturnas_festivo.push(element.horas_nocturnas_fest)
       grafico_torta[3] += element.horas_nocturnas_fest;
+      total_horas.push(element.total_horas)
 
     });
    //width="400" height="400"
@@ -94,6 +96,12 @@ export class ReporteConsolidadoComponent {
       data: {
         labels: nombres,
         datasets: [
+          {
+            label: 'Horas totales',
+            data: total_horas,
+            backgroundColor: 'rgba(46, 174, 243, 0.8)'
+          }
+          /*
           {
             label: 'Diurnas',
             data: horas_diurnas,
@@ -113,7 +121,7 @@ export class ReporteConsolidadoComponent {
             label: 'Nocturnas Festivas',
             data: horas_nocturnas_festivo,
             backgroundColor: 'rgba(96, 70, 247, 0.8)'
-          }
+          }*/
         ]
       },
       options: {
@@ -160,33 +168,7 @@ export class ReporteConsolidadoComponent {
     });
   }
 
-  faCircleXmark = faCircleXmark;
-  faCircleUser = faCircleUser;
-  faBars = faBars;
-
-
-  dropdown_preoperativos = signal(false);
-  dropdown_tramites = signal(false);
-  dropdown_menu = signal(false);
-  dropdown_solicitudes = signal(false);
   
-
-  dropDownPre(): void {
-    this.dropdown_preoperativos.set(!this.dropdown_preoperativos()) ;
-  }
-
-  dropDownTram(): void {
-    this.dropdown_tramites.set(!this.dropdown_tramites()) ;
-  }
-
-  dropDownMenu(): void {
-    this.dropdown_menu.set(!this.dropdown_menu()) ;
-  }
-
-  dropDownSolicitudes(): void {
-    this.dropdown_solicitudes.set(!this.dropdown_solicitudes()) ;
-    console.log(this.fecha)
-  }
 
   fecha = `${new Date().getFullYear()}-${(new Date().getMonth() + 1).toString().padStart(2, '0')}`;
   empleades: Array<any> = [
@@ -251,6 +233,24 @@ export class ReporteConsolidadoComponent {
   generarPDF() {
    
     this.backendService.generarPDFConsolidado(this.fecha_inicio,this.fecha_fin)
+      .subscribe({
+        next: ({ blob, fileName }) => {
+          // Descargar el archivo directamente
+          const anclaDescarga = document.createElement('a');
+          anclaDescarga.href = window.URL.createObjectURL(blob);
+          anclaDescarga.download = fileName;
+          anclaDescarga.click();
+        },
+        error: (error) => {
+          console.error('Error al generar el PDF:', error);
+        }
+      });
+  }
+
+
+  generarEXEL() {
+   
+    this.backendService.generarEXELConsolidado(this.fecha_inicio,this.fecha_fin)
       .subscribe({
         next: ({ blob, fileName }) => {
           // Descargar el archivo directamente
