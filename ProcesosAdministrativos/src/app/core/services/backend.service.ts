@@ -139,6 +139,12 @@ export class BackendService {
         })
       );
   }
+
+  getReporteAsistencia(cedulas: number[], fechaInicio: string, fechaFin: string): Observable<any> {
+    const url = `${this.apiUrl}/reporte-asistencia`;
+    const body = { cedulas, fechaInicio, fechaFin };
   
+    return this.http.post<any>(url, body);
+  }
 }
 
