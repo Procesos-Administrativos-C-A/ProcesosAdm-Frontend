@@ -10,8 +10,8 @@
                 <label for="lugar" class="w-1/6 mx-9  text-sm font-medium leading-6 text-gray-900">Lugar :</label>
                 <select name="lugar"  id="lugar" class="rounded-md" (change)="actualizarLinea($event)" 
                 formControlName="lugar">
-                    <option value="Linea1">Linea 1</option>
-                    <option value="Linea2">Linea 2</option>
+                    <option value="Linea1">Línea 1</option>
+                    <option value="Linea2">Línea 2</option>
                     <option value="Mantenimiento">Mantenimiento</option>
                 </select>
 
@@ -40,7 +40,7 @@
             
             <div class="w-1/3 mt-9">
 
-                <label for="festivo" class="w-1/6 ml-9  text-sm font-medium leading-6 text-gray-900">Dia festivo </label>
+                <label for="festivo" class="w-1/6 ml-9  text-sm font-medium leading-6 text-gray-900">Día festivo </label>
                 <input type="checkbox" name="festivo" id="festivo" class="ml-2 border-2 text-xl border-gray-300 rounded-md  checked:bg-Primario" 
                 formControlName="festivo" >
 
@@ -72,9 +72,9 @@
                         <td class="w-5/12 p-4 border">
                             <select name="cargo" class="rounded-md" (change)="asignarCargoEmpleado(i,j,$event)">
                                 <option value="OPERADOR">Operador</option>
-                                <option value="AUXILIAR DE ABORDAJE Y TAQUILLA">Auxiliar de A & T</option>
+                                <option value="AUXILIAR DE ABORDAJE Y TAQUILLA">Auxiliar de A&T</option>
                                 <option value="INGENIERO DE MANTENIMIENTO">Ingeniero de MTTO</option>
-                                <option value="TECNICO DE MANTENIMIENTO">Tecnico MTTO</option>
+                                <option value="TECNICO DE MANTENIMIENTO">Técnico MTTO</option>
                             </select>
                         </td>
                         <td class="w-6/12 p-4 border relative">
