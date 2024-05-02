@@ -11,8 +11,10 @@
             <ul class="flex items-center ">
                 <li class=" mx-10"><a href="#">Inicio</a></li>
                 <li class=" mx-10" >
-                    <button type="button" class="bg-transparent  rounded-md h-12 w-32 focus:shadow-lg focus:shadow-white/10" (click)="dropDownPre()">Preoperativos</button> 
-                    <div class="animate-fade-right absolute  mt-2 w-56 z-10   rounded-md bg-white shadow-lg shadow-gray-400  focus:outline-none" (mouseleave)="dropDownPre()" *ngIf="dropdown_preoperativos()" >
+                    <button type="button" class="bg-transparent  rounded-md h-12 w-32 hover:shadow-lg hover:shadow-white/10"
+                     (click)="dropDownPre()" (mouseenter)="dropDownPre(true)" (mouseleave)="dropDownPre()">Preoperativos</button> 
+                    <div class="animate-fade-right absolute  mt-2 w-56 z-10   rounded-md bg-white shadow-lg shadow-gray-400  focus:outline-none" 
+                    (mouseleave)="dropDownPre()" (mouseenter)="dropDownPre(true)" (mouseleave)="dropDownPre()" *ngIf="dropdown_preoperativos()" >
                         <div class="" role="none">
                         <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
                         <a href="/Reportes" class="text-gray-700 block px-4 py-2 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white" role="menuitem" tabindex="-1" >Lista de Preoperativos</a>
@@ -22,9 +24,10 @@
                     </div>    
                 </li>
                 <li class="mx-10">
-                    <button type="button" class="bg-transparent  rounded-md" (click)="dropDownTram()">Tramites</button> 
+                    <button type="button" class="bg-transparent  rounded-md" 
+                    (click)="dropDownTram()" (mouseenter)="dropDownTram(true)" (mouseleave)="dropDownTram()">Tramites</button> 
                     <div class="animate-fade-right absolute  mt-2 w-56 z-10  rounded-md bg-white shadow-lg shadow-gray-400 focus:outline-none transition-all duration-500"
-                    (mouseleave)="dropDownTram()" *ngIf="dropdown_tramites()"  >
+                    (mouseleave)="dropDownTram()" (mouseenter)="dropDownTram(true)" (mouseleave)="dropDownTram()" *ngIf="dropdown_tramites()"  >
                         <div class="" >
                         <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
                         <a href="#" class="text-gray-700 block px-4 py-2 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white">
@@ -37,10 +40,11 @@
                     </div>
                 </li>
                 <li class="mx-10">
-                    <button type="button" class="bg-transparent  rounded-md" (click)="dropDownSolicitudes()">Solicitudes</button>
+                    <button type="button" class="bg-transparent  rounded-md" 
+                    (click)="dropDownSolic()" (mouseenter)="dropDownSolic(true)" (mouseleave)="dropDownSolic()">Solicitudes</button>
                     <div
                       class="animate-fade-right absolute  mt-2 w-56 z-10  rounded-md bg-white shadow-lg shadow-gray-400 focus:outline-none transition-all duration-500"
-                      (mouseleave)="dropDownSolicitudes()" *ngIf="dropdown_solicitudes()">
+                      (mouseleave)="dropDownSolic()" (mouseenter)="dropDownSolic(true)" (mouseleave)="dropDownSolic()" *ngIf="dropdown_solicitudes()">
                       <div class="">
                         <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
                         <a href="#"
@@ -59,27 +63,33 @@
         </div>
         <ng-template #menu_operador >
             <div class="nav-links sm:block telefono:hidden ">
-                <ul class="flex items-center ">
-                    <li class=" mx-10"><a href="#">Inicio</a></li>
-                    <li class=" mx-10" >
-                        <button type="button" class="bg-transparent  rounded-md h-12 w-32 focus:shadow-lg focus:shadow-white/10" (click)="dropDownPre()">Preoperativos</button> 
-                        <div class="animate-fade-right absolute  mt-2 w-56 z-10   rounded-md bg-white shadow-lg shadow-gray-400  focus:outline-none" (mouseleave)="dropDownPre()" *ngIf="dropdown_preoperativos()" >
-                            <div class="" role="none">
+                <ul class="flex items-center">
+                    <li class="mx-10">
+                        <a href="#" class="hover:scale-110 hover:bg-gradient-to-b from-Secundario hover:rounded-t-md h-12 w-32 flex items-center justify-center">Inicio</a>
+                    </li>
+                    <li class=" mx-10 h-full" >
+
+                        <button type="button" [class]=" dropdown_preop_desplegado() ? 'scale-110  bg-gradient-to-b from-Secundario rounded-t-md h-12 w-32 ' :  '   rounded-md h-12 w-32'" (click)="dropDownPre(true)" (mouseenter)="dropDownPre(true)" (mouseleave)="dropDownPre()">Preoperativos</button> 
+                        <div id="PreoperativosMenu" class="animate-flip-down absolute w-56 z-10 focus:outline-none" (mouseleave)="dropDownPre()" (mouseenter)="dropDownPre(true)" *ngIf="dropdown_preoperativos()" >
+                            <div class=" mt-2 divide-y divide-gray-400/20 bg-white shadow-lg shadow-gray-400 rounded-md" role="none">
                             <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                            <a href="/Preoperativos" class="text-gray-700 block px-4 py-2 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white" role="menuitem" tabindex="-1" >Crear Preoperativo</a>
-                            <a href="/Preoperativos/Editar" class="text-gray-700 block px-4 py-2 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white" role="menuitem" tabindex="-1" >Editar ultimo registro</a>
+                            <a href="/Preoperativos" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white" role="menuitem" tabindex="-1" >Crear Preoperativo</a>
+                            <a href="/Preoperativos/Editar" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white" role="menuitem" tabindex="-1" >Editar ultimo registro</a>
                             </div>
-                        </div>    
+                        </div> 
+                           
                     </li>
                     <li class="mx-10">
-                        <button type="button" class="bg-transparent  rounded-md" (click)="dropDownTram()">Tramites</button> 
-                        <div class="animate-fade-right absolute  mt-2 w-56 z-10  rounded-md bg-white shadow-lg shadow-gray-400 focus:outline-none transition-all duration-500"
-                        (mouseleave)="dropDownTram()" *ngIf="dropdown_tramites()"  >
-                            <div class="" >
+
+                        <button type="button" [class]=" dropdown_tram_desplegado() ? 'scale-110 bg-gradient-to-b from-Secundario rounded-t-md h-12 w-32 ' :  'bg-transparent  rounded-md h-12 w-32'" 
+                        (click)="dropDownTram(true)" (mouseenter)="dropDownTram(true)" (mouseleave)="dropDownTram()">Tramites</button> 
+                        <div class="animate-flip-down absolute w-56 z-10   focus:outline-none transition-all duration-500"
+                        (mouseleave)="dropDownTram()" (mouseenter)="dropDownTram(true)" *ngIf="dropdown_tramites()"  >
+                            <div class="mt-2 divide-y divide-gray-400/20  rounded-md bg-white shadow-lg shadow-gray-400 " >
                             <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                            <a href="#" class="text-gray-700 block px-4 py-2 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white" >Solicitar vacaciones</a>
-                            <a href="#" class="text-gray-700 block px-4 py-2 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white"  >Generear certificaco</a>
-                            <a href="#" class="text-gray-700 block px-4 py-2 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white" >Retiro de cesantias</a>
+                            <a href="#" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white" >Solicitar vacaciones</a>
+                            <a href="#" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white"  >Generear certificado</a>
+                            <a href="#" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white" >Retiro de cesantias</a>
                             </div>
                         </div>
                     </li>
@@ -91,9 +101,19 @@
             <fa-icon [icon]="faCircleUser" class="text-white text-2xl"></fa-icon>
         </div>
     </div>
-    <div class=" flex justify-end sm:w-1/2 sm:flex telefono:hidden ">     
-        <div class="pr-8">
-            <fa-icon [icon]="faCircleUser" class="text-white text-2xl"></fa-icon>
+    <div class=" flex justify-end sm:w-1/2 sm:flex telefono:hidden">     
+        <div [class]="dropdown_user_desplegado()? 'mr-6 flex w-12 h-14 items-center justify-center cursor-pointer bg-gradient-to-b from-Secundario rounded-t-md':'mr-6 flex w-12 h-12 items-center justify-center cursor-pointer' "
+         (click)="dropDownUser(true)" (mouseenter)="dropDownUser(true)" (mouseleave)="dropDownUser()">
+            <fa-icon [icon]="faCircleUser" class="text-white text-3xl"></fa-icon>
+        </div>
+        <div class="animate-flip-down mt-12 absolute w-56 z-10   focus:outline-none transition-all duration-500"
+            (mouseleave)="dropDownUser()" (mouseenter)="dropDownUser(true)"  *ngIf="dropdown_user()"  >
+                <div class="mt-3 divide-y divide-gray-400/20  rounded-md bg-white shadow-lg shadow-gray-400 " >
+                <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+                <a href="#" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white" >Cambiar contraseña</a>
+                <a href="#" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white"  >Actualizar datos</a>
+                <a href="#" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white" >Cerrar sesion</a>
+                </div>
         </div>
     </div>
     

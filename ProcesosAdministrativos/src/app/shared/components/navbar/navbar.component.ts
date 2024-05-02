@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, signal } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faCircleUser, faCircleXmark  } from '@fortawesome/free-regular-svg-icons';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faCircleUser, faCircleXmark ,faPenToSquare  } from '@fortawesome/free-regular-svg-icons';
+import { faBars, faAngleUp, faAngleDown} from '@fortawesome/free-solid-svg-icons';
+import { elements } from 'chart.js';
 
 @Component({
   selector: 'app-navbar',
@@ -20,28 +21,94 @@ export class NavbarComponent {
   faCircleUser = faCircleUser;
   faBars = faBars;
 
+  faAngleDown = faAngleDown;
+  faAngleUp = faAngleUp;
+  faPenToSquare = faPenToSquare;
+
 
   dropdown_preoperativos = signal(false);
+  dropdown_preop_desplegado = signal(false);
   dropdown_tramites = signal(false);
-  dropdown_menu = signal(false);
+  dropdown_tram_desplegado = signal(false);
   dropdown_solicitudes = signal(false);
+  dropdown_solic_desplegado= signal(false);
+  dropdown_menu = signal(false);
+  dropdown_user= signal(false);
+  dropdown_user_desplegado= signal(false);
   
 
-  dropDownPre(): void {
-    this.dropdown_preoperativos.set(!this.dropdown_preoperativos()) ;
+  dropDownPre(desplegado: boolean = false): void {
+    this.dropdown_preop_desplegado.set(desplegado);
+    if (this.dropdown_preoperativos()){
+      if(desplegado){
+        return
+      }
+      setTimeout(() => {
+        if(!this.dropdown_preop_desplegado()){
+          this.dropdown_preoperativos.set(false);
+        } 
+        return
+      }, 100);
+    }else{
+      this.dropdown_preoperativos.set(true);
+    }
+    
   }
 
-  dropDownTram(): void {
-    this.dropdown_tramites.set(!this.dropdown_tramites()) ;
+  dropDownTram(desplegado: boolean = false): void {
+    this.dropdown_tram_desplegado.set(desplegado);
+    if (this.dropdown_tramites()){
+      if(desplegado){
+        return
+      }
+      setTimeout(() => {
+        if(!this.dropdown_tram_desplegado()){
+          this.dropdown_tramites.set(false);
+        } 
+      }, 100);
+    }else{
+      this.dropdown_tramites.set(true);
+    }
+  }
+
+
+
+  dropDownSolic(desplegado: boolean = false): void {
+    this.dropdown_solic_desplegado.set(desplegado);
+    if (this.dropdown_solicitudes()){
+      if(desplegado){
+        return
+      }
+      setTimeout(() => {
+        if(!this.dropdown_solic_desplegado()){
+          this.dropdown_solicitudes.set(false);
+        } 
+      }, 100);
+    }else{
+      this.dropdown_solicitudes.set(true);
+    }
   }
 
   dropDownMenu(): void {
     this.dropdown_menu.set(!this.dropdown_menu()) ;
   }
 
-  dropDownSolicitudes(): void {
-    this.dropdown_solicitudes.set(!this.dropdown_solicitudes()) ;
+  dropDownUser(desplegado : boolean = false): void {
+    this.dropdown_user_desplegado.set(desplegado);
+    if (this.dropdown_user()){
+      if(desplegado){
+        return
+      }
+      setTimeout(() => {
+        if(!this.dropdown_user_desplegado()){
+          this.dropdown_user.set(false);
+        } 
+      }, 100);
+    }else{
+      this.dropdown_user.set(true);
+    }
   }
+
 }
 
 
