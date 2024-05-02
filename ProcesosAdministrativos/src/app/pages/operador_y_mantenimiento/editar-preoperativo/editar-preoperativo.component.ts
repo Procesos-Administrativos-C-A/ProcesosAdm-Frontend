@@ -101,7 +101,7 @@ export class EditarPreoperativoComponent implements OnInit {
       let lineas: any[] = [];
       switch (this.preoperativoBd.preoperativo.lugar) {
         case 'Linea1':
-          lineas = ['Cambulos','Betania','Fundadores'];
+          lineas = ['Fundadores','Betania','Cambulos'];
           break;
         case 'Linea2':
           lineas = ['Villamaria + S.A.V','Villamaria + S.U.V'];
@@ -169,7 +169,7 @@ export class EditarPreoperativoComponent implements OnInit {
           console.log('Registro preoperativo insertado:', preoperativoInsertado);
           Swal.fire({
             title: '¡Guardado!',
-            text: 'Los cambios hechos al preoperativo se ha almacenado correctamente.',
+            text: 'Los cambios hechos al preoperativo se han almacenado correctamente.',
             icon: 'success',
             confirmButtonColor: '#002252',
             confirmButtonText: 'Aceptar'
@@ -183,7 +183,7 @@ export class EditarPreoperativoComponent implements OnInit {
           console.error('Error al insertar registro preoperativo:', error);
           Swal.fire({
             title: '¡Error!',
-            text: 'No se pudieron registrar los cambios al preoperativo, intente nuevamenete.',
+            text: 'No se pudieron registrar los cambios en el preoperatorio, inténtelo nuevamenete.',
             icon: 'error',
             confirmButtonColor: '#002252',
             confirmButtonText: 'Aceptar'
@@ -214,7 +214,7 @@ export class EditarPreoperativoComponent implements OnInit {
 
     switch (elementInput.value) {
       case 'Linea1':
-        lineas = ['Cambulos','Betania','Fundadores'];
+        lineas = ['Fundadores','Betania','Cambulos'];
         break;
       case 'Linea2':
         lineas = ['Villamaria + S.A.V','Villamaria + S.U.V'];

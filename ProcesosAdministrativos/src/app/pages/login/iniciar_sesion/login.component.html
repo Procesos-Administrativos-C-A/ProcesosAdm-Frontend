@@ -6,52 +6,56 @@
         <!-- Elemento Central-->
         <div class=" flex gap-8  flex-col  lg:w-1/3 sm:w-3/4 telefono:w-11/12  mx-auto rounded-md shadow-inner shadow-TextoGris/45 bg-white " >
             <!-- Formulario Inicio de Sesion-->
-            <form class="animate-fade-down animate-ease-in flex  flex-col " *ngIf="!menuRecuperacion() ; else formularioRecuperar" [formGroup]="usuarioForm" (ngSubmit)="enviarInicioSesion()">
-                <h1 class="text-center text-2xl font-semibold leading-7 text-gray-900 my-8 ">Iniciar sesión</h1>
+            <form class="animate-fade-down animate-ease-in flex  flex-col " *ngIf="!menu_recuperacion() ; else formularioRecuperar" [formGroup]="usuarioForm" (ngSubmit)="enviarInicioSesion()">
+                <h1 class="text-center text-2xl font-semibold leading-7 text-gray-900 my-8 ">Iniciar Sesión</h1>
 
                 <!-- Campo de Cedula-->
-                <label  for="cedula" class="ml-9 my-2 text-sm font-medium leading-6 text-gray-900">Numero de Cedula</label>
+                <label  for="cedula" class="ml-9 my-2 text-sm font-medium leading-6 text-gray-900">Número de Cédula</label>
                 <div class="relative flex justify-center  h-12">
                     <fa-icon [icon]="faUser" class="fas fa-fw fade absolute top-0 bottom-0 sm:left-[16%] telefono:left-[10%]  text-2xl flex items-center"></fa-icon>
-                    <input type="number" name="cedula" min="0" id="cedula" placeholder="" formControlName="cedula" class="appearance-none h-12 sm:w-3/4 telefono:w-11/12 pl-12 mx-auto  border-2 text-xl border-gray-300 rounded-md  focus:outline-none focus:ring-0 focus:border-4 focus:border-Secundario" >
+                    <input type="number" name="cedula" min="0" id="cedula" placeholder="" formControlName="cedula" class="appearance-none h-12 sm:w-3/4 telefono:w-11/12 pl-14 mx-auto  border-2 text-xl border-gray-300 rounded-md  focus:outline-none focus:ring-0 focus:border-4 focus:border-Secundario" >
                 </div>
                 
                 <!-- Campo de Contraseña-->
                 <label for="contrasena" class="mt-5 ml-9 text-sm font-medium leading-6 text-gray-900">Contraseña</label>
 
                 <div class="relative flex justify-center h-12">
-                    <fa-icon [icon]="faLock" class="absolute top-4 bottom-0 sm:left-[16%] telefono:left-[10%]  text-2xl flex items-center "></fa-icon>
-                    <input type="password" name="contrasena" id="contrasena" placeholder="" formControlName="contrasena" class="h-12 sm:w-3/4 telefono:w-11/12 pl-12 mx-auto mt-2  border-2 text-xl border-gray-300 rounded-md focus:outline-none focus:ring-0 focus:border-4 focus:border-Secundario ">
+                    <fa-icon [icon]="ver_contrasena()? faEye:faEyeSlash" class="absolute top-4 bottom-0  sm:left-[16%] telefono:left-[10%]  text-2xl flex items-center " (click)="verContrasena()"></fa-icon>
+                    <input [type]="ver_contrasena()? 'text' : 'password'" name="contrasena" id="contrasena" formControlName="contrasena" class="h-12 sm:w-3/4 telefono:w-11/12 pl-14 mx-auto mt-2  border-2 text-xl border-gray-300 rounded-md focus:outline-none focus:ring-0 focus:border-4 focus:border-Secundario ">
                 </div>
+                <!-- Boton de acceso-->
                 <button type="submit" [disabled]="!usuarioForm.valid" class="flex disabled:bg-Primario items-center justify-center p-3 w-1/4 mx-auto mt-8 rounded-md bg-Primario text-TextoBlanco hover:bg-Secundario active:bg-gray-500">Acceder</button>
             </form>
             <ng-template #formularioRecuperar >
                 <!-- Formulario Recuperacion de Contraseña-->
                 <form class="animate-fade-down animate-ease-in flex  flex-col " >
+                    <!-- Titulo y funcionamiento-->
                     <h1 class="text-center text-2xl font-semibold leading-7 text-gray-900 my-8">Recuperar Contraseña</h1>
-                    <p class=" sm:w-3/4 telefono:w-11/12 mx-auto mt-2 mb-14 text-center text-sm font-medium leading-6 text-TextoGris">
-                        Introduce tu numero de cedula y te enviaremos un enlace al correo electronico que tengas registrado
+                    <p class=" sm:w-3/4 telefono:w-11/12 mx-auto mt-2 mb-6 text-center text-sm font-medium leading-6 text-TextoGris">
+                        Introduce tu número de cédula y te enviaremos un enlace al correo electrónico que tengas registrado
                         para que puedas restablecer la contraseña de tu cuenta. 
                     </p>
                     <!-- Campo de Cedula-->
+                    <label  for="cedulaRecuperacion" class="ml-9 mb-2 text-sm font-medium leading-6 text-gray-900">Número de Cédula</label>
                     <div class="relative flex justify-center  h-12">
                         <fa-icon [icon]="faUser" class="absolute top-0 bottom-0 sm:left-[16%] telefono:left-[10%]  text-2xl flex items-center"></fa-icon>
-                        <input type="number" name="cedula" placeholder="Numero de cedula" [formControl]="cedulaRecForm" class="appearance-none h-12 sm:w-3/4 telefono:w-11/12 pl-12 mx-auto  border-2 text-xl border-gray-300 rounded-md focus:outline-none focus:ring-0 focus:border-4 focus:border-Secundario"  >                    
+                        <input type="number" name="cedulaRecuperacion" [formControl]="cedulaRecForm" class="appearance-none h-12 sm:w-3/4 telefono:w-11/12 pl-12 mx-auto  border-2 text-xl border-gray-300 rounded-md focus:outline-none focus:ring-0 focus:border-4 focus:border-Secundario"  >                    
                     </div>
+                    <!-- Boton de recuperacion -->
                     <button type="submit" class="flex items-center justify-center p-3 sm:w-3/5 telefono:w-3/4 mx-auto mt-8 rounded-md bg-Primario text-TextoBlanco hover:bg-Secundario active:bg-gray-500">Enviar enlace de acceso</button>
                 </form>
             </ng-template>
             <!-- Botones de cambio de menu-->
             <div class="animate-flip-up h-12 flex  flex-col justify-center bg-Primario rounded-t-full text-TextoBlanco "
-                *ngIf="!menuRecuperacion() ; else elseBlock">
+                *ngIf="!menu_recuperacion() ; else elseBlock">
                 <span class="text-center cursor-pointer w-40 m-auto" (click)="cambiarMenu()">
-                   <p > Olvidé mi contraseña</p> 
+                   <p > Olvidé mi Contraseña</p> 
                 </span>
             </div>
             <ng-template #elseBlock >
                 <div class="animate-flip-up h-12 flex  flex-col justify-center bg-Primario rounded-t-full text-TextoBlanco">
                 <span class="text-center cursor-pointer w-40 m-auto" (click)="cambiarMenu()">
-                   <p > Iniciar Sesion</p> 
+                   <p > Iniciar Sesión</p> 
                 </span>
                 </div>
             </ng-template>
