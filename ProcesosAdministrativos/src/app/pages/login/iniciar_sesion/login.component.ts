@@ -4,7 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { BackendService } from '../../../core/services/backend.service';
 import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faEyeSlash, faAddressCard,  } from '@fortawesome/free-regular-svg-icons';
+import { faEyeSlash, faAddressCard, faEye  } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'app-login',
@@ -14,10 +14,19 @@ import { faEyeSlash, faAddressCard,  } from '@fortawesome/free-regular-svg-icons
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
+
   faUser = faAddressCard;
-  faLock = faEyeSlash;
+  faEyeSlash = faEyeSlash;
+  faEye = faEye;
+
   credenciales: any =  {};
+
+  menu_recuperacion = signal(false);
+  ver_contrasena = signal(false);
+
+
   constructor(private router: Router , private backendService: BackendService) { }
+
   
   iniciarSesion(username : string , password : string) {
     this.backendService.ingresar(username,password)
@@ -66,8 +75,7 @@ export class LoginComponent {
   cedulaRecForm = new FormControl("",[Validators.required,Validators.nullValidator,Validators.minLength(6),
     Validators.maxLength(13)]);
 
-  menuRecuperacion = signal(false);
-
+  
   /*
   constructor(){
     this.usuarioForm = new FormGroup({
@@ -82,8 +90,11 @@ export class LoginComponent {
   */
 
   cambiarMenu(): void {
-    this.menuRecuperacion.set(!this.menuRecuperacion()) ;
-    console.log(this.menuRecuperacion());
+    this.menu_recuperacion.set(!this.menu_recuperacion()) ;
+    console.log(this.menu_recuperacion());
+  }
+  verContrasena(): void {
+    this.ver_contrasena.set(!this.ver_contrasena()) ;
   }
 
   enviarInicioSesion(): void {

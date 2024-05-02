@@ -97,7 +97,7 @@ export class PreoperativosComponent implements OnInit {
           console.error('Error al insertar registro preoperativo:', error);
           Swal.fire({
             title: '¡Error!',
-            text: 'No se pudo registrar el preoperativo, intente nuevamenete.',
+            text: 'No se pudo registrar el preoperativo, inténtelo nuevamenete.',
             icon: 'error',
             confirmButtonColor: '#002252',
             confirmButtonText: 'Aceptar'
@@ -133,7 +133,7 @@ export class PreoperativosComponent implements OnInit {
 
     switch (elementInput.value) {
       case 'Linea1':
-        lineas = ['Cambulos','Betania','Fundadores'];
+        lineas = ['Fundadores','Betania','Cambulos'];
         break;
       case 'Linea2':
         lineas = ['Villamaria + S.A.V','Villamaria + S.U.V'];
