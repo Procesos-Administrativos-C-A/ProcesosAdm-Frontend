@@ -1,9 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, signal } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faCircleUser, faCircleXmark ,faPenToSquare  } from '@fortawesome/free-regular-svg-icons';
-import { faBars, faAngleUp, faAngleDown} from '@fortawesome/free-solid-svg-icons';
-import { elements } from 'chart.js';
+import { faCircleUser, faCircleXmark ,faPenToSquare, faFileLines  } from '@fortawesome/free-regular-svg-icons';
+import { faBars, faAngleUp, faAngleDown, faHouse, faBoxArchive} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-navbar',
@@ -15,16 +14,18 @@ import { elements } from 'chart.js';
 export class NavbarComponent {
   @Input() rol: string | undefined;
 
-  
-
   faCircleXmark = faCircleXmark;
   faCircleUser = faCircleUser;
   faBars = faBars;
 
+
   faAngleDown = faAngleDown;
   faAngleUp = faAngleUp;
-  faPenToSquare = faPenToSquare;
 
+  faHouse = faHouse;
+  faPenToSquare = faPenToSquare;
+  faFileLines = faFileLines;
+  faBoxArchive = faBoxArchive;
 
   dropdown_preoperativos = signal(false);
   dropdown_preop_desplegado = signal(false);
