@@ -15,7 +15,7 @@
                     <fa-icon [icon]="faUser" class="fas fa-fw fade absolute top-0 bottom-0 sm:left-[16%] telefono:left-[10%]  text-2xl flex items-center"></fa-icon>
                     <input type="number" name="cedula" min="0" id="cedula" placeholder="" formControlName="cedula" class="appearance-none h-12 sm:w-3/4 telefono:w-11/12 pl-14 mx-auto  border-2 text-xl border-gray-300 rounded-md  focus:outline-none focus:ring-0 focus:border-4 focus:border-Secundario" >
                 </div>
-                
+                <!--<p *ngIf="usuarioForm.get('cedula')?.hasError('minlength')">El numero de cedula no puede ser menor de 6 digitos</p> -->
                 <!-- Campo de Contraseña-->
                 <label for="contrasena" class="mt-5 ml-9 text-sm font-medium leading-6 text-gray-900">Contraseña</label>
 
