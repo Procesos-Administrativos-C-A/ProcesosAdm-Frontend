@@ -178,7 +178,7 @@ export class ReporteAsistenciaComponent {
     this.horas.forEach(persona => {
       
       nombres.push(persona.nombre + ' '+ persona.apellidos)
-      total_horas.
+      
       persona.horas.forEach( (registro: any) => {
         console.log(registro)
         console.log(registro.horas_diurnas_ord)
@@ -193,7 +193,7 @@ export class ReporteAsistenciaComponent {
         grafico_torta[3] += registro.horas_nocturnas_fest;
         horas_nocturnas_festivo.push(registro.horas_extras)
         grafico_torta[4] += registro.horas_extras;
-        total_horas.push(registro.total_horas)
+        //total_horas.push(registro.total_horas)
         torta_grupal.push(registro.total_horas)
       });
       
