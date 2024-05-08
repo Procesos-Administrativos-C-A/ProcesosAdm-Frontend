@@ -1,0 +1,26 @@
+<app-navbar rol="2"></app-navbar>
+
+<div class="w-10/12 mx-auto my-14 rounded-md flex flex-col items-center justify-start border border-spacing-7 shadow-inner shadow-TextoGris/45 border-black bg-white">
+    <h1 class="text-center text-2xl font-semibold leading-7 text-gray-900 my-8">Solicitud de Certificado Laboral</h1>
+    <div class="w-10/12 m-auto grid grid-cols-2 gap-4">
+        <div>
+            <label for="nombre" class="block text-sm font-medium leading-6 text-gray-900">Nombre Completo:</label>
+            <input type="text" name="nombre" id="nombre" class="w-full rounded-md" required>
+        </div>
+        <div>
+            <label for="cedula" class="block text-sm font-medium leading-6 text-gray-900">Cédula:</label>
+            <input type="text" name="cedula" id="cedula" class="w-full rounded-md" required>
+        </div>
+        <div>
+            <label for="cargo" class="block text-sm font-medium leading-6 text-gray-900">Cargo:</label>
+            <input type="text" name="cargo" id="cargo" class="w-full rounded-md" required>
+        </div>
+        <div>
+            <label for="fecha_ingreso" class="block text-sm font-medium leading-6 text-gray-900">Fecha de Ingreso:</label>
+            <input type="date" name="fecha_ingreso" id="fecha_ingreso" class="w-full rounded-md" required>
+        </div>
+        <div class="col-span-2 mt-8">
+            <button type="submit" class="flex items-center justify-center p-3 w-1/4 mx-auto my-8 rounded-md bg-Primario text-TextoBlanco hover:bg-Secundario active:bg-gray-500">Solicitar Certificado</button>
+        </div>
+    </div>
+</div>
