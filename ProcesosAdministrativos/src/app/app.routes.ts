@@ -26,6 +26,14 @@ export const routes: Routes = [
         
     },
     {
+        path: 'Solicitud',
+        canActivate: [
+           // AuthenticationTalentoHumanoGuard
+        ],
+        loadChildren: () => import('./pages/general/talento_humano.routes').then(m => m.OMRoutes)
+        
+    },
+    {
         path: '**',
         component: NavbarComponent
     }
