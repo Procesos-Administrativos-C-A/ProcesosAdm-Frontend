@@ -102,6 +102,11 @@ export class BackendService {
     const url = `${this.apiUrl}/horas_empleados/consolidado_horas/?fecha_inicio=${fecha_inicio}&fecha_fin=${fecha_fin}`; 
     return this.http.get<any[]>(url);
   }
+
+  getEmpleadoHoras(fecha_inicio: string , fecha_fin: string, cedulas: number[]): Observable<any[]> {
+    const url = `${this.apiUrl}/horas_empleados/asistencia_horas/?fecha_inicio=${fecha_inicio}&fecha_fin=${fecha_fin}&lista_cedulas=${cedulas}`; 
+    return this.http.get<any[]>(url);
+  }
   
 // Método para generar un PDF de preoperativos por fecha
   generarPDFPreoperativosPorFecha(fecha: string): Observable<{ blob: Blob, fileName: string }> {
@@ -140,11 +145,5 @@ export class BackendService {
       );
   }
 
-  getReporteAsistencia(cedulas: number[], fechaInicio: string, fechaFin: string): Observable<any> {
-    const url = `${this.apiUrl}/reporte-asistencia`;
-    const body = { cedulas, fechaInicio, fechaFin };
-  
-    return this.http.post<any>(url, body);
-  }
 }
 
