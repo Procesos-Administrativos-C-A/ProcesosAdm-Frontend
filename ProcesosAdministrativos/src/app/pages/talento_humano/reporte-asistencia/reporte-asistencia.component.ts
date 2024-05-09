@@ -8,6 +8,7 @@ import { Empleado } from '../../../core/models/empleados.model';
 import { Chart, ChartDataset } from 'chart.js/auto';
 import { CustomValidators } from '../../../core/validators/custom_validators';
 import Swal from 'sweetalert2';
+import moment from 'moment';
 
 @Component({
   selector: 'app-reporte-asistencia',
@@ -19,49 +20,49 @@ import Swal from 'sweetalert2';
 export class ReporteAsistenciaComponent {
 
   empleadosForm: FormGroup = new FormGroup({
-    fechaInicio : new FormControl('', [Validators.required,Validators.nullValidator]),
-    fechaFin :  new FormControl('', [Validators.required,Validators.nullValidator]),
+    fechaInicio: new FormControl('', [Validators.required, Validators.nullValidator]),
+    fechaFin: new FormControl('', [Validators.required, Validators.nullValidator]),
     empleados: new FormArray([
       new FormGroup({
-        cargo: new FormControl('OPERADOR',[Validators.required, Validators.nullValidator]),
-        nombre: new FormControl ('',[Validators.required, Validators.nullValidator]),
-        cedula: new FormControl ( 0 ,[Validators.required, Validators.nullValidator]),
+        cargo: new FormControl('OPERADOR', [Validators.required, Validators.nullValidator]),
+        nombre: new FormControl('', [Validators.required, Validators.nullValidator]),
+        cedula: new FormControl(0, [Validators.required, Validators.nullValidator]),
       }),
       new FormGroup({
-        cargo: new FormControl('OPERADOR',[Validators.required, Validators.nullValidator]),
-        nombre: new FormControl ('',[Validators.required, Validators.nullValidator]),
-        cedula: new FormControl ( 0 ,[Validators.required, Validators.nullValidator]),
+        cargo: new FormControl('OPERADOR', [Validators.required, Validators.nullValidator]),
+        nombre: new FormControl('', [Validators.required, Validators.nullValidator]),
+        cedula: new FormControl(0, [Validators.required, Validators.nullValidator]),
       })
     ])
   }, [CustomValidators.fechaFinalMenorQueInicial]);
 
-  
-  empleados: any =  {};
+
+  empleados: any = {};
 
   stackedBarChart: any;
-  pieChart: any;
 
-  horas: Array<any> =[];
+
+  horas: Array<any> = [];
 
   dias_semana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
- 
+
   constructor(private backendService: BackendService) {
-    
+
   }
- 
+
   ngOnInit(): void {
     this.obtenerNombresEmpleados('OPERADOR')
   }
 
-  obtenerHoras(fecha_inicio : string, fecha_fin : string, cedulas : number[]){
-    this.backendService.getEmpleadoHoras(fecha_inicio,fecha_fin,cedulas)
+  obtenerHoras(fecha_inicio: string, fecha_fin: string, cedulas: number[]) {
+    this.backendService.getEmpleadoHoras(fecha_inicio, fecha_fin, cedulas)
       .subscribe({
         next: (horas) => {
           console.log(horas)
-          this.horas= horas;
+          this.horas = horas;
           this.crearGrafico();
-          if(horas.length == 0 ){
-            
+          if (horas.length == 0) {
+
             Swal.fire({
               title: 'Empleado/s sin registros!',
               text: 'No se encontraron registros en el rango de fechas seleccionado, verifique e intente nuevamente.',
@@ -85,13 +86,13 @@ export class ReporteAsistenciaComponent {
   }
 
   obtenerNombresEmpleados(cargo: string) {
-    if(cargo in this.empleados){
+    if (cargo in this.empleados) {
       return
     }
     this.backendService.getObtenerNombresEmpleadosCargo(cargo)
       .subscribe({
         next: (empleados) => {
-          
+
           this.empleados[cargo] = empleados;
           console.log(this.empleados)
         },
@@ -103,10 +104,10 @@ export class ReporteAsistenciaComponent {
 
   get empleadosArray(): FormArray {
     return this.empleadosForm.get('empleados') as FormArray;
-    
+
   }
 
-  asignarCargoEmpleado(j: number, event : Event){
+  asignarCargoEmpleado(j: number, event: Event) {
     const elementInput = event.target as HTMLInputElement;
     this.obtenerNombresEmpleados(elementInput.value);
     const empleado = (this.empleadosArray as unknown as FormArray).at(j)
@@ -115,7 +116,7 @@ export class ReporteAsistenciaComponent {
     empleado.get('cedula')?.setValue(0);
   }
 
-  asignarNombreEmpleado(cargo : string , j: number,event: Event){
+  asignarNombreEmpleado(cargo: string, j: number, event: Event) {
     const elementInput = event.target as HTMLInputElement;
     const empleado = (this.empleadosArray as unknown as FormArray).at(j);
     const cedula: string = this.empleados[cargo].find((objeto: { nombre: any; }) => objeto.nombre === elementInput.value)['cedula'];
@@ -123,15 +124,15 @@ export class ReporteAsistenciaComponent {
     empleado.get('cedula')?.setValue(cedula);
   }
 
-  eliminarEmpleado( j: number) {
+  eliminarEmpleado(j: number) {
     (this.empleadosArray as unknown as FormArray).removeAt(j);
   }
 
   agregarEmpleado() {
     const empleadoFormGroup = new FormGroup({
-      cargo: new FormControl('OPERADOR',[Validators.required, Validators.nullValidator]),
-      nombre: new FormControl ('',[Validators.required, Validators.nullValidator]),
-      cedula: new FormControl ( 0 ,[Validators.required, Validators.nullValidator]),
+      cargo: new FormControl('OPERADOR', [Validators.required, Validators.nullValidator]),
+      nombre: new FormControl('', [Validators.required, Validators.nullValidator]),
+      cedula: new FormControl(0, [Validators.required, Validators.nullValidator]),
     });
     (this.empleadosArray as unknown as FormArray).push(empleadoFormGroup);
   }
@@ -142,200 +143,205 @@ export class ReporteAsistenciaComponent {
     }
   }
 
-  
- 
+
+
   generarReporte(): void {
-    console.log(this.empleadosForm)
-    const cedulas : number[] =[]
+    const cedulas: number[] = []
     this.empleadosArray.controls.forEach(element => {
       cedulas.push(element.get('cedula')?.value)
     });
 
-    this.obtenerHoras(this.empleadosForm.get('fechaInicio')?.value,this.empleadosForm.get('fechaFin')?.value,cedulas)
-    
+    this.obtenerHoras(this.empleadosForm.get('fechaInicio')?.value, this.empleadosForm.get('fechaFin')?.value, cedulas)
+
   }
 
-  crearGrafico(): void{
+  crearGrafico(): void {
     if (this.stackedBarChart) {
       this.stackedBarChart.destroy();
-      this.pieChart.destroy();
-    }
-    let nombres: string[] =[]
-    let fechas: string[] =[]
-    let horas_diurnas: number[] =[]
-    let horas_diurnas_festivo: number[] =[]
-    let horas_nocturnas: number[] =[]
-    let horas_nocturnas_festivo: number[] =[]
-    let horas_extras: number[] =[]
-    let total_horas: any ={
-
     }
 
-    let grafico_torta: number[] =[0,0,0,0,0]
+    const { nombres, fechas, datos } = this.prepararDatos();
 
-    let torta_grupal: number[] = []
+    if (nombres.length === 1) {
+      this.crearGraficoIndividual(nombres[0], fechas, datos);
+    } else {
+      this.crearGraficoMultiple(nombres, datos, fechas);
+    }
+  }
+
+  prepararDatos(): { nombres: string[], fechas: string[], datos: any[] } {
+    const nombres: string[] = [];
+    const fechas: string[] = [];
+    const datos: any[] = [];
+    const totalHorasEmpleado: { [nombre: string]: number } = {};
 
     this.horas.forEach(persona => {
-      
-      nombres.push(persona.nombre + ' '+ persona.apellidos)
-      
-      persona.horas.forEach( (registro: any) => {
-        console.log(registro)
-        console.log(registro.horas_diurnas_ord)
-        fechas.push(this.dias_semana[new Date(registro.fecha).getDay()] + ' - ' +registro.fecha)
-        horas_diurnas.push(registro.horas_diurnas_ord)
-        grafico_torta[0] += registro.horas_diurnas_ord;
-        horas_diurnas_festivo.push(registro.horas_diurnas_fest)
-        grafico_torta[1] += registro.horas_diurnas_fest;
-        horas_nocturnas.push(registro.horas_nocturnas)
-        grafico_torta[2] += registro.horas_nocturnas;
-        horas_nocturnas_festivo.push(registro.horas_nocturnas_fest)
-        grafico_torta[3] += registro.horas_nocturnas_fest;
-        horas_nocturnas_festivo.push(registro.horas_extras)
-        grafico_torta[4] += registro.horas_extras;
-        //total_horas.push(registro.total_horas)
-        torta_grupal.push(registro.total_horas)
+      const nombreCompleto = persona.nombre + ' ' + persona.apellidos;
+      nombres.push(nombreCompleto);
+
+      let totalHoras = 0;
+      const datosPersona: any = {
+        horas_diurnas: [],
+        horas_diurnas_festivo: [],
+        horas_nocturnas: [],
+        horas_nocturnas_festivo: [],
+        horas_extras: []
+      };
+
+      persona.horas.forEach((registro: any) => {
+        fechas.push(this.dias_semana[new Date(registro.fecha).getDay()] + ' - ' + registro.fecha);
+        datosPersona.horas_diurnas.push(registro.horas_diurnas_ord);
+        datosPersona.horas_diurnas_festivo.push(registro.horas_diurnas_fest);
+        datosPersona.horas_nocturnas.push(registro.horas_nocturnas);
+        datosPersona.horas_nocturnas_festivo.push(registro.horas_nocturnas_fest);
+        datosPersona.horas_extras.push(registro.horas_extras);
+        totalHoras += registro.total_horas;
       });
-      
 
+      datos.push(datosPersona);
+      totalHorasEmpleado[nombreCompleto] = totalHoras;
     });
-   //width="400" height="400"
 
-    if(nombres.length == 1){
-      this.stackedBarChart = new Chart('canvas', {
-        type: 'bar',
-        data: {
-          labels: fechas,
-          datasets: [
-            {
-              label: 'Diurnas',
-              data: horas_diurnas,
-              backgroundColor: 'rgba(207, 243, 117)'
-            },
-            {
-              label: 'Diurnas Festivas',
-              data: horas_diurnas_festivo,
-              backgroundColor: 'rgba(243, 243, 46, 0.8)'
-            },
-            {
-              label: 'Nocturnas',
-              data: horas_nocturnas,
-              backgroundColor: 'rgba(46, 174, 243, 0.8)'
-            },
-            {
-              label: 'Nocturnas Festivas',
-              data: horas_nocturnas_festivo,
-              backgroundColor: 'rgba(96, 70, 247, 0.8)'
-            },
-            {
-              label: 'Extra',
-              data: horas_extras,
-              backgroundColor: 'rgba(96, 70, 217, 0.8)'
-            }
-          ]
-        },
-        options: {
-          indexAxis: 'y', // Swap axes to display names on Y-axis
-          elements: {
-            bar: {
-              borderWidth: 1 // Set bar border width
-            }
+    return { nombres, fechas, datos };
+  }
+
+  crearGraficoIndividual(nombre: string, fechas: string[], datos: any[]) {
+    this.stackedBarChart = new Chart('canvas', {
+      type: 'bar',
+      data: {
+        labels: fechas,
+        datasets: [
+          {
+            label: 'Diurnas',
+            data: datos[0].horas_diurnas,
+            backgroundColor: 'rgba(207, 243, 117)'
           },
-          responsive: true, // Enable responsiveness
-          plugins: {
-            legend: {
-              position: 'top' // Place legend on the right
-            },
-            title: {
-              display: false,
-              text: 'Stacked Bar Chart with Names on Y-axis' // Title for the chart
-            }
+          {
+            label: 'Diurnas Festivas',
+            data: datos[0].horas_diurnas_festivo,
+            backgroundColor: 'rgba(243, 243, 46, 0.8)'
+          },
+          {
+            label: 'Nocturnas',
+            data: datos[0].horas_nocturnas,
+            backgroundColor: 'rgba(46, 174, 243, 0.8)'
+          },
+          {
+            label: 'Nocturnas Festivas',
+            data: datos[0].horas_nocturnas_festivo,
+            backgroundColor: 'rgba(96, 70, 247, 0.8)'
+          },
+          {
+            label: 'Extra',
+            data: datos[0].horas_extras,
+            backgroundColor: 'rgba(96, 70, 217, 0.8)'
+          }
+        ]
+      },
+      options: {
+        indexAxis: 'y',
+        elements: {
+          bar: {
+            borderWidth: 1
+          }
+        },
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top'
+          },
+          title: {
+            display: false,
+            text: `Stacked Bar Chart with Name ${nombre}`
           }
         }
-      });
-    }else{
-      let datasets2: ChartDataset<'bar', number[]>[] = [];
-      for (let i = 0; i < nombres.length; i++) {
-        datasets2.push({
-          label: nombres[i],
-          data: total_horas,
+      }
+    });
+  }
+
+
+  crearGraficoMultiple(nombres: string[], datos: any[], fechas: string[]) {
+    console.log(fechas);
+    console.log(datos);
+    const datasets: ChartDataset<'bar', number[]>[] = [];
+
+    // Calcular la diferencia de días entre fechaInicio y fechaFin
+    const fechaInicio = moment(this.empleadosForm.get('fechaInicio')?.value);
+    const fechaFin = moment(this.empleadosForm.get('fechaFin')?.value);
+    const diferenciaDias = fechaFin.diff(fechaInicio, 'days') + 1; 
+
+    // Iterar sobre los nombres de los empleados
+    nombres.forEach((nombre, index) => {
+      let horasTotales = 0;
+
+      if (datos[index]) {
+        horasTotales =
+          (datos[index].horas_diurnas || []).reduce((acc: number, val: number) => acc + val, 0) +
+          (datos[index].horas_diurnas_festivo || []).reduce((acc: number, val: number) => acc + val, 0) +
+          (datos[index].horas_nocturnas || []).reduce((acc: number, val: number) => acc + val, 0) +
+          (datos[index].horas_nocturnas_festivo || []).reduce((acc: number, val: number) => acc + val, 0) +
+          (datos[index].horas_extras || []).reduce((acc: number, val: number) => acc + val, 0);
+      }
+
+      // Agregar conjunto de datos solo si hay horas registradas
+      if (horasTotales > 0) {
+        datasets.push({
+          label: nombre,
+          data: [horasTotales],
           backgroundColor: this.obtenerColorAleatorio(),
           borderColor: 'rgba(0, 0, 0, 0.5)',
           borderWidth: 1
         });
       }
-    
+    });
+
     this.stackedBarChart = new Chart('canvas', {
       type: 'bar',
       data: {
-        labels: fechas,
-        datasets: datasets2
+        labels: [`${diferenciaDias} días`], // Usamos la diferencia de días como etiqueta en el eje Y
+        datasets: datasets
       },
       options: {
-        indexAxis: 'y', // Swap axes to display names on Y-axis
+        indexAxis: 'y',
         elements: {
           bar: {
-            borderWidth: 1 // Set bar border width
+            borderWidth: 1
           }
         },
-        responsive: true, // Enable responsiveness
+        responsive: true,
         plugins: {
           legend: {
-            position: 'top' // Place legend on the right
+            position: 'top'
           },
           title: {
             display: false,
-            text: 'Stacked Bar Chart with Names on Y-axis' // Title for the chart
+            text: 'Total Hours per Employee'
+          }
+        },
+        scales: {
+          x: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Total Horas'
+            },
+            ticks: {
+              precision: 0,
+              callback: function (value: any) {
+                return Number.isInteger(value) ? value : '';
+              }
+            }
           }
         }
       }
     });
   }
-    
 
-    //-------------------------------------------------------------
 
-    this.pieChart = new Chart('canvasPie', {
-      type: 'pie',
-      data: {
-        labels: ['Diurnas', 'Diurnas Festivas', 'Nocturnas', 'Nocturnas Festivas','Extra'],
-        datasets: [{
-          label: 'Horas totales',
-          data: grafico_torta,
-          backgroundColor: [
-            'rgba(207, 243, 117)',
-            'rgba(243, 243, 46, 0.8)',
-            'rgba(46, 174, 243, 0.8)',
-            'rgba(96, 70, 247, 0.8)',
-            'rgba(96, 70, 217, 0.8)'
-          ]
-        }]
-      },
-      options: {
-        responsive: true
-      }
-    });
-  }
 
-  obtenerEtiquetas(data: any): string[] {
-    if (data.empleados.length === 1) {
-      // Si solo hay un empleado, las etiquetas son las fechas
-      return data.empleados[0].datos.map((dato: any) => dato.fecha);
-    } else {
-      // Si hay múltiples empleados, las etiquetas son los nombres
-      return data.empleados.map((empleado: any) => empleado.nombre);
-    }
-  }
 
-  obtenerDatosGrafico(data: any): any[] {
-    return data.empleados.map((empleado: any) => {
-      return {
-        label: empleado.nombre,
-        data: empleado.datos.map((dato: any) => dato.horas),
-        backgroundColor: this.obtenerColorAleatorio(), // Puedes generar un color aleatorio para cada conjunto de datos
-      };
-    });
-  }
+
+
   obtenerColorAleatorio(): string {
     // Función para generar un color aleatorio en formato hexadecimal
     const generarColorAleatorio = (): string => {
