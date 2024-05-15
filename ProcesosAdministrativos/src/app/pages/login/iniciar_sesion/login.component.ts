@@ -5,6 +5,7 @@ import { BackendService } from '../../../core/services/backend.service';
 import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEyeSlash, faAddressCard, faEye  } from '@fortawesome/free-regular-svg-icons';
+import { faL, faSpinner  } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-login',
@@ -18,11 +19,14 @@ export class LoginComponent {
   faUser = faAddressCard;
   faEyeSlash = faEyeSlash;
   faEye = faEye;
+  faSpinner = faSpinner;
 
   credenciales: any =  {};
 
   menu_recuperacion = signal(false);
   ver_contrasena = signal(false);
+  icono_carga = signal(false);
+  mensaje_error = signal(false);
 
 
   constructor(private router: Router , private backendService: BackendService) { }
@@ -38,6 +42,8 @@ export class LoginComponent {
         },
         error: (error) => {
           console.error('Error al obtener los nombres de empleados:', error);
+          this.icono_carga.set(false);
+          this.mensaje_error.set(true);
         }
       });
   }
@@ -56,10 +62,13 @@ export class LoginComponent {
           }else{
             this.router.navigate(['/Reportes']);
           }
-          
+          this.icono_carga.set(false);
         },
         error: (error) => {
+          this.icono_carga.set(false);
+          this.mensaje_error.set(true);
           console.error('Error al obtener los nombres de empleados:', error);
+          
         }
       });
   }
@@ -98,7 +107,10 @@ export class LoginComponent {
   }
 
   enviarInicioSesion(): void {
+    this.icono_carga.set(true);
+    this.mensaje_error.set(false);
     console.log(this.usuarioForm.value);
     this.iniciarSesion(this.usuarioForm.value.cedula!.toString(),this.usuarioForm.value.contrasena!)
+    
   }
 }
