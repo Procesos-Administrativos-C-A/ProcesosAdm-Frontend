@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { MostrarPreoperativosComponent } from './pages/talento_humano/mostrar-preoperativos/mostrar-preoperativos.component';
-import {  AuthenticationTalentoHumanoGuard } from './core/guards/auth_talento_humano/authentication_talento_humano.guard';
+import { AuthenticationTalentoHumanoGuard } from './core/guards/auth_talento_humano/authentication_talento_humano.guard';
 import { AuthenticationOperYMantGuard } from './core/guards/auth_operador_y_mantenimiento/authentication-oper-y-mant.guard';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
 
@@ -20,17 +20,17 @@ export const routes: Routes = [
     {
         path: 'Reportes',
         canActivate: [
-           // AuthenticationTalentoHumanoGuard
+           //AuthenticationTalentoHumanoGuard
         ],
         loadChildren: () => import('./pages/talento_humano/talento_humano.routes').then(m => m.OMRoutes)
         
     },
     {
-        path: 'Solicitud',
+        path: 'Solicitudes',
         canActivate: [
            // AuthenticationTalentoHumanoGuard
         ],
-        loadChildren: () => import('./pages/general/talento_humano.routes').then(m => m.OMRoutes)
+        loadChildren: () => import('./pages/general/general.routes').then(m => m.OMRoutes)
         
     },
     {

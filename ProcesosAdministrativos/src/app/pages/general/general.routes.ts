@@ -5,7 +5,7 @@ import {SolicitudCLComponent} from "./solicitud-cl/solicitud-cl.component";
 export const OMRoutes: Routes =[
 
     {
-        path: '', component: SolicitudCLComponent
+        path: 'Certificado', component: SolicitudCLComponent
     }
 
 ];

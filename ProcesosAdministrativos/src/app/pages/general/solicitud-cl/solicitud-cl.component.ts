@@ -10,25 +10,7 @@ import { FormGroup, FormControl, Validators, ValidationErrors } from '@angular/f
   styleUrl: './solicitud-cl.component.css'
 })
 export class SolicitudCLComponent {
-  // Define métodos para manejar dropdowns
-  dropdown_preoperativos = signal(false);
-  dropdown_tramites = signal(false);
-  dropdown_solicitudes = signal(false);
-
-  // Método para dropdown de preoperativos
-  dropDownPre(): void {
-    this.dropdown_preoperativos.set(!this.dropdown_preoperativos());
-  }
-
-  // Método para dropdown de tramites
-  dropDownTram(): void {
-    this.dropdown_tramites.set(!this.dropdown_tramites());
-  }
-
-  // Método para dropdown de solicitudes
-  dropDownSoli(): void {
-    this.dropdown_solicitudes.set(!this.dropdown_solicitudes());
-  }
+  
 
   // Función para validar que la cédula no sea negativa
   validarCedulaNoNegativa(control: FormControl): ValidationErrors | null {
