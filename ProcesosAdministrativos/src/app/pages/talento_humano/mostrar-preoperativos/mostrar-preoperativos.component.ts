@@ -33,6 +33,14 @@ export class MostrarPreoperativosComponent implements OnInit {
     const fechaActual = new Date().toISOString().split('T')[0];
     this.fechaBusqueda = fechaActual;
   }
+  estacionesOrdenadas = [
+    'Fundadores',
+    'Betania',
+    'Cambulos',
+    'Villamaria + S.A.V',
+    'Villamaria + S.U.V',
+    'Mantenimiento'
+  ];
 
   ngOnInit() {
     console.log('Componente inicializado');
