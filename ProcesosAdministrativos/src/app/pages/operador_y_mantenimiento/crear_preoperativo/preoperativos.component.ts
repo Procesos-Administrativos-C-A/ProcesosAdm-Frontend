@@ -22,11 +22,7 @@ import { NavbarComponent } from "../../../shared/components/navbar/navbar.compon
     imports: [CommonModule, FormsModule, FontAwesomeModule, ReactiveFormsModule, NavbarComponent]
 })
 export class PreoperativosComponent implements OnInit {
-  
-  faCircleXmark = faCircleXmark;
-  faCircleUser = faCircleUser;
-  faBars = faBars;
-
+ 
   preoperativoForm: FormGroup = new FormGroup({
     lugar: new FormControl("",[Validators.required, Validators.nullValidator]) ,
     fecha: new FormControl(new Date().toISOString().substring(0, 10), [Validators.required]),

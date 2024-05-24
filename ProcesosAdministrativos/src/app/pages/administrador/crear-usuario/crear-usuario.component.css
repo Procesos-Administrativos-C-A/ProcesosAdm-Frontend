@@ -1,0 +1,5 @@
+.appearance-none::-webkit-inner-spin-button,
+.appearance-none::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
