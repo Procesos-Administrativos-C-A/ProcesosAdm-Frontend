@@ -34,6 +34,14 @@ export const routes: Routes = [
         
     },
     {
+        path: 'Admin',
+        canActivate: [
+           // AuthenticationTalentoHumanoGuard
+        ],
+        loadChildren: () => import('./pages/administrador/administrador.routes').then(m => m.OMRoutes)
+        
+    },
+    {
         path: '**',
         component: NavbarComponent
     }
