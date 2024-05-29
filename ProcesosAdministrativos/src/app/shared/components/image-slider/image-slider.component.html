@@ -1,0 +1,27 @@
+<div class="relative w-full h-80 overflow-hidden mt-4">
+    <div class="absolute inset-0 flex transition-transform duration-500"
+        [style.transform]="'translateX(-' + currentIndex * 100 + '%)'">
+        <div class="w-full flex-shrink-0" *ngFor="let image of images">
+            <img [src]="image" alt="Image" class="w-full h-full object-cover object-center">
+        </div>
+    </div>
+    <div class="absolute bottom-4 left-0 right-0 flex justify-center space-x-2">
+        <button *ngFor="let image of images; let i = index" (click)="goToSlide(i)" class="w-4 h-4 rounded-full"
+            [ngClass]="currentIndex === i ? 'bg-white' : 'bg-gray-400'">
+        </button>
+    </div>
+    <button (click)="prevSlide()"
+        class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white p-3 rounded-full shadow-lg hover:bg-gray-200">
+        <svg class="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+    </button>
+    <button (click)="nextSlide()"
+        class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white p-3 rounded-full shadow-lg hover:bg-gray-200">
+        <svg class="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+    </button>
+</div>
