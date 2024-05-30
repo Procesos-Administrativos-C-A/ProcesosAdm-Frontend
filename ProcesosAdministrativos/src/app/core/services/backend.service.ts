@@ -144,6 +144,23 @@ export class BackendService {
         })
       );
   }
+  
+  // Cambiar
+  getEmpleadosContratoVencido(): Observable<Empleado[]> {
+    const url = `${this.apiUrl}/empleados/contrato-vencido`;
+    return this.http.get<Empleado[]>(url);
+  }
+  //Cambiar
+  generarPdfEmpleado(cedula: string): Observable<{ blob: Blob, fileName: string }> {
+    const url = `${this.apiUrl}/empleados/generar-pdf/${cedula}`;
+    return this.http.get(url, { responseType: 'blob' })
+      .pipe(
+        map((blob: Blob) => {
+          const fileName = `empleado_${cedula}.pdf`;
+          return { blob, fileName };
+        })
+      );
+  }
 
 }
 

@@ -1,5 +1,7 @@
 export interface Empleado{
     nombre: string,
     apellidos?: string,
-    cedula: number
+    cedula: number,
+    mail?: string,
+    fechaFinContrato?: Date
 }
