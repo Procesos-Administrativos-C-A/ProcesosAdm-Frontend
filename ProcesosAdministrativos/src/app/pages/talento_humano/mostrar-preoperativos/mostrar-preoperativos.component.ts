@@ -78,26 +78,6 @@ export class MostrarPreoperativosComponent implements OnInit {
   }
 
 
-  // Define métodos para manejar dropdowns
-  dropdown_preoperativos = signal(false);
-  dropdown_tramites = signal(false);
-  dropdown_solicitudes = signal(false);
-
-  // Método para dropdown de preoperativos
-  dropDownPre(): void {
-    this.dropdown_preoperativos.set(!this.dropdown_preoperativos());
-  }
-
-  // Método para dropdown de tramites
-  dropDownTram(): void {
-    this.dropdown_tramites.set(!this.dropdown_tramites());
-  }
-
-  // Método para dropdown de solicitudes
-  dropDownSoli(): void {
-    this.dropdown_solicitudes.set(!this.dropdown_solicitudes());
-  }
-
   // Define métodos para procesar datos recibidos del backend
   procesarDatosBackend(data: any) {
     // Procesa los datos recibidos del backend y actualiza la lista de preoperativos

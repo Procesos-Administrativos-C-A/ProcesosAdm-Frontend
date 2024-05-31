@@ -7,7 +7,7 @@
             <img src="../../../assets/logo_cable_aereo_color_dos.png" alt="Logo" class="bg-contain h-[4rem] object-cover">
         </div>
       
-        <div class="nav-links sm:block telefono:hidden" *ngIf="rol === '2'; else menu_operador">
+        <div class="nav-links sm:block telefono:hidden" *ngIf="(rol!) <= 2 || rol! > 6; else menu_operador">
             <ul class="flex items-center ">
                 <li class="ml-12 mr-5 ">
                     <a href="#" class="hover:scale-110 hover:bg-gradient-to-b from-Secundario hover:rounded-t-md h-12 w-32 flex items-center justify-center">
@@ -45,12 +45,8 @@
                      (mouseleave)="dropDownTram()" (mouseenter)="dropDownTram(true)" *ngIf="dropdown_tramites()"  >
                         <div class="mt-2 divide-y divide-gray-400/20  rounded-md bg-white shadow-lg shadow-gray-400 " >
                         <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                        <a href="#" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white">
-                            Solicitar Vacaciones</a>
                         <a href="/Solicitudes/Certificado" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white">
                             Solicitar Certificado Laboral</a>
-                        <a href="#" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white">
-                            Retiro de Cesantías</a>
                         </div>
                     </div>
                 </li>
@@ -65,12 +61,8 @@
                       (mouseleave)="dropDownSolic()" (mouseenter)="dropDownSolic(true)" (mouseleave)="dropDownSolic()" *ngIf="dropdown_solicitudes()">
                       <div class="mt-2 divide-y divide-gray-400/20  rounded-md bg-white shadow-lg shadow-gray-400 " >
                         <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                        <a href="#" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white">
-                          Solicitudes de Vacaciones</a>
-                        <a href="/Solicitudes/Certificado" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white">
-                          Solicitudes de Certificados</a>
-                        <a href="#" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white">
-                          Solicitudes de Cesantías</a>
+                        <a href="/Reportes/Contrato" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white">
+                          Terminacion de Contrato</a>
                       </div>
                     </div>
                   </li>
@@ -116,9 +108,7 @@
                         (mouseleave)="dropDownTram()" (mouseenter)="dropDownTram(true)" *ngIf="dropdown_tramites()"  >
                             <div class="mt-2 divide-y divide-gray-400/20  rounded-md bg-white shadow-lg shadow-gray-400 " >
                             <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                            <a href="#" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white" >Solicitar Vacaciones</a>
-                            <a href="#" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white"  >Generar Certificado</a>
-                            <a href="#" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white" >Retiro de Cesantías</a>
+                            <a href="/Solicitudes/Certificado" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white"  >Generar Certificado</a>
                             </div>
                         </div>
                     </li>
