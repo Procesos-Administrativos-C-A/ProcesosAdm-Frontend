@@ -12,7 +12,7 @@ import { faBars, faAngleUp, faAngleDown, faHouse, faBoxArchive} from '@fortaweso
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
-  @Input() rol: string | undefined;
+  @Input() rol: number | undefined;
 
   faCircleXmark = faCircleXmark;
   faCircleUser = faCircleUser;

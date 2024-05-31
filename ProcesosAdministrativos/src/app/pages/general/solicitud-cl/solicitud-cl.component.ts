@@ -1,6 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { NavbarComponent } from "../../../shared/components/navbar/navbar.component";
 import { FormGroup, FormControl, Validators, ValidationErrors } from '@angular/forms';
+import { BackendService } from '../../../core/services/backend.service';
 
 @Component({
   selector: 'app-solicitud-cl',
@@ -10,7 +11,12 @@ import { FormGroup, FormControl, Validators, ValidationErrors } from '@angular/f
   styleUrl: './solicitud-cl.component.css'
 })
 export class SolicitudCLComponent {
+  rol = Number(localStorage.getItem('rol'))
   
+  
+  constructor(private backendService: BackendService) {
+    console.log(this.rol);
+  }
 
   // Función para validar que la cédula no sea negativa
   validarCedulaNoNegativa(control: FormControl): ValidationErrors | null {
@@ -32,11 +38,32 @@ export class SolicitudCLComponent {
     return fechaIngreso > fechaActual ? { fechaIngresoInvalida: true } : null;
   }
 
-  // Formulario actualizado con validaciones adicionales
+  /*/ Formulario actualizado con validaciones adicionales
   solicitudForm = signal(new FormGroup({
     nombre: new FormControl('', [Validators.required, this.validarSinSimbolos]),
     cedula: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/), this.validarCedulaNoNegativa, this.validarSinSimbolos]),
     cargo: new FormControl('', Validators.required),
     fechaIngreso: new FormControl('', [Validators.required, this.validarFechaIngresoAnterior])
   }));
+  */
+
+  generarPDF() {
+   
+    this.backendService.generarPDFCertificado(localStorage.getItem('cedula')!)
+      .subscribe({
+        next: ({ blob, fileName }) => {
+          // Descargar el archivo directamente
+          const anclaDescarga = document.createElement('a');
+          anclaDescarga.href = window.URL.createObjectURL(blob);
+          anclaDescarga.download = fileName;
+          anclaDescarga.click();
+        },
+        error: (error) => {
+          console.error('Error al generar el PDF:', error);
+        }
+      });
+  }
+
+
+
 }
