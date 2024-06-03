@@ -64,6 +64,13 @@ export class BackendService {
     return this.http.get<any>(url);
   }
 
+  // Método para obtener un registro de preoperativo por su ID junto con sus empleados preoperativos
+  getUltimoPreoperativo(cedula: number): Observable<any> {
+    const url = `${this.apiUrl}/preoperativos/ultimo_preoperativo/${cedula}`;
+    return this.http.get<any>(url);
+  }
+
+
   // Método para actualizar un registro de preoperativo por su ID junto con sus empleados preoperativos
   actualizarPreoperativo(id: number, preoperativo: Preoperativo, empleadosPreoperativos: Array<EmpleadosPreoperativo>): Observable<Preoperativo> {
     const url = `${this.apiUrl}/preoperativos/putPreoperativos/${id}`;
