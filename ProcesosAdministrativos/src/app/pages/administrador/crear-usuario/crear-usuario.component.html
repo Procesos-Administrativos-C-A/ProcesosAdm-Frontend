@@ -26,26 +26,35 @@
                     <label for="rol" class="w-1/6 mr-20   text-sm font-medium leading-6 text-gray-900">Rol :</label>
                     <select name="rol"  id="rol" class="h-12 sm:w-3/4 telefono:w-11/12  mx-auto mt-2  border-2 text-xl border-gray-300 rounded-md focus:outline-none focus:ring-0 focus:border-4 focus:border-Secundario "
                     formControlName="rol">
-                        <option value="Administrador">Administrador</option>
-                        <option value="Lector">Lector </option>
-                        <option value="Ingeniero de Mantenimiento">Ingeniero de Mantenimiento</option>
-                        <option value="Operador">Operador</option>
-                        <option value="Tecnico de Mantenimeinto">Técnico de Mantenimeinto</option>
-                        <option value="Auxiliar">Auxiliar</option>
-                        <option value="Oficina">Oficina</option>
+                        <option value="0">Administrador</option>
+                        <option value="1">Lector </option>
+                        <option value="2">Ingeniero de Mantenimiento</option>
+                        <option value="3">Operador</option>
+                        <option value="4">Técnico de Mantenimiento</option>
+                        <option value="5">Auxiliar</option>
+                        <option value="6">Oficina</option>
                     </select>
                     
                 </div >
     
                 <div class=" w-1/3">
                     <label for="cargo" class="w-1/6 mr-20  text-sm font-medium leading-6 text-gray-900">Cargo :</label>
-                    <select name="rol"  id="rol" class="h-12 sm:w-3/4 telefono:w-11/12  mx-auto mt-2  border-2 text-xl border-gray-300 rounded-md focus:outline-none focus:ring-0 focus:border-4 focus:border-Secundario "
-                    formControlName="rol">
-                        <option value="Administrador">Ingeniero Mantenimeinto</option>
-                        <option value="Operador">Taquilla</option>
-                        <option value="Recursos Humanos">Ingeniero de Sistemas</option>
+                    <select name="cargo"  id="cargo" class="h-12 sm:w-3/4 telefono:w-11/12  mx-auto mt-2  border-2 text-xl border-gray-300 rounded-md focus:outline-none focus:ring-0 focus:border-4 focus:border-Secundario "
+                    formControlName="cargo" (change)="actualizarCargo($event)">
+                        <option value="OPERADOR">Operador</option>
+                        <option value="AUXILIAR DE ABORDAJE Y TAQUILLA">Auxiliar de Abordaje y Taquilla</option>
+                        <option value="INGENIERO DE MANTENIMIENTO">Ingeniero de Mantenimiento</option>
+                        <option value="TECNICO DE MANTENIMIENTO">Técnico de Mantenimiento</option>
+                        <option value="Otro">Otro</option>
+                        
                     </select>
                 </div >
+
+                <div class=" w-1/3" *ngIf="otro_cargo()">
+                    <label for="rolEsp" class="w-1/6 mr-9  text-sm font-medium leading-6 text-gray-900">Cargo Especifico :</label>
+                    <input type="text" name="rolEsp" id="rolEsp" formControlName="rolEsp" class="h-12 sm:w-3/4 telefono:w-11/12  mx-auto mt-2  border-2 text-xl border-gray-300 rounded-md focus:outline-none focus:ring-0 focus:border-4 focus:border-Secundario ">
+                </div >
+                
             </div>
 
             <div class=" w-full flex justify-center mt-9">

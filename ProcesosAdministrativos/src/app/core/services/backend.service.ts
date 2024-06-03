@@ -5,6 +5,7 @@ import { Empleado } from '../models/empleados.model';
 import { Preoperativo } from '../models/preoperativo.model';
 import { EmpleadosPreoperativo } from '../models/empleados_preoperativo.model';
 import { environment } from '../../../environments/environment';
+import { Usuario } from '../models/usuario.model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,15 @@ export class BackendService {
       preoperativo,
       empleados_preoperativos: empleadosPreoperativos
     };
+
+    return this.http.post<any>(url, body);
+  }
+
+  // Método para crear un nuevo preoperativo junto con sus empleados preoperativos
+  crearEmpleado(empleado: Usuario): Observable<any> {
+    const url = `${this.apiUrl}/login/CrearEmpleado/`;
+    const body = empleado
+    
 
     return this.http.post<any>(url, body);
   }
