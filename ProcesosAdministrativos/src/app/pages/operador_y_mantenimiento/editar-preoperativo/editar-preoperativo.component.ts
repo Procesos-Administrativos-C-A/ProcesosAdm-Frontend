@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, signal } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { Preoperativo } from '../../../core/models/preoperativo.model';
 import { BackendService } from '../../../core/services/backend.service';
-import { Empleado } from '../../../core/models/empleados.model';
-import { environment } from '../../../../environments/environment';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faCirclePlus, faTrashCan, faCalendarDays  } from '@fortawesome/free-solid-svg-icons';
 import { EmpleadosPreoperativo } from '../../../core/models/empleados_preoperativo.model';
 import Swal from 'sweetalert2';
 import { NavbarComponent } from "../../../shared/components/navbar/navbar.component";
+
 
 @Component({
     selector: 'app-editar-preoperativo',
@@ -32,6 +32,9 @@ export class EditarPreoperativoComponent implements OnInit {
 
   preoperativoBd: any = {};
   
+  faCirclePlus = faCirclePlus;
+  faTrashCan = faTrashCan;
+  faCalendarDays = faCalendarDays;
 
   constructor(private fb: FormBuilder , private backendService: BackendService) {}
 
@@ -84,7 +87,7 @@ export class EditarPreoperativoComponent implements OnInit {
     if(this.preoperativoBd){
       this.preoperativoForm = new FormGroup({
         lugar: new FormControl(this.preoperativoBd.preoperativo.lugar,[Validators.required, Validators.nullValidator]) ,
-        fecha: new FormControl(this.preoperativoBd.preoperativo.fecha, [Validators.required]),
+        fecha: new FormControl({value: this.preoperativoBd.preoperativo.fecha,disabled: true},[Validators.required]),
         turno: new FormControl(this.preoperativoBd.preoperativo.turno,[Validators.required, Validators.nullValidator]),
         festivo: new FormControl(Boolean(this.preoperativoBd.preoperativo.festivo)),
         extra: new FormControl(Boolean(this.preoperativoBd.preoperativo.horas_extra)),
@@ -192,19 +195,6 @@ export class EditarPreoperativoComponent implements OnInit {
       );
     
   }
-  
-  dropdown_preoperativos = signal(false);
-  dropdown_tramites = signal(false);
-  
-
-  dropDownPre(): void {
-    this.dropdown_preoperativos.set(!this.dropdown_preoperativos()) ;
-  }
-
-  dropDownTram(): void {
-    this.dropdown_tramites.set(!this.dropdown_tramites()) ;
-  }
-
 
 
 
@@ -336,11 +326,6 @@ export class EditarPreoperativoComponent implements OnInit {
       })
       
     });
-
-    console.log(preoperativo)
-    console.log(empleados_preoperativo)
-    console.log(this.preoperativoForm.valid)
-    console.log(this.preoperativoForm.value)
 
     this.guardarRegistroPreoperativo(preoperativo  , empleados_preoperativo)
 

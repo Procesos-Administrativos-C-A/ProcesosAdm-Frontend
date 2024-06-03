@@ -7,8 +7,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { BackendService } from '../../../core/services/backend.service';
 import { environment } from '../../../../environments/environment';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faCircleUser, faCircleXmark  } from '@fortawesome/free-regular-svg-icons';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faCirclePlus, faTrashCan, faCalendarDays  } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
 import { NavbarComponent } from "../../../shared/components/navbar/navbar.component";
 
@@ -25,7 +24,7 @@ export class PreoperativosComponent implements OnInit {
  
   preoperativoForm: FormGroup = new FormGroup({
     lugar: new FormControl("",[Validators.required, Validators.nullValidator]) ,
-    fecha: new FormControl(new Date().toISOString().substring(0, 10), [Validators.required]),
+    fecha: new FormControl({ value: new Date().toISOString().substring(0, 10), disabled: true }, Validators.required),
     turno: new FormControl("",[Validators.required, Validators.nullValidator]),
     festivo: new FormControl(false),
     extra: new FormControl(false),
@@ -35,6 +34,10 @@ export class PreoperativosComponent implements OnInit {
   fecha_hoy = '';
 
   empleados: any =  {};
+
+  faCirclePlus = faCirclePlus;
+  faTrashCan = faTrashCan;
+  faCalendarDays = faCalendarDays;
 
   constructor(private fb: FormBuilder , private backendService: BackendService) {}
 
