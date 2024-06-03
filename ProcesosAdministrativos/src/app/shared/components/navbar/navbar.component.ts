@@ -110,6 +110,11 @@ export class NavbarComponent {
     }
   }
 
+
+  cerrarSesion():void {
+    localStorage.clear()
+  }
+
 }
 
 
