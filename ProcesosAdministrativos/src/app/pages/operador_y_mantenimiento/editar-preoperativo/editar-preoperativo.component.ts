@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, numberAttribute, signal } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Preoperativo } from '../../../core/models/preoperativo.model';
 import { BackendService } from '../../../core/services/backend.service';
@@ -31,6 +31,8 @@ export class EditarPreoperativoComponent implements OnInit {
   empleados: any =  {};
 
   preoperativoBd: any = {};
+
+  idPreoperativo: number = -1;
   
   faCirclePlus = faCirclePlus;
   faTrashCan = faTrashCan;
@@ -39,10 +41,10 @@ export class EditarPreoperativoComponent implements OnInit {
   constructor(private fb: FormBuilder , private backendService: BackendService) {}
 
   ngOnInit(): void {
-    const numero_registro = parseInt(localStorage.getItem('ultimo_registro') ?? '-1')
-    console.log(numero_registro)
-    this.backendService.getPreoperativoPorId(numero_registro)
-      .subscribe({
+
+      const cedula = localStorage.getItem("cedula") || '0'
+      this.backendService.getUltimoPreoperativo( parseInt(cedula) )
+        .subscribe({
         next: (preoperativo) => {
           const preoperative : Preoperativo = {
             fecha: preoperativo.fecha,
@@ -51,6 +53,8 @@ export class EditarPreoperativoComponent implements OnInit {
             lugar: preoperativo.lugar,
             festivo: preoperativo.festivo,
           }
+          this.idPreoperativo = preoperativo.id
+          console.log(preoperativo)
           this.preoperativoBd['preoperativo'] = preoperativo;
           this.asignarPreoperativo();
           this.asignarEmpleados();
@@ -66,8 +70,10 @@ export class EditarPreoperativoComponent implements OnInit {
           }).then((result) => {
             window.history.back();
           });
+          
         }
       });
+      
       
     
   }
@@ -97,6 +103,7 @@ export class EditarPreoperativoComponent implements OnInit {
       });
     }
 
+    
   }
 
   asignarEmpleados(){
