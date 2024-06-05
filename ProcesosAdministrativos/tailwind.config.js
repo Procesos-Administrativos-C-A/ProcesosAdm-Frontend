@@ -14,6 +14,7 @@ module.exports = {
         'TextoBlanco' : '#ffffff'
       },
       screens: {
+        'lg':'1023px',
         'tablet' : '769px',
         'telefono' : '320px'
       }
