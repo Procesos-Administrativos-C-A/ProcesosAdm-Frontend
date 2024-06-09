@@ -31,6 +31,8 @@ export class PreoperativosComponent implements OnInit {
     estaciones: new FormArray([])
   });
 
+  rol = Number(localStorage.getItem('rol'))
+
   fecha_hoy = '';
 
   empleados: any =  {};

@@ -1,4 +1,4 @@
-<app-navbar [rol]="2"></app-navbar>
+<app-navbar [rol]="this.rol"></app-navbar>
 
 <main class=" w-screen pb-14 relative min-h-[760px] overscroll-contain overflow-y-auto "> 
     <div class=" w-10/12 mx-auto my-14 rounded-md flex flex-col items-center justify-start border border-spacing-7 shadow-inner shadow-TextoGris/45 border-black bg-white ">
@@ -26,13 +26,13 @@
                     <label for="rol" class="w-1/6 mr-20   text-sm font-medium leading-6 text-gray-900">Rol :</label>
                     <select name="rol"  id="rol" class="h-12 sm:w-3/4 telefono:w-11/12  mx-auto mt-2  border-2 text-xl border-gray-300 rounded-md focus:outline-none focus:ring-0 focus:border-4 focus:border-Secundario "
                     formControlName="rol">
-                        <option value="0">Administrador</option>
-                        <option value="1">Lector </option>
-                        <option value="2">Ingeniero de Mantenimiento</option>
-                        <option value="3">Operador</option>
-                        <option value="4">Técnico de Mantenimiento</option>
-                        <option value="5">Auxiliar</option>
-                        <option value="6">Oficina</option>
+                        <option value="1">Administrador</option>
+                        <option value="2">Lector </option>
+                        <option value="3">Ingeniero de Mantenimiento</option>
+                        <option value="4">Operador</option>
+                        <option value="5">Técnico de Mantenimiento</option>
+                        <option value="6">Auxiliar</option>
+                        <option value="7">Oficina</option>
                     </select>
                     
                 </div >

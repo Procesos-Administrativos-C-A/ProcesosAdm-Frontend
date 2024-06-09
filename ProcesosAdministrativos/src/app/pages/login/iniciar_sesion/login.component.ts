@@ -57,11 +57,9 @@ export class LoginComponent {
           localStorage.setItem('cedula',credenciales.cedula)
           localStorage.setItem('rol',credenciales.rol)
           console.log(localStorage)
-          if(credenciales.rol >= 3 &&credenciales.rol <= 6 ){
-            this.router.navigate(['/Preoperativos']);
-          }else{
-            this.router.navigate(['/Reportes']);
-          }
+          
+          this.router.navigate(['/Home']);
+          
           this.icono_carga.set(false);
         },
         error: (error) => {

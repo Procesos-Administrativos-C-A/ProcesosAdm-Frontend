@@ -20,6 +20,8 @@ import { NavbarComponent } from "../../../shared/components/navbar/navbar.compon
 export class MostrarPreoperativosComponent implements OnInit {
   preoperativos: Preoperativo[] = [];
 
+  rol = Number(localStorage.getItem('rol'))
+
   empleadosPreoperativo: EmpleadosPreoperativo[] = [];
 
   preoperativoSeleccionado: Preoperativo | null = null;

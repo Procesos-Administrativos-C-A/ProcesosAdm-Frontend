@@ -20,8 +20,10 @@ export class ReporteConsolidadoComponent {
   empleados : Array<any> =[];
   stackedBarChart: any;
   pieChart: any;
-  fecha_inicio: string = '2024-04-19';
-  fecha_fin: string = '2024-05-20';
+  fecha_inicio: string = '2024-05-19';
+  fecha_fin: string = '2024-06-20';
+
+  rol = Number(localStorage.getItem('rol'))
 
   constructor( private backendService: BackendService) {}
 

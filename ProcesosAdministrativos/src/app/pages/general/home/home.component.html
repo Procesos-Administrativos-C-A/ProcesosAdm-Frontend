@@ -2,9 +2,9 @@
 
 <app-image-slider></app-image-slider>
 
-<main class="w-screen pb-14 relative min-h-[760px] overscroll-contain overflow-y-auto mt-12">
-    <div class="flex flex-col justify-between m-auto w-10/12 gap-4">
-        <div class="w-full rounded-md shadow-md shadow-TextoGris/45 bg-white flex">
+<main class="w-screen pb-14 relative min-h-[760px] overscroll-contain overflow-y-auto mt-12" >
+    <div class="flex flex-col justify-between m-auto w-10/12 gap-4" >
+        <div class="w-full rounded-md shadow-md shadow-TextoGris/45 bg-white flex" *ngIf="this.rol! < 6 && this.rol! != 2 ">
             <img src="assets/Imagenes/Home1.jpg" alt="Descripción de la imagen"
                 class="w-1/2 object-contain rounded-l-md" />
             <div class="w-1/2 p-4 flex flex-col justify-center">
@@ -21,7 +21,7 @@
                     empleados pueden descargarse en formato PDF.</p>
             </div>
         </div>
-        <div class="w-full rounded-md shadow-md shadow-TextoGris/45 bg-white flex">
+        <div class="w-full rounded-md shadow-md shadow-TextoGris/45 bg-white flex" >
             <img src="assets/Imagenes/Home2.JPG" alt="Descripción de la imagen"
                 class="w-1/2 object-contain rounded-l-md" />
             <div class="w-1/2 p-4 flex flex-col justify-center">
@@ -31,7 +31,7 @@
                     el certificado.</p>
             </div>
         </div>
-        <div class="w-full rounded-md shadow-md shadow-TextoGris/45 bg-white flex">
+        <div class="w-full rounded-md shadow-md shadow-TextoGris/45 bg-white flex" *ngIf=" this.rol! <3 ">
             <img src="assets/Imagenes/Home3.jpg" alt="Descripción de la imagen"
                 class="w-1/2 object-contain rounded-l-md" />
             <div class="w-1/2 p-4 flex flex-col justify-center">

@@ -28,6 +28,8 @@ export class EditarPreoperativoComponent implements OnInit {
     estaciones: new FormArray([])
   });
 
+  rol = Number(localStorage.getItem('rol'))
+
   empleados: any =  {};
 
   preoperativoBd: any = {};
