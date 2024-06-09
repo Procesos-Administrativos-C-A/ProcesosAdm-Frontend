@@ -28,6 +28,8 @@ export class CrearUsuarioComponent implements OnInit {
     contrasena: new FormControl("",[Validators.required,Validators.nullValidator]),
   });
 
+  rol = Number(localStorage.getItem('rol'))
+
   otro_cargo = signal(false);
 
   constructor( private backendService: BackendService) {}
@@ -85,8 +87,8 @@ export class CrearUsuarioComponent implements OnInit {
       cedula: this.ususarioForm.get("cedula")?.value,
       nombre: this.ususarioForm.get("nombre")?.value.toUpperCase(),
       apellidos: this.ususarioForm.get("apellido")?.value.toUpperCase(),
-      rol: this.otro_cargo() ?  this.ususarioForm.get("rolEsp")?.value :this.ususarioForm.get("rol")?.value,
-      cargo: this.ususarioForm.get("cargo")?.value,
+      rol: Number(this.ususarioForm.get("rol")?.value),
+      cargo: this.otro_cargo() ?  this.ususarioForm.get("rolEsp")?.value :this.ususarioForm.get("cargo")?.value,
       email: this.ususarioForm.get("email")?.value,
       contraseña:this.ususarioForm.get("contrasena")?.value,
     }

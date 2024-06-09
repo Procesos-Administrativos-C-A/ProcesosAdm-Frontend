@@ -7,7 +7,7 @@
             <img src="../../../assets/logo_cable_aereo_color_dos.png" alt="Logo" class="bg-contain h-[4rem] object-cover">
         </div>
       
-        <div class="nav-links sm:block telefono:hidden" *ngIf="(rol!) <= 2 || rol! > 6; else menu_operador">
+        <div class="nav-links sm:block telefono:hidden" *ngIf="rol! <= 2 ; else menu_operador">
             <ul class="flex items-center ">
                 <li class="ml-12 mr-5 ">
                     <a href="Home" class="hover:scale-110 hover:bg-gradient-to-b from-Secundario hover:rounded-t-md h-12 w-32 flex items-center justify-center">
@@ -25,6 +25,10 @@
                     <div id="PreoperativosMenu" class="animate-flip-down absolute w-56 z-10 focus:outline-none" (mouseleave)="dropDownPre()" (mouseenter)="dropDownPre(true)" *ngIf="dropdown_preoperativos()" >
                         <div class=" mt-2 divide-y divide-gray-400/20 bg-white shadow-lg shadow-gray-400 rounded-md" role="none">
                         <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+                        <a href="/Preoperativos"  *ngIf="rol! == 1" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white" role="menuitem" tabindex="-1" >
+                            Crear Preoperativo</a>
+                        <a href="/Preoperativos/Editar"  *ngIf="rol! == 1" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white" role="menuitem" tabindex="-1" >
+                            Editar ultimo registro</a>
                         <a href="/Reportes" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white" role="menuitem" tabindex="-1" >
                             Lista de Preoperativos</a>
                         <a href="/Reportes/Consolidado" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white" role="menuitem" tabindex="-1" >
@@ -65,11 +69,27 @@
                           Terminacion de Contrato</a>
                       </div>
                     </div>
-                  </li>
+                </li>
+                <li class="mx-5"  *ngIf="rol! == 1">
+                    <button type="button" [class]=" dropdown_usuarios_desplegado() ? 'scale-110 flex items-center justify-center bg-gradient-to-b from-Secundario rounded-t-md h-12 w-44 ' :  'flex items-center justify-center bg-transparent  rounded-md h-12 w-44 '"
+                    (click)="dropDownUsuarios(true)" (mouseenter)="dropDownUsuarios(true)" (mouseleave)="dropDownUsuarios()">
+                        <fa-icon [icon]="faUsers" class="text-white text-2xl mr-2"></fa-icon>
+                        Usuarios
+                        <fa-icon [icon]="dropdown_usuarios_desplegado()? faAngleUp : faAngleDown" [class]=" dropdown_usuarios_desplegado()? 'text-white text-1xl ml-6':'text-Secundario text-1xl ml-6' "></fa-icon>
+                    </button>
+                    <div class="animate-flip-down absolute w-56 z-10   focus:outline-none transition-all duration-500"
+                      (mouseleave)="dropDownUsuarios()" (mouseenter)="dropDownUsuarios(true)" (mouseleave)="dropDownUsuarios()" *ngIf="dropdown_usuarios()">
+                      <div class="mt-2 divide-y divide-gray-400/20  rounded-md bg-white shadow-lg shadow-gray-400 " >
+                        <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+                        <a href="/Admin/CrearUsuario" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white">
+                          Crear Usuario </a>
+                      </div>
+                    </div>
+                </li>
             </ul>
         </div>
         <ng-template #menu_operador >
-            <div class="nav-links sm:block telefono:hidden ">
+            <div class="nav-links sm:block telefono:hidden" *ngIf="rol! < 6; else menu_general">
                 <ul class="flex items-center">
                     <li class="ml-12 mr-5 ">
                         <a href="/Home" class="hover:scale-110 hover:bg-gradient-to-b from-Secundario hover:rounded-t-md h-12 w-32 flex items-center justify-center">
@@ -95,6 +115,36 @@
                             </div>
                         </div> 
                            
+                    </li>
+                    <li class="mx-5">
+
+                        <button type="button" [class]=" dropdown_tram_desplegado() ? 'scale-110 flex items-center justify-center bg-gradient-to-b from-Secundario rounded-t-md h-12 w-40 ' :  'flex items-center justify-center bg-transparent  rounded-md h-12 w-40 '" 
+                        (click)="dropDownTram(true)" (mouseenter)="dropDownTram(true)" (mouseleave)="dropDownTram()">
+                            <fa-icon [icon]="faFileLines" class="text-white text-2xl mr-2"></fa-icon>
+                            Trámites
+                            <fa-icon [icon]="dropdown_tram_desplegado()? faAngleUp : faAngleDown" [class]=" dropdown_tram_desplegado()? 'text-white text-1xl ml-6':'text-Secundario text-1xl ml-6' "></fa-icon>
+                        </button> 
+                        <div class="animate-flip-down absolute w-56 z-10   focus:outline-none transition-all duration-500"
+                        (mouseleave)="dropDownTram()" (mouseenter)="dropDownTram(true)" *ngIf="dropdown_tramites()"  >
+                            <div class="mt-2 divide-y divide-gray-400/20  rounded-md bg-white shadow-lg shadow-gray-400 " >
+                            <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+                            <a href="/Solicitudes/Certificado" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white"  >Generar Certificado</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </ng-template>
+
+
+        <ng-template #menu_general >
+            <div class="nav-links sm:block telefono:hidden">
+                <ul class="flex items-center">
+                    <li class="ml-12 mr-5 ">
+                        <a href="/Home" class="hover:scale-110 hover:bg-gradient-to-b from-Secundario hover:rounded-t-md h-12 w-32 flex items-center justify-center">
+                            <fa-icon [icon]="faHouse" class="text-white text-2xl mr-2"></fa-icon>
+                            Inicio
+                        </a>
                     </li>
                     <li class="mx-5">
 

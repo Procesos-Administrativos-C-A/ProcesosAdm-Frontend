@@ -21,6 +21,8 @@ interface Empleado {
 export class TerminacionContratoComponent implements OnInit {
   empleadosContratoVencido: Empleado[] = [];
 
+  rol = Number(localStorage.getItem('rol'))
+
   constructor() { }
 
   ngOnInit() {

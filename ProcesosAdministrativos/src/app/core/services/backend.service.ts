@@ -28,7 +28,7 @@ export class BackendService {
 
   // Método para crear un nuevo preoperativo junto con sus empleados preoperativos
   crearEmpleado(empleado: Usuario): Observable<any> {
-    const url = `${this.apiUrl}/login/CrearEmpleado/`;
+    const url = `${this.apiUrl}/login/CrearEmpleado`;
     const body = empleado
     
 

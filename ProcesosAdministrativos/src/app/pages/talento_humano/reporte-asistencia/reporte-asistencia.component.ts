@@ -36,6 +36,7 @@ export class ReporteAsistenciaComponent {
     ])
   }, [CustomValidators.fechaFinalMenorQueInicial]);
 
+  rol = Number(localStorage.getItem('rol'))
 
   empleados: any = {};
 

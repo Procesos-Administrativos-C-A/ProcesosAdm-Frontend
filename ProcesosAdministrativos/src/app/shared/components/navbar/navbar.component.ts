@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, signal } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCircleUser, faCircleXmark ,faPenToSquare, faFileLines  } from '@fortawesome/free-regular-svg-icons';
-import { faBars, faAngleUp, faAngleDown, faHouse, faBoxArchive} from '@fortawesome/free-solid-svg-icons';
+import { faBars, faAngleUp, faAngleDown, faHouse, faBoxArchive, faUsers} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-navbar',
@@ -26,6 +26,7 @@ export class NavbarComponent {
   faPenToSquare = faPenToSquare;
   faFileLines = faFileLines;
   faBoxArchive = faBoxArchive;
+  faUsers = faUsers;
 
   dropdown_preoperativos = signal(false);
   dropdown_preop_desplegado = signal(false);
@@ -36,6 +37,8 @@ export class NavbarComponent {
   dropdown_menu = signal(false);
   dropdown_user= signal(false);
   dropdown_user_desplegado= signal(false);
+  dropdown_usuarios= signal(false);
+  dropdown_usuarios_desplegado= signal(false);
   
 
   dropDownPre(desplegado: boolean = false): void {
@@ -107,6 +110,22 @@ export class NavbarComponent {
       }, 100);
     }else{
       this.dropdown_user.set(true);
+    }
+  }
+
+  dropDownUsuarios(desplegado : boolean = false): void {
+    this.dropdown_usuarios_desplegado.set(desplegado);
+    if (this.dropdown_usuarios()){
+      if(desplegado){
+        return
+      }
+      setTimeout(() => {
+        if(!this.dropdown_usuarios_desplegado()){
+          this.dropdown_usuarios.set(false);
+        } 
+      }, 100);
+    }else{
+      this.dropdown_usuarios.set(true);
     }
   }
 
