@@ -11,5 +11,6 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
+  // Obtiene el rol del usuario desde el local storage y lo convierte a número
   rol = Number(localStorage.getItem('rol'))
  }

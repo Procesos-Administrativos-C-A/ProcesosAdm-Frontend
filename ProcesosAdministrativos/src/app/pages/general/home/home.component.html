@@ -1,45 +1,53 @@
+<!-- Componente de barra de navegación -->
 <app-navbar [rol]="this.rol"></app-navbar>
 
+<!-- Componente de carrusel de imágenes -->
 <app-image-slider></app-image-slider>
 
-<main class="w-screen pb-14 relative min-h-[760px] overscroll-contain overflow-y-auto mt-12" >
-    <div class="flex flex-col justify-between m-auto w-10/12 gap-4" >
+<!-- Contenedor principal -->
+<main class="w-screen pb-14 relative min-h-[760px] overscroll-contain overflow-y-auto mt-12">
+    <!-- Contenedor para los módulos, con un margen y una disposición en columnas -->
+    <div class="flex flex-col justify-between m-auto w-10/12 gap-4">
+        
+        <!-- Módulo de preoperativos, visible para roles menores a 6 y diferentes de 2 -->
         <div class="w-full rounded-md shadow-md shadow-TextoGris/45 bg-white flex" *ngIf="this.rol! < 6 && this.rol! != 2 ">
-            <img src="assets/Imagenes/Home1.jpg" alt="Descripción de la imagen"
-                class="w-1/2 object-contain rounded-l-md" />
+            <!-- Imagen representativa del módulo -->
+            <img src="assets/Imagenes/Home1.jpg" alt="Descripción de la imagen" class="w-1/2 object-contain rounded-l-md" />
+            <!-- Contenido del módulo -->
             <div class="w-1/2 p-4 flex flex-col justify-center">
                 <h2 class="text-xl font-semibold text-gray-900 mb-2">Preoperativos</h2>
                 <p class="text-gray-700 mb-2">En este módulo, podrás:</p>
                 <ul class="list-disc list-inside text-gray-700 mb-2">
-                    <li>Diligenciar y editar el último registro dentro de un plazo máximo de 8 horas desde su creación.
-                    </li>
+                    <li>Diligenciar y editar el último registro dentro de un plazo máximo de 8 horas desde su creación.</li>
                     <li>Listar todos los preoperativos.</li>
                     <li>Generar un reporte mensual.</li>
                     <li>Comparar datos de empleados.</li>
                 </ul>
-                <p class="text-gray-700">Listado de los preoperativos, los reportes mensuales y las comparativas de
-                    empleados pueden descargarse en formato PDF.</p>
+                <p class="text-gray-700">Listado de los preoperativos, los reportes mensuales y las comparativas de empleados pueden descargarse en formato PDF.</p>
             </div>
         </div>
-        <div class="w-full rounded-md shadow-md shadow-TextoGris/45 bg-white flex" >
-            <img src="assets/Imagenes/Home2.JPG" alt="Descripción de la imagen"
-                class="w-1/2 object-contain rounded-l-md" />
+
+        <!-- Módulo para solicitar certificados laborales, visible para todos los roles -->
+        <div class="w-full rounded-md shadow-md shadow-TextoGris/45 bg-white flex">
+            <!-- Imagen representativa del módulo -->
+            <img src="assets/Imagenes/Home2.JPG" alt="Descripción de la imagen" class="w-1/2 object-contain rounded-l-md" />
+            <!-- Contenido del módulo -->
             <div class="w-1/2 p-4 flex flex-col justify-center">
                 <h2 class="text-xl font-semibold text-gray-900 mb-2">Solicitar certificado laboral</h2>
-                <p class="text-gray-700">En este módulo, podrás solicitar certificados laborales de manera rápida y
-                    sencilla. La información se toma automáticamente del sistema y en unos segundos se genera un PDF con
-                    el certificado.</p>
+                <p class="text-gray-700">En este módulo, podrás solicitar certificados laborales de manera rápida y sencilla. La información se toma automáticamente del sistema y en unos segundos se genera un PDF con el certificado.</p>
             </div>
         </div>
-        <div class="w-full rounded-md shadow-md shadow-TextoGris/45 bg-white flex" *ngIf=" this.rol! <3 ">
-            <img src="assets/Imagenes/Home3.jpg" alt="Descripción de la imagen"
-                class="w-1/2 object-contain rounded-l-md" />
+
+        <!-- Módulo para empleados próximos a terminar contrato, visible para roles menores a 3 -->
+        <div class="w-full rounded-md shadow-md shadow-TextoGris/45 bg-white flex" *ngIf=" this.rol! < 3 ">
+            <!-- Imagen representativa del módulo -->
+            <img src="assets/Imagenes/Home3.jpg" alt="Descripción de la imagen" class="w-1/2 object-contain rounded-l-md" />
+            <!-- Contenido del módulo -->
             <div class="w-1/2 p-4 flex flex-col justify-center">
-                <h2 class="text-xl font-semibold text-gray-900 mb-2">Empleados proximos a terminar contrato</h2>
-                <p class="text-gray-700">En este módulo, se enumeran los empleados cuyos contratos están próximos a
-                    finalizar en dos meses. Se genera un PDF en pocos segundos, listo para darle el manejo
-                    correspondiente.</p>
+                <h2 class="text-xl font-semibold text-gray-900 mb-2">Empleados próximos a terminar contrato</h2>
+                <p class="text-gray-700">En este módulo, se enumeran los empleados cuyos contratos están próximos a finalizar en dos meses. Se genera un PDF en pocos segundos, listo para darle el manejo correspondiente.</p>
             </div>
         </div>
+
     </div>
 </main>

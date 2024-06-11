@@ -1,134 +1,127 @@
-<nav class="relative w-screen min-w-80 flex h-16 items-center justify-stretch bg-Primario text-white shadow-lg shadow-Primario" >
-    <div class="flex items-center sm:justify-start telefono:justify-between  telefono:w-full">
+<!-- Barra de navegación -->
+<nav class="relative w-screen min-w-80 flex h-16 items-center justify-stretch bg-Primario text-white shadow-lg shadow-Primario">
+
+    <!-- Contenedor de los elementos de navegación -->
+    <div class="flex items-center sm:justify-start telefono:justify-between telefono:w-full">
+
+        <!-- Icono de menú desplegable para dispositivos pequeños -->
         <div class="sm:hidden telefono:block">
-            <fa-icon [icon]="dropdown_menu() ? faCircleXmark : faBars" class="text-white text-2xl pl-3 cursor-pointer" (click)="dropDownMenu()" ></fa-icon>
+            <fa-icon [icon]="dropdown_menu() ? faCircleXmark : faBars" class="text-white text-2xl pl-3 cursor-pointer" (click)="dropDownMenu()"></fa-icon>
         </div>
+
+        <!-- Logo -->
         <div class="w-28 flex-shrink-0 sm:block telefono:relative telefono:left-5">
             <img src="../../../assets/logo_cable_aereo_color_dos.png" alt="Logo" class="bg-contain h-[4rem] object-cover">
         </div>
-      
-        <div class="nav-links sm:block telefono:hidden" *ngIf="rol! <= 2 ; else menu_operador">
-            <ul class="flex items-center ">
-                <li class="ml-12 mr-5 ">
+
+        <!-- Enlaces de navegación para roles administrativos (rol <= 2) -->
+        <div class="nav-links sm:block telefono:hidden" *ngIf="rol! <= 2; else menu_operador">
+            <ul class="flex items-center">
+                <li class="ml-12 mr-5">
                     <a href="Home" class="hover:scale-110 hover:bg-gradient-to-b from-Secundario hover:rounded-t-md h-12 w-32 flex items-center justify-center">
                         <fa-icon [icon]="faHouse" class="text-white text-2xl mr-2"></fa-icon>
                         Inicio
                     </a>
                 </li>
-                <li class=" mx-5" >
-                    <button type="button" [class]=" dropdown_preop_desplegado() ? 'scale-110 flex items-center justify-center  bg-gradient-to-b from-Secundario rounded-t-md h-12 w-48 ' :  ' flex items-center justify-center  rounded-md h-12 w-48'"
+                <li class="mx-5">
+                    <button type="button" [class]="dropdown_preop_desplegado() ? 'scale-110 flex items-center justify-center bg-gradient-to-b from-Secundario rounded-t-md h-12 w-48' : 'flex items-center justify-center rounded-md h-12 w-48'" 
                      (click)="dropDownPre(true)" (mouseenter)="dropDownPre(true)" (mouseleave)="dropDownPre()">
                         <fa-icon [icon]="faPenToSquare" class="text-white text-2xl mr-2"></fa-icon>
                         Preoperativos
-                        <fa-icon [icon]="dropdown_preop_desplegado()? faAngleUp : faAngleDown" [class]=" dropdown_preop_desplegado()? 'text-white text-1xl ml-6':'text-Secundario text-1xl ml-6' "></fa-icon>
-                    </button> 
-                    <div id="PreoperativosMenu" class="animate-flip-down absolute w-56 z-10 focus:outline-none" (mouseleave)="dropDownPre()" (mouseenter)="dropDownPre(true)" *ngIf="dropdown_preoperativos()" >
-                        <div class=" mt-2 divide-y divide-gray-400/20 bg-white shadow-lg shadow-gray-400 rounded-md" role="none">
-                        <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                        <a href="/Preoperativos"  *ngIf="rol! == 1" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white" role="menuitem" tabindex="-1" >
-                            Crear Preoperativo</a>
-                        <a href="/Preoperativos/Editar"  *ngIf="rol! == 1" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white" role="menuitem" tabindex="-1" >
-                            Editar ultimo registro</a>
-                        <a href="/Reportes" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white" role="menuitem" tabindex="-1" >
-                            Lista de Preoperativos</a>
-                        <a href="/Reportes/Consolidado" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white" role="menuitem" tabindex="-1" >
-                            Reporte por Mes</a>
-                        <a href="/Reportes/Asistencia" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white" role="menuitem" tabindex="-1" >
-                            Reporte por Empleado</a>
+                        <fa-icon [icon]="dropdown_preop_desplegado() ? faAngleUp : faAngleDown" [class]="dropdown_preop_desplegado() ? 'text-white text-1xl ml-6' : 'text-Secundario text-1xl ml-6'"></fa-icon>
+                    </button>
+                    <!-- Menú desplegable de preoperativos -->
+                    <div id="PreoperativosMenu" class="animate-flip-down absolute w-56 z-10 focus:outline-none" (mouseleave)="dropDownPre()" (mouseenter)="dropDownPre(true)" *ngIf="dropdown_preoperativos()">
+                        <div class="mt-2 divide-y divide-gray-400/20 bg-white shadow-lg shadow-gray-400 rounded-md" role="none">
+                            <a href="/Preoperativos" *ngIf="rol! == 1" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white" role="menuitem" tabindex="-1">Crear Preoperativo</a>
+                            <a href="/Preoperativos/Editar" *ngIf="rol! == 1" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white" role="menuitem" tabindex="-1">Editar ultimo registro</a>
+                            <a href="/Reportes" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white" role="menuitem" tabindex="-1">Lista de Preoperativos</a>
+                            <a href="/Reportes/Consolidado" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white" role="menuitem" tabindex="-1">Reporte por Mes</a>
+                            <a href="/Reportes/Asistencia" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white" role="menuitem" tabindex="-1">Reporte por Empleado</a>
                         </div>
-                    </div>    
+                    </div>
                 </li>
                 <li class="mx-5">
-                    <button type="button" [class]=" dropdown_tram_desplegado() ? 'scale-110 flex items-center justify-center bg-gradient-to-b from-Secundario rounded-t-md h-12 w-40 ' :  'flex items-center justify-center bg-transparent  rounded-md h-12 w-40 '" 
+                    <button type="button" [class]="dropdown_tram_desplegado() ? 'scale-110 flex items-center justify-center bg-gradient-to-b from-Secundario rounded-t-md h-12 w-40' : 'flex items-center justify-center bg-transparent rounded-md h-12 w-40'"
                      (click)="dropDownTram(true)" (mouseenter)="dropDownTram(true)" (mouseleave)="dropDownTram()">
                         <fa-icon [icon]="faFileLines" class="text-white text-2xl mr-2"></fa-icon>
                         Trámites
-                        <fa-icon [icon]="dropdown_tram_desplegado()? faAngleUp : faAngleDown" [class]=" dropdown_tram_desplegado()? 'text-white text-1xl ml-6':'text-Secundario text-1xl ml-6' "></fa-icon>
-                    </button> 
-                    <div class="animate-flip-down absolute w-56 z-10   focus:outline-none transition-all duration-500"
-                     (mouseleave)="dropDownTram()" (mouseenter)="dropDownTram(true)" *ngIf="dropdown_tramites()"  >
-                        <div class="mt-2 divide-y divide-gray-400/20  rounded-md bg-white shadow-lg shadow-gray-400 " >
-                        <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                        <a href="/Solicitudes/Certificado" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white">
-                            Solicitar Certificado Laboral</a>
+                        <fa-icon [icon]="dropdown_tram_desplegado() ? faAngleUp : faAngleDown" [class]="dropdown_tram_desplegado() ? 'text-white text-1xl ml-6' : 'text-Secundario text-1xl ml-6'"></fa-icon>
+                    </button>
+                    <!-- Menú desplegable de trámites -->
+                    <div class="animate-flip-down absolute w-56 z-10 focus:outline-none transition-all duration-500" (mouseleave)="dropDownTram()" (mouseenter)="dropDownTram(true)" *ngIf="dropdown_tramites()">
+                        <div class="mt-2 divide-y divide-gray-400/20 rounded-md bg-white shadow-lg shadow-gray-400">
+                            <a href="/Solicitudes/Certificado" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white">Solicitar Certificado Laboral</a>
                         </div>
                     </div>
                 </li>
                 <li class="mx-5">
-                    <button type="button" [class]=" dropdown_solic_desplegado() ? 'scale-110 flex items-center justify-center bg-gradient-to-b from-Secundario rounded-t-md h-12 w-44 ' :  'flex items-center justify-center bg-transparent  rounded-md h-12 w-44 '"
+                    <button type="button" [class]="dropdown_solic_desplegado() ? 'scale-110 flex items-center justify-center bg-gradient-to-b from-Secundario rounded-t-md h-12 w-44' : 'flex items-center justify-center bg-transparent rounded-md h-12 w-44'"
                     (click)="dropDownSolic(true)" (mouseenter)="dropDownSolic(true)" (mouseleave)="dropDownSolic()">
                         <fa-icon [icon]="faBoxArchive" class="text-white text-2xl mr-2"></fa-icon>
                         Solicitudes
-                        <fa-icon [icon]="dropdown_solic_desplegado()? faAngleUp : faAngleDown" [class]=" dropdown_solic_desplegado()? 'text-white text-1xl ml-6':'text-Secundario text-1xl ml-6' "></fa-icon>
+                        <fa-icon [icon]="dropdown_solic_desplegado() ? faAngleUp : faAngleDown" [class]="dropdown_solic_desplegado() ? 'text-white text-1xl ml-6' : 'text-Secundario text-1xl ml-6'"></fa-icon>
                     </button>
-                    <div class="animate-flip-down absolute w-56 z-10   focus:outline-none transition-all duration-500"
-                      (mouseleave)="dropDownSolic()" (mouseenter)="dropDownSolic(true)" (mouseleave)="dropDownSolic()" *ngIf="dropdown_solicitudes()">
-                      <div class="mt-2 divide-y divide-gray-400/20  rounded-md bg-white shadow-lg shadow-gray-400 " >
-                        <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                        <a href="/Reportes/Contrato" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white">
-                          Terminacion de Contrato</a>
-                      </div>
+                    <!-- Menú desplegable de solicitudes -->
+                    <div class="animate-flip-down absolute w-56 z-10 focus:outline-none transition-all duration-500" (mouseleave)="dropDownSolic()" (mouseenter)="dropDownSolic(true)" *ngIf="dropdown_solicitudes()">
+                        <div class="mt-2 divide-y divide-gray-400/20 rounded-md bg-white shadow-lg shadow-gray-400">
+                            <a href="/Reportes/Contrato" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white">Terminacion de Contrato</a>
+                        </div>
                     </div>
                 </li>
-                <li class="mx-5"  *ngIf="rol! == 1">
-                    <button type="button" [class]=" dropdown_usuarios_desplegado() ? 'scale-110 flex items-center justify-center bg-gradient-to-b from-Secundario rounded-t-md h-12 w-44 ' :  'flex items-center justify-center bg-transparent  rounded-md h-12 w-44 '"
+                <li class="mx-5" *ngIf="rol! == 1">
+                    <button type="button" [class]="dropdown_usuarios_desplegado() ? 'scale-110 flex items-center justify-center bg-gradient-to-b from-Secundario rounded-t-md h-12 w-44' : 'flex items-center justify-center bg-transparent rounded-md h-12 w-44'"
                     (click)="dropDownUsuarios(true)" (mouseenter)="dropDownUsuarios(true)" (mouseleave)="dropDownUsuarios()">
                         <fa-icon [icon]="faUsers" class="text-white text-2xl mr-2"></fa-icon>
                         Usuarios
-                        <fa-icon [icon]="dropdown_usuarios_desplegado()? faAngleUp : faAngleDown" [class]=" dropdown_usuarios_desplegado()? 'text-white text-1xl ml-6':'text-Secundario text-1xl ml-6' "></fa-icon>
+                        <fa-icon [icon]="dropdown_usuarios_desplegado() ? faAngleUp : faAngleDown" [class]="dropdown_usuarios_desplegado() ? 'text-white text-1xl ml-6' : 'text-Secundario text-1xl ml-6'"></fa-icon>
                     </button>
-                    <div class="animate-flip-down absolute w-56 z-10   focus:outline-none transition-all duration-500"
-                      (mouseleave)="dropDownUsuarios()" (mouseenter)="dropDownUsuarios(true)" (mouseleave)="dropDownUsuarios()" *ngIf="dropdown_usuarios()">
-                      <div class="mt-2 divide-y divide-gray-400/20  rounded-md bg-white shadow-lg shadow-gray-400 " >
-                        <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                        <a href="/Admin/CrearUsuario" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white">
-                          Crear Usuario </a>
-                      </div>
+                    <!-- Menú desplegable de usuarios -->
+                    <div class="animate-flip-down absolute w-56 z-10 focus:outline-none transition-all duration-500" (mouseleave)="dropDownUsuarios()" (mouseenter)="dropDownUsuarios(true)" *ngIf="dropdown_usuarios()">
+                        <div class="mt-2 divide-y divide-gray-400/20 rounded-md bg-white shadow-lg shadow-gray-400">
+                            <a href="/Admin/CrearUsuario" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white">Crear Usuario</a>
+                        </div>
                     </div>
                 </li>
             </ul>
         </div>
-        <ng-template #menu_operador >
+
+        <!-- Enlaces de navegación para roles operadores (3 <= rol < 6) -->
+        <ng-template #menu_operador>
             <div class="nav-links sm:block telefono:hidden" *ngIf="rol! < 6; else menu_general">
                 <ul class="flex items-center">
-                    <li class="ml-12 mr-5 ">
+                    <li class="ml-12 mr-5">
                         <a href="/Home" class="hover:scale-110 hover:bg-gradient-to-b from-Secundario hover:rounded-t-md h-12 w-32 flex items-center justify-center">
                             <fa-icon [icon]="faHouse" class="text-white text-2xl mr-2"></fa-icon>
                             Inicio
                         </a>
                     </li>
-                    <li class=" mx-5 " >
-
-                        <button type="button" [class]=" dropdown_preop_desplegado() ? 'scale-110 flex items-center justify-center  bg-gradient-to-b from-Secundario rounded-t-md h-12 w-52 ' :  ' flex items-center justify-center  rounded-md h-12 w-52'" (click)="dropDownPre(true)" (mouseenter)="dropDownPre(true)" (mouseleave)="dropDownPre()">
+                    <li class="mx-5">
+                        <button type="button" [class]="dropdown_preop_desplegado() ? 'scale-110 flex items-center justify-center bg-gradient-to-b from-Secundario rounded-t-md h-12 w-52' : 'flex items-center justify-center rounded-md h-12 w-52'"
+                        (click)="dropDownPre(true)" (mouseenter)="dropDownPre(true)" (mouseleave)="dropDownPre()">
                             <fa-icon [icon]="faPenToSquare" class="text-white text-2xl mr-2"></fa-icon>
                             Preoperativos
-                            <fa-icon [icon]="dropdown_preop_desplegado()? faAngleUp : faAngleDown" [class]=" dropdown_preop_desplegado()? 'text-white text-1xl ml-6':'text-Secundario text-1xl ml-6' "></fa-icon>
-                        </button> 
-                        <div id="PreoperativosMenu" class="animate-flip-down absolute w-56 z-10 focus:outline-none" 
-                         (mouseleave)="dropDownPre()" (mouseenter)="dropDownPre(true)" *ngIf="dropdown_preoperativos()" >
-                            <div class=" mt-2 divide-y divide-gray-400/20 bg-white shadow-lg shadow-gray-400 rounded-md" role="none">
-                            <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                            <a href="/Preoperativos" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white" role="menuitem" tabindex="-1" >
-                                Crear Preoperativo</a>
-                            <a href="/Preoperativos/Editar" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white" role="menuitem" tabindex="-1" >
-                                Editar ultimo registro</a>
+                            <fa-icon [icon]="dropdown_preop_desplegado() ? faAngleUp : faAngleDown" [class]="dropdown_preop_desplegado() ? 'text-white text-1xl ml-6' : 'text-Secundario text-1xl ml-6'"></fa-icon>
+                        </button>
+                        <!-- Menú desplegable de preoperativos -->
+                        <div id="PreoperativosMenu" class="animate-flip-down absolute w-56 z-10 focus:outline-none" (mouseleave)="dropDownPre()" (mouseenter)="dropDownPre(true)" *ngIf="dropdown_preoperativos()">
+                            <div class="mt-2 divide-y divide-gray-400/20 bg-white shadow-lg shadow-gray-400 rounded-md" role="none">
+                                <a href="/Preoperativos" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white" role="menuitem" tabindex="-1">Crear Preoperativo</a>
+                                <a href="/Preoperativos/Editar" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white" role="menuitem" tabindex="-1">Editar ultimo registro</a>
                             </div>
-                        </div> 
-                           
+                        </div>
                     </li>
                     <li class="mx-5">
-
-                        <button type="button" [class]=" dropdown_tram_desplegado() ? 'scale-110 flex items-center justify-center bg-gradient-to-b from-Secundario rounded-t-md h-12 w-40 ' :  'flex items-center justify-center bg-transparent  rounded-md h-12 w-40 '" 
+                        <button type="button" [class]="dropdown_tram_desplegado() ? 'scale-110 flex items-center justify-center bg-gradient-to-b from-Secundario rounded-t-md h-12 w-40' : 'flex items-center justify-center bg-transparent rounded-md h-12 w-40'"
                         (click)="dropDownTram(true)" (mouseenter)="dropDownTram(true)" (mouseleave)="dropDownTram()">
                             <fa-icon [icon]="faFileLines" class="text-white text-2xl mr-2"></fa-icon>
                             Trámites
-                            <fa-icon [icon]="dropdown_tram_desplegado()? faAngleUp : faAngleDown" [class]=" dropdown_tram_desplegado()? 'text-white text-1xl ml-6':'text-Secundario text-1xl ml-6' "></fa-icon>
-                        </button> 
-                        <div class="animate-flip-down absolute w-56 z-10   focus:outline-none transition-all duration-500"
-                        (mouseleave)="dropDownTram()" (mouseenter)="dropDownTram(true)" *ngIf="dropdown_tramites()"  >
-                            <div class="mt-2 divide-y divide-gray-400/20  rounded-md bg-white shadow-lg shadow-gray-400 " >
-                            <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                            <a href="/Solicitudes/Certificado" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white"  >Generar Certificado</a>
+                            <fa-icon [icon]="dropdown_tram_desplegado() ? faAngleUp : faAngleDown" [class]="dropdown_tram_desplegado() ? 'text-white text-1xl ml-6' : 'text-Secundario text-1xl ml-6'"></fa-icon>
+                        </button>
+                        <!-- Menú desplegable de trámites -->
+                        <div class="animate-flip-down absolute w-56 z-10 focus:outline-none transition-all duration-500" (mouseleave)="dropDownTram()" (mouseenter)="dropDownTram(true)" *ngIf="dropdown_tramites()">
+                            <div class="mt-2 divide-y divide-gray-400/20 rounded-md bg-white shadow-lg shadow-gray-400">
+                                <a href="/Solicitudes/Certificado" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white">Generar Certificado</a>
                             </div>
                         </div>
                     </li>
@@ -136,29 +129,27 @@
             </div>
         </ng-template>
 
-
-        <ng-template #menu_general >
+        <!-- Enlaces de navegación para roles generales (rol >= 6) -->
+        <ng-template #menu_general>
             <div class="nav-links sm:block telefono:hidden">
                 <ul class="flex items-center">
-                    <li class="ml-12 mr-5 ">
+                    <li class="ml-12 mr-5">
                         <a href="/Home" class="hover:scale-110 hover:bg-gradient-to-b from-Secundario hover:rounded-t-md h-12 w-32 flex items-center justify-center">
                             <fa-icon [icon]="faHouse" class="text-white text-2xl mr-2"></fa-icon>
                             Inicio
                         </a>
                     </li>
                     <li class="mx-5">
-
-                        <button type="button" [class]=" dropdown_tram_desplegado() ? 'scale-110 flex items-center justify-center bg-gradient-to-b from-Secundario rounded-t-md h-12 w-40 ' :  'flex items-center justify-center bg-transparent  rounded-md h-12 w-40 '" 
+                        <button type="button" [class]="dropdown_tram_desplegado() ? 'scale-110 flex items-center justify-center bg-gradient-to-b from-Secundario rounded-t-md h-12 w-40' : 'flex items-center justify-center bg-transparent rounded-md h-12 w-40'"
                         (click)="dropDownTram(true)" (mouseenter)="dropDownTram(true)" (mouseleave)="dropDownTram()">
                             <fa-icon [icon]="faFileLines" class="text-white text-2xl mr-2"></fa-icon>
                             Trámites
-                            <fa-icon [icon]="dropdown_tram_desplegado()? faAngleUp : faAngleDown" [class]=" dropdown_tram_desplegado()? 'text-white text-1xl ml-6':'text-Secundario text-1xl ml-6' "></fa-icon>
-                        </button> 
-                        <div class="animate-flip-down absolute w-56 z-10   focus:outline-none transition-all duration-500"
-                        (mouseleave)="dropDownTram()" (mouseenter)="dropDownTram(true)" *ngIf="dropdown_tramites()"  >
-                            <div class="mt-2 divide-y divide-gray-400/20  rounded-md bg-white shadow-lg shadow-gray-400 " >
-                            <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                            <a href="/Solicitudes/Certificado" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white"  >Generar Certificado</a>
+                            <fa-icon [icon]="dropdown_tram_desplegado() ? faAngleUp : faAngleDown" [class]="dropdown_tram_desplegado() ? 'text-white text-1xl ml-6' : 'text-Secundario text-1xl ml-6'"></fa-icon>
+                        </button>
+                        <!-- Menú desplegable de trámites -->
+                        <div class="animate-flip-down absolute w-56 z-10 focus:outline-none transition-all duration-500" (mouseleave)="dropDownTram()" (mouseenter)="dropDownTram(true)" *ngIf="dropdown_tramites()">
+                            <div class="mt-2 divide-y divide-gray-400/20 rounded-md bg-white shadow-lg shadow-gray-400">
+                                <a href="/Solicitudes/Certificado" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white">Generar Certificado</a>
                             </div>
                         </div>
                     </li>
@@ -166,21 +157,23 @@
             </div>
         </ng-template>
         
+        <!-- Icono de usuario para dispositivos pequeños -->
         <div class="sm:hidden telefono:block pr-3">
             <fa-icon [icon]="faCircleUser" class="text-white text-2xl"></fa-icon>
         </div>
     </div>
-    <div class=" flex justify-end sm:w-30 sm:flex telefono:hidden">     
-        <div [class]="dropdown_user_desplegado()? 'mr-6 flex w-12 h-14 items-center justify-center cursor-pointer bg-gradient-to-b from-Secundario rounded-t-md':'mr-6 flex w-12 h-14 items-center justify-center cursor-pointer' "
+
+    <!-- Icono de usuario para dispositivos grandes -->
+    <div class="flex justify-end sm:w-30 sm:flex telefono:hidden">     
+        <div [class]="dropdown_user_desplegado() ? 'mr-6 flex w-12 h-14 items-center justify-center cursor-pointer bg-gradient-to-b from-Secundario rounded-t-md' : 'mr-6 flex w-12 h-14 items-center justify-center cursor-pointer'" 
          (click)="dropDownUser(true)" (mouseenter)="dropDownUser(true)" (mouseleave)="dropDownUser()">
             <fa-icon [icon]="faCircleUser" class="text-white text-3xl"></fa-icon>
         </div>
-        <div class="animate-flip-down mt-12 absolute w-56 z-10   focus:outline-none transition-all duration-500"
-            (mouseleave)="dropDownUser()" (mouseenter)="dropDownUser(true)"  *ngIf="dropdown_user()"  >
-                <div class="mt-3 divide-y divide-gray-400/20  rounded-md bg-white shadow-lg shadow-gray-400 " >
-                <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                <a href="#" (click)="cerrarSesion()" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white" >Cerrar Sesión</a>
-                </div>
+        <!-- Menú desplegable de usuario -->
+        <div class="animate-flip-down mt-12 absolute w-56 z-10 focus:outline-none transition-all duration-500" (mouseleave)="dropDownUser()" (mouseenter)="dropDownUser(true)" *ngIf="dropdown_user()">
+            <div class="mt-3 divide-y divide-gray-400/20 rounded-md bg-white shadow-lg shadow-gray-400">
+                <a href="#" (click)="cerrarSesion()" class="text-gray-700 block px-4 py-3 text-sm rounded-md hover:bg-Secundario hover:shadow-md hover:shadow-gray-400/55 hover:text-white">Cerrar Sesión</a>
+            </div>
         </div>
     </div>
     

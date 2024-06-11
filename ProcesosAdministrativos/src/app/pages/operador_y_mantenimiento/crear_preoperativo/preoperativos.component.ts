@@ -5,7 +5,6 @@ import {EmpleadosPreoperativo} from '../../../core/models/empleados_preoperativo
 import { FormArray, FormBuilder, FormsModule } from '@angular/forms';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BackendService } from '../../../core/services/backend.service';
-import { environment } from '../../../../environments/environment';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCirclePlus, faTrashCan, faCalendarDays  } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
@@ -22,6 +21,7 @@ import { NavbarComponent } from "../../../shared/components/navbar/navbar.compon
 })
 export class PreoperativosComponent implements OnInit {
  
+  // Definición del formulario reactivo 'preoperativoForm' con sus controles y validadores
   preoperativoForm: FormGroup = new FormGroup({
     lugar: new FormControl("",[Validators.required, Validators.nullValidator]) ,
     fecha: new FormControl({ value: new Date().toISOString().substring(0, 10), disabled: true }, Validators.required),
@@ -31,35 +31,56 @@ export class PreoperativosComponent implements OnInit {
     estaciones: new FormArray([])
   });
 
+  // Obtiene el rol del usuario desde el local storage y lo convierte a número
   rol = Number(localStorage.getItem('rol'))
 
+  // Variable para almacenar la fecha de hoy
   fecha_hoy = '';
 
+  // Objeto para almacenar los empleados
   empleados: any =  {};
 
+  // Declaracion de iconos para usar en la interfaz
   faCirclePlus = faCirclePlus;
   faTrashCan = faTrashCan;
   faCalendarDays = faCalendarDays;
 
+  /**
+   * Constructor de la clase
+   * @param fb - FormBuilder para la creación de formularios
+   * @param backendService - Servicio inyectado para realizar llamadas al backend
+   */
   constructor(private fb: FormBuilder , private backendService: BackendService) {}
 
+  /**
+   * Método ngOnInit para inicializar el componente
+   */
   ngOnInit(): void {
-
     this.obtenerNombresEmpleados('OPERADOR')
-    
     this.fecha_hoy = new Date().toISOString().substring(0, 10);
   }
   
-
+  /**
+   * Getter para obtener el FormArray 'estaciones' del formulario
+   */
   get estacionesesArray() {
     return this.preoperativoForm.get('estaciones') as FormArray;
   }
-  nombre = environment.nombre
+
+  /**
+   * Obtiene el FormArray 'empleados' de una estación específica
+   * @param estacion - Índice de la estación
+   * @returns FormArray de empleados para esa estacion
+   */
   empleadosArray(estacion : number): FormArray {
     return this.estacionesesArray.at(estacion).get('empleados') as FormArray ;
     
   }
 
+  /**
+   * Obtiene los nombres de los empleados de un cargo específico desde el backend
+   * @param cargo - El cargo para el que se desean obtener los empleados
+   */
   obtenerNombresEmpleados(cargo: string) {
     if(cargo in this.empleados){
       return
@@ -67,16 +88,25 @@ export class PreoperativosComponent implements OnInit {
     this.backendService.getObtenerNombresEmpleadosCargo(cargo)
       .subscribe({
         next: (empleados) => {
-          
           this.empleados[cargo] = empleados;
-          console.log(this.empleados)
         },
         error: (error) => {
-          console.error('Error al obtener los nombres de empleados:', error);
+          Swal.fire({
+            title: '¡Error!',
+            text: 'No se pudieron cargar las personas con el cargo '+cargo +', por favor inténtelo nuevamenete.',
+            icon: 'error',
+            confirmButtonColor: '#002252',
+            confirmButtonText: 'Aceptar'
+          });
         }
       });
   }
 
+  /**
+   * Guarda un registro preoperativo en el backend
+   * @param preoperativo - Objeto de tipo Preoperativo que contiene los datos del preoperativo
+   * @param empleados_preoperativo - Arreglo de objetos EmpleadosPreoperativo con los datos de los empleados
+   */
   guardarRegistroPreoperativo(preoperativo : Preoperativo , empleados_preoperativo: Array<EmpleadosPreoperativo>) {
     this.backendService.crearPreoperativo(preoperativo, empleados_preoperativo)
       .subscribe(
@@ -89,13 +119,10 @@ export class PreoperativosComponent implements OnInit {
             confirmButtonColor: '#002252',
             confirmButtonText: 'Aceptar'
           }).then((result) => {
-            localStorage.setItem('ultimo_registro',preoperativoInsertado.id)
             window.location.reload();
           });
-          
         },
         (error) => {
-          console.error('Error al insertar registro preoperativo:', error);
           Swal.fire({
             title: '¡Error!',
             text: 'No se pudo registrar el preoperativo, inténtelo nuevamenete.',
@@ -108,26 +135,10 @@ export class PreoperativosComponent implements OnInit {
     
   }
 
-  dropdown_preoperativos = signal(false);
-  dropdown_tramites = signal(false);
-  dropdown_menu = signal(false);
-  
-
-  dropDownPre(): void {
-    this.dropdown_preoperativos.set(!this.dropdown_preoperativos()) ;
-  }
-
-  dropDownTram(): void {
-    this.dropdown_tramites.set(!this.dropdown_tramites()) ;
-  }
-
-  dropDownMenu(): void {
-    this.dropdown_menu.set(!this.dropdown_menu()) ;
-  }
-
-
-
-
+  /**
+   * Actualiza las estaciones basadas en el valor seleccionado en el formulario
+   * @param event - Evento de cambio del input
+   */
   actualizarLinea(event: Event){
     const elementInput = event.target as HTMLInputElement;
     let lineas: any[] = [];
@@ -181,6 +192,12 @@ export class PreoperativosComponent implements OnInit {
       
   }
 
+  /**
+   * Asigna el cargo de un empleado y actualiza el formulario con los datos correspondientes
+   * @param i - Índice de la estación
+   * @param j - Índice del empleado
+   * @param event - Evento de cambio del input
+   */
   asignarCargoEmpleado(i : number, j: number, event : Event){
     const elementInput = event.target as HTMLInputElement;
     this.obtenerNombresEmpleados(elementInput.value);
@@ -189,6 +206,13 @@ export class PreoperativosComponent implements OnInit {
     (this.estacionesesArray.at(i).get('empleados') as FormArray).at(j).get('cargo')?.setValue(elementInput.value);
   }
 
+  /**
+   * Asigna el nombre de un empleado y actualiza el formulario con los datos correspondientes
+   * @param cargo - Cargo del empleado
+   * @param i - Índice de la estación
+   * @param j - Índice del empleado
+   * @param event - Evento de cambio del input
+   */
   asignarNombreEmpleado(cargo : string , i : number, j: number,event: Event){
     const elementInput = event.target as HTMLInputElement;
     (this.estacionesesArray.at(i).get('empleados') as FormArray).at(j).get('nombre')?.setValue(elementInput.value);
@@ -196,11 +220,21 @@ export class PreoperativosComponent implements OnInit {
     (this.estacionesesArray.at(i).get('empleados') as FormArray).at(j).get('cedula')?.setValue(cedula);
   }
 
+  /**
+   * Asigna las horas extras de un empleado y actualiza el formulario
+   * @param i - Índice de la estación
+   * @param j - Índice del empleado
+   * @param event - Evento de cambio del input
+   */
   asignarHorasEmpleado(i : number, j: number,event: Event){
     const elementInput = event.target as HTMLInputElement;
     (this.estacionesesArray.at(i).get('empleados') as FormArray).at(j).get('hora_extra')?.setValue(elementInput.value) ;
   }
   
+  /**
+   * Agrega un nuevo empleado al formulario de una estación específica
+   * @param estacionEmp - Nombre de la estación a la que se va a agregar el empleado
+   */
   agregarEmpleado(estacionEmp : string) {
     const empleadoFormGroup = new FormGroup({
       hora_extra: new FormControl ('0',[Validators.pattern(/^[0-9]$/),Validators.maxLength(1)]),
@@ -218,10 +252,18 @@ export class PreoperativosComponent implements OnInit {
     }
   }
 
+  /**
+   * Elimina un empleado del formulario
+   * @param i - Índice de la estación
+   * @param j - Índice del empleado
+   */
   eliminarEmpleado(i : number, j: number) {
     (this.estacionesesArray.at(i).get('empleados') as FormArray).removeAt(j);
   }
 
+  /**
+   * Guarda la información del preoperativo y los empleados en el backend
+   */
   guardarInformacion(){
     const nombres: any = localStorage.getItem("nombre")+ ' '+ localStorage.getItem("apellidos")
     const preoperativo: Preoperativo ={
@@ -254,15 +296,9 @@ export class PreoperativosComponent implements OnInit {
         empleados_preoperativo.push(emp);
       })
       
-    });
-
-    console.log(preoperativo)
-    console.log(empleados_preoperativo)
-    console.log(this.preoperativoForm.valid)
-    console.log(this.preoperativoForm.value)
+    })
 
     this.guardarRegistroPreoperativo(preoperativo  , empleados_preoperativo)
-
   }
 
 }
