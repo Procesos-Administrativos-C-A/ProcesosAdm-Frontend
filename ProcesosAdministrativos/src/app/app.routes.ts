@@ -1,21 +1,23 @@
 import { Routes } from '@angular/router';
-import { MostrarPreoperativosComponent } from './pages/talento_humano/mostrar-preoperativos/mostrar-preoperativos.component';
 import { AuthenticationTalentoHumanoGuard } from './core/guards/auth_talento_humano/authentication_talento_humano.guard';
 import { AuthenticationAdminGuard } from './core/guards/authentication-admin/authentication-admin.guard';
 import { AuthenticationOperYMantGuard } from './core/guards/auth_operador_y_mantenimiento/authentication-oper-y-mant.guard';
-import { NavbarComponent } from './shared/components/navbar/navbar.component';
+import { AuthInicioSesionGuard } from './core/guards/auth_sesion/auth-inicio-sesion.guard';
 import { HomeComponent } from './pages/general/home/home.component';
 
 export const routes: Routes = [
     {
         path: '',
+        canActivate: [
+            AuthInicioSesionGuard
+        ],
         loadChildren: () => import('./pages/login/login.routes').then(m => m.LoginRoutes)
     },
     {
 
         path: 'Home',
         canActivate: [
-            //AuthenticationOperYMantGuard
+            AuthInicioSesionGuard
         ],
         component: HomeComponent
 
@@ -40,7 +42,7 @@ export const routes: Routes = [
     {
         path: 'Solicitudes',
         canActivate: [
-            //AuthenticationTalentoHumanoGuard
+            AuthInicioSesionGuard
         ],
         loadChildren: () => import('./pages/general/general.routes').then(m => m.OMRoutes)
 
@@ -55,7 +57,8 @@ export const routes: Routes = [
     },
     {
         path: '**',
-        component: NavbarComponent
+        redirectTo: '/',
+        pathMatch: 'full'
     }
 
 ];
