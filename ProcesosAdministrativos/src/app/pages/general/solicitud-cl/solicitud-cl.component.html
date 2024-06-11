@@ -1,10 +1,16 @@
+<!-- Componente de navegación -->
 <app-navbar [rol]="this.rol"></app-navbar>
 
+<!-- Contenedor principal -->
 <main class=" w-screen pb-14 relative min-h-[760px] overscroll-contain overflow-y-auto ">
 
+    <!-- Contenedor del formulario y la imagen -->
     <div class="w-10/12 h-[600px] m-auto my-14 rounded-md flex items-center justify-between border border-spacing-7 shadow-inner shadow-TextoGris/45 border-black bg-white">
+        <!-- Sección de texto e instrucciones -->
         <div class="w-[45%] h-full flex flex-col justify-between ">
+            <!-- Título de la sección -->
             <h1 class="text-center text-2xl font-semibold leading-7 text-gray-900 my-8">Generación de Certificado Laboral</h1>
+            <!-- Instrucciones y notas -->
             <div class=" mx-8">
                 <p class="mb-2">
                     Al presionar el botón <strong>"Generar Certificado"</strong>, se descargará automáticamente tu certificado laboral en formato PDF. Este documento es una constancia oficial emitida por la empresa que detalla tu historial laboral, incluyendo tu cargo, tiempo de servicio y otros detalles relevantes.
@@ -17,11 +23,13 @@
                     <li>Si tienes algún problema con la descarga o necesitas actualizar tu información, por favor, contacta con nuestro departamento de Recursos Humanos.</li>
                 </ul>
             </div>
+            <!-- Botón para generar el certificado PDF -->
             <button type="submit" (click)="generarPDF()" class="flex items-center justify-center p-3 mx-auto my-8 rounded-md bg-Primario text-TextoBlanco hover:bg-Secundario active:bg-gray-500">Generar Certificado</button>
         </div>
-        
+        <!-- Sección de imagen de fondo -->
         <div class="fondo-img w-[55%] h-[600px] rounded-r-md shadow-md shadow-TextoGris/45">
         </div>
+        
     </div>
     
 

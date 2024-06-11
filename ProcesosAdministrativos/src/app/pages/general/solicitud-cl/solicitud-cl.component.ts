@@ -11,44 +11,20 @@ import { BackendService } from '../../../core/services/backend.service';
   styleUrl: './solicitud-cl.component.css'
 })
 export class SolicitudCLComponent {
+
+  // Obtiene el rol del usuario desde el local storage y lo convierte a número
   rol = Number(localStorage.getItem('rol'))
   
-  
-  constructor(private backendService: BackendService) {
-    console.log(this.rol);
-  }
+  /**
+   * Constructor de la clase
+   * @param backendService - Servicio inyectado para realizar llamadas al backend
+   */
+  constructor(private backendService: BackendService) {}
 
-  // Función para validar que la cédula no sea negativa
-  validarCedulaNoNegativa(control: FormControl): ValidationErrors | null {
-    const cedula = control.value;
-    return cedula < 0 ? { cedulaNegativa: true } : null;
-  }
-
-  // Función para validar que el nombre y la cédula no contengan símbolos
-  validarSinSimbolos(control: FormControl): ValidationErrors | null {
-    const valor = control.value;
-    const regex = /^[a-zA-Z0-9\s]+$/;
-    return !regex.test(valor) ? { contieneSimbolos: true } : null;
-  }
-
-  // Función para validar que la fecha de ingreso sea menor a la fecha actual
-  validarFechaIngresoAnterior(control: FormControl): ValidationErrors | null {
-    const fechaIngreso = control.value;
-    const fechaActual = new Date();
-    return fechaIngreso > fechaActual ? { fechaIngresoInvalida: true } : null;
-  }
-
-  /*/ Formulario actualizado con validaciones adicionales
-  solicitudForm = signal(new FormGroup({
-    nombre: new FormControl('', [Validators.required, this.validarSinSimbolos]),
-    cedula: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/), this.validarCedulaNoNegativa, this.validarSinSimbolos]),
-    cargo: new FormControl('', Validators.required),
-    fechaIngreso: new FormControl('', [Validators.required, this.validarFechaIngresoAnterior])
-  }));
-  */
-
+  /**
+   * Genera un PDF del certificado del usuario y lo descarga automáticamente
+   */
   generarPDF() {
-   
     this.backendService.generarPDFCertificado(localStorage.getItem('cedula')!)
       .subscribe({
         next: ({ blob, fileName }) => {
@@ -63,7 +39,5 @@ export class SolicitudCLComponent {
         }
       });
   }
-
-
 
 }

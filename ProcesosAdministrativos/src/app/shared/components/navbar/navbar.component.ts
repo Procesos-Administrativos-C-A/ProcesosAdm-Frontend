@@ -12,127 +12,147 @@ import { faBars, faAngleUp, faAngleDown, faHouse, faBoxArchive, faUsers} from '@
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
-  @Input() rol: number | undefined;
+// Entrada del componente para recibir el rol del usuario
+@Input() rol: number | undefined;
 
-  faCircleXmark = faCircleXmark;
-  faCircleUser = faCircleUser;
-  faBars = faBars;
+// Declaración de iconos de FontAwesome
+faCircleXmark = faCircleXmark;
+faCircleUser = faCircleUser;
+faBars = faBars;
+faAngleDown = faAngleDown;
+faAngleUp = faAngleUp;
+faHouse = faHouse;
+faPenToSquare = faPenToSquare;
+faFileLines = faFileLines;
+faBoxArchive = faBoxArchive;
+faUsers = faUsers;
 
+// Señales (signals) para gestionar el estado de los menús desplegables
+dropdown_preoperativos = signal(false);
+dropdown_preop_desplegado = signal(false);
+dropdown_tramites = signal(false);
+dropdown_tram_desplegado = signal(false);
+dropdown_solicitudes = signal(false);
+dropdown_solic_desplegado = signal(false);
+dropdown_menu = signal(false);
+dropdown_user = signal(false);
+dropdown_user_desplegado = signal(false);
+dropdown_usuarios = signal(false);
+dropdown_usuarios_desplegado = signal(false);
 
-  faAngleDown = faAngleDown;
-  faAngleUp = faAngleUp;
-
-  faHouse = faHouse;
-  faPenToSquare = faPenToSquare;
-  faFileLines = faFileLines;
-  faBoxArchive = faBoxArchive;
-  faUsers = faUsers;
-
-  dropdown_preoperativos = signal(false);
-  dropdown_preop_desplegado = signal(false);
-  dropdown_tramites = signal(false);
-  dropdown_tram_desplegado = signal(false);
-  dropdown_solicitudes = signal(false);
-  dropdown_solic_desplegado= signal(false);
-  dropdown_menu = signal(false);
-  dropdown_user= signal(false);
-  dropdown_user_desplegado= signal(false);
-  dropdown_usuarios= signal(false);
-  dropdown_usuarios_desplegado= signal(false);
-  
-
-  dropDownPre(desplegado: boolean = false): void {
-    this.dropdown_preop_desplegado.set(desplegado);
-    if (this.dropdown_preoperativos()){
-      if(desplegado){
-        return
-      }
-      setTimeout(() => {
-        if(!this.dropdown_preop_desplegado()){
-          this.dropdown_preoperativos.set(false);
-        } 
-        return
-      }, 100);
-    }else{
-      this.dropdown_preoperativos.set(true);
+/**
+ * Método para gestionar el despliegue del menú de Preoperativos
+ * @param desplegado - Indica si el menú debe estar desplegado (true) o no (false)
+ */
+dropDownPre(desplegado: boolean = false): void {
+  this.dropdown_preop_desplegado.set(desplegado);
+  if (this.dropdown_preoperativos()) {
+    if (desplegado) {
+      return;
     }
-    
-  }
-
-  dropDownTram(desplegado: boolean = false): void {
-    this.dropdown_tram_desplegado.set(desplegado);
-    if (this.dropdown_tramites()){
-      if(desplegado){
-        return
+    setTimeout(() => {
+      if (!this.dropdown_preop_desplegado()) {
+        this.dropdown_preoperativos.set(false);
       }
-      setTimeout(() => {
-        if(!this.dropdown_tram_desplegado()){
-          this.dropdown_tramites.set(false);
-        } 
-      }, 100);
-    }else{
-      this.dropdown_tramites.set(true);
-    }
+    }, 100);
+  } else {
+    this.dropdown_preoperativos.set(true);
   }
+}
 
-
-
-  dropDownSolic(desplegado: boolean = false): void {
-    this.dropdown_solic_desplegado.set(desplegado);
-    if (this.dropdown_solicitudes()){
-      if(desplegado){
-        return
+/**
+ * Método para gestionar el despliegue del menú de Trámites
+ * @param desplegado - Indica si el menú debe estar desplegado (true) o no (false)
+ */
+dropDownTram(desplegado: boolean = false): void {
+  this.dropdown_tram_desplegado.set(desplegado);
+  if (this.dropdown_tramites()) {
+    if (desplegado) {
+      return;
+    }
+    setTimeout(() => {
+      if (!this.dropdown_tram_desplegado()) {
+        this.dropdown_tramites.set(false);
       }
-      setTimeout(() => {
-        if(!this.dropdown_solic_desplegado()){
-          this.dropdown_solicitudes.set(false);
-        } 
-      }, 100);
-    }else{
-      this.dropdown_solicitudes.set(true);
+    }, 100);
+  } else {
+    this.dropdown_tramites.set(true);
+  }
+}
+
+/**
+ * Método para gestionar el despliegue del menú de Solicitudes
+ * @param desplegado - Indica si el menú debe estar desplegado (true) o no (false)
+ */
+dropDownSolic(desplegado: boolean = false): void {
+  this.dropdown_solic_desplegado.set(desplegado);
+  if (this.dropdown_solicitudes()) {
+    if (desplegado) {
+      return;
     }
-  }
-
-  dropDownMenu(): void {
-    this.dropdown_menu.set(!this.dropdown_menu()) ;
-  }
-
-  dropDownUser(desplegado : boolean = false): void {
-    this.dropdown_user_desplegado.set(desplegado);
-    if (this.dropdown_user()){
-      if(desplegado){
-        return
+    setTimeout(() => {
+      if (!this.dropdown_solic_desplegado()) {
+        this.dropdown_solicitudes.set(false);
       }
-      setTimeout(() => {
-        if(!this.dropdown_user_desplegado()){
-          this.dropdown_user.set(false);
-        } 
-      }, 100);
-    }else{
-      this.dropdown_user.set(true);
-    }
+    }, 100);
+  } else {
+    this.dropdown_solicitudes.set(true);
   }
+}
 
-  dropDownUsuarios(desplegado : boolean = false): void {
-    this.dropdown_usuarios_desplegado.set(desplegado);
-    if (this.dropdown_usuarios()){
-      if(desplegado){
-        return
+/**
+ * Método para alternar el estado del menú principal
+ */
+dropDownMenu(): void {
+  this.dropdown_menu.set(!this.dropdown_menu());
+}
+
+/**
+ * Método para gestionar el despliegue del menú de usuario
+ * @param desplegado - Indica si el menú debe estar desplegado (true) o no (false)
+ */
+dropDownUser(desplegado: boolean = false): void {
+  this.dropdown_user_desplegado.set(desplegado);
+  if (this.dropdown_user()) {
+    if (desplegado) {
+      return;
+    }
+    setTimeout(() => {
+      if (!this.dropdown_user_desplegado()) {
+        this.dropdown_user.set(false);
       }
-      setTimeout(() => {
-        if(!this.dropdown_usuarios_desplegado()){
-          this.dropdown_usuarios.set(false);
-        } 
-      }, 100);
-    }else{
-      this.dropdown_usuarios.set(true);
+    }, 100);
+  } else {
+    this.dropdown_user.set(true);
+  }
+}
+
+/**
+ * Método para gestionar el despliegue del menú de Usuarios
+ * @param desplegado - Indica si el menú debe estar desplegado (true) o no (false)
+ */
+dropDownUsuarios(desplegado: boolean = false): void {
+  this.dropdown_usuarios_desplegado.set(desplegado);
+  if (this.dropdown_usuarios()) {
+    if (desplegado) {
+      return;
     }
+    setTimeout(() => {
+      if (!this.dropdown_usuarios_desplegado()) {
+        this.dropdown_usuarios.set(false);
+      }
+    }, 100);
+  } else {
+    this.dropdown_usuarios.set(true);
   }
+}
 
-
-  cerrarSesion():void {
-    localStorage.clear()
-  }
+/**
+ * Método para cerrar la sesión del usuario, limpiando el almacenamiento local
+ */
+cerrarSesion(): void {
+  localStorage.clear();
+}
 
 }
 
