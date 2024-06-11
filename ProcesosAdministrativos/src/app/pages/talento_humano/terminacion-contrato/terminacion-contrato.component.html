@@ -1,9 +1,17 @@
+<!-- Componente Navbar que recibe el rol como propiedad -->
 <app-navbar [rol]="this.rol"></app-navbar>
 
+<!-- Contenido principal de la página -->
 <main class="w-screen pb-14 relative min-h-[760px] overscroll-contain overflow-y-auto">
-    <div class="w-10/12 mx-auto my-14 rounded-md flex flex-col items-center justify-start border border-spacing-7 shadow-inner shadow-TextoGris/45 border-black bg-white">
-        <h1 class="text-center text-2xl font-semibold leading-7 text-gray-900 my-8">Empleados próximos a vencer contrato</h1>
+    <!-- Contenedor principal del contenido -->
+    <div
+        class="w-10/12 mx-auto my-14 rounded-md flex flex-col items-center justify-start border border-spacing-7 shadow-inner shadow-TextoGris/45 border-black bg-white">
+        <!-- Título principal de la página -->
+        <h1 class="text-center text-2xl font-semibold leading-7 text-gray-900 my-8">Empleados próximos a vencer contrato
+        </h1>
+        <!-- Tabla que muestra la información de los empleados próximos a vencer contrato -->
         <table class="table-auto w-10/12 mt-10 mb-20">
+            <!-- Encabezado de la tabla -->
             <thead>
                 <tr class="bg-gray-200">
                     <th class="p-4">Nombre completo</th>
@@ -12,8 +20,11 @@
                     <th class="p-4">Finalización del contrato</th>
                 </tr>
             </thead>
+            <!-- Cuerpo de la tabla con filas generadas dinámicamente -->
             <tbody>
+                <!-- Bucle que recorre la lista de empleados próximos a vencer contrato -->
                 <tr *ngFor="let empleado of empleadosContratoVencido">
+                    <!-- Celdas de la tabla con la información de cada empleado -->
                     <td class="p-4 border">{{ empleado.nombre }} {{ empleado.apellidos }}</td>
                     <td class="p-4 border">{{ empleado.cedula }}</td>
                     <td class="p-4 border">{{ empleado.correoElectronico }}</td>

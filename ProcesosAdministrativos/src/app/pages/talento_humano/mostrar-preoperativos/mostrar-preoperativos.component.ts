@@ -9,32 +9,35 @@ import { EmpleadosPreoperativo } from '../../../core/models/empleados_preoperati
 import { BackendService } from '../../../core/services/backend.service';
 import { NavbarComponent } from "../../../shared/components/navbar/navbar.component";
 
-
 @Component({
-    selector: 'app-preoperativos',
-    standalone: true,
-    templateUrl: './mostrar-preoperativos.component.html',
-    styleUrls: ['./mostrar-preoperativos.component.css'],
-    imports: [CommonModule, FormsModule, FontAwesomeModule, ReactiveFormsModule, NavbarComponent]
+    selector: 'app-preoperativos',  // Define el selector para este componente
+    standalone: true,  // Especifica que este componente es independiente
+    templateUrl: './mostrar-preoperativos.component.html',  // Ruta de la plantilla HTML
+    styleUrls: ['./mostrar-preoperativos.component.css'],  // Rutas de las hojas de estilo CSS
+    imports: [CommonModule, FormsModule, FontAwesomeModule, ReactiveFormsModule, NavbarComponent]  // Módulos importados
 })
 export class MostrarPreoperativosComponent implements OnInit {
-  preoperativos: Preoperativo[] = [];
+  preoperativos: Preoperativo[] = [];  // Arreglo para almacenar preoperativos
 
-  rol = Number(localStorage.getItem('rol'))
+  rol = Number(localStorage.getItem('rol'))  // Obtiene el rol desde el almacenamiento local
 
-  empleadosPreoperativo: EmpleadosPreoperativo[] = [];
+  empleadosPreoperativo: EmpleadosPreoperativo[] = [];  // Arreglo para almacenar empleados preoperativos
 
-  preoperativoSeleccionado: Preoperativo | null = null;
-  preoperativoForm: FormGroup;
-  fechaBusqueda: string = '';
-  private fechaBusquedaAnterior: string = '';
-  modalVisible = false;
+  preoperativoSeleccionado: Preoperativo | null = null;  // Variable para almacenar el preoperativo seleccionado
+  preoperativoForm: FormGroup;  // FormGroup para el formulario de preoperativos
+  fechaBusqueda: string = '';  // Variable para la fecha de búsqueda
+  private fechaBusquedaAnterior: string = '';  // Variable para almacenar la fecha de búsqueda anterior
+  modalVisible = false;  // Variable para controlar la visibilidad del modal
 
   constructor(private fb: FormBuilder, private backendService: BackendService) {
+    // Inicializa el formulario vacío
     this.preoperativoForm = this.fb.group({});
+    // Obtiene la fecha actual y la asigna a la fecha de búsqueda
     const fechaActual = new Date().toISOString().split('T')[0];
     this.fechaBusqueda = fechaActual;
   }
+
+  // Estaciones ordenadas
   estacionesOrdenadas = [
     'Fundadores',
     'Betania',
@@ -44,12 +47,13 @@ export class MostrarPreoperativosComponent implements OnInit {
     'Mantenimiento'
   ];
 
+  // Método que se ejecuta al inicializar el componente
   ngOnInit() {
     console.log('Componente inicializado');
     this.obtenerPreoperativosPorFecha(this.fechaBusqueda);
   }
 
-  // Mapea y asigna los preoperativos obtenidos a la propiedad preoperativos
+  // Obtiene los preoperativos por fecha y los asigna a la propiedad preoperativos
   obtenerPreoperativosPorFecha(fecha: string) {
     this.backendService.getPreoperativosPorFecha(fecha)
       .subscribe({
@@ -60,13 +64,13 @@ export class MostrarPreoperativosComponent implements OnInit {
             encargado: preoperativo.encargado,
             turno: preoperativo.turno,
             lugar: preoperativo.lugar,
-            festivo: Boolean(preoperativo.festivo), // Cambiar esta línea
+            festivo: Boolean(preoperativo.festivo),  // Conversión de festivo a booleano
             empleados_preoperativos: preoperativo.empleados_preoperativos?.map((empleado: EmpleadosPreoperativo) => ({
               id: empleado.id,
               id_preoperativo: empleado.id_preoperativo,
               cedula: empleado.cedula.toString(),
-              nombre: empleado.nombre ,
-              apellidos : empleado.apellidos,
+              nombre: empleado.nombre,
+              apellidos: empleado.apellidos,
               horas_diarias: empleado.horas_diarias,
               horas_adicionales: empleado.horas_adicionales,
               estacion: empleado.estacion
@@ -79,16 +83,14 @@ export class MostrarPreoperativosComponent implements OnInit {
       });
   }
 
-
-  // Define métodos para procesar datos recibidos del backend
+  // Procesa los datos recibidos del backend y actualiza la lista de preoperativos
   procesarDatosBackend(data: any) {
-    // Procesa los datos recibidos del backend y actualiza la lista de preoperativos
     const preoperativo: Preoperativo = {
       fecha: data.preoperativo.fecha,
       encargado: data.preoperativo.encargado,
       turno: data.preoperativo.turno,
       lugar: data.preoperativo.lugar,
-      festivo: data.preoperativo.festivo === 1,
+      festivo: data.preoperativo.festivo === 1,  // Conversión de festivo a booleano
       empleados_preoperativos: data.empleados_preoperativos.map((empleado: any) => ({
         cedula: empleado.cedula.toString(),
         nombre: empleado.nombre,
@@ -100,11 +102,11 @@ export class MostrarPreoperativosComponent implements OnInit {
     this.preoperativos.push(preoperativo);
   }
 
-  // Define métodos para filtrar preoperativos y agrupar empleados
+  // Filtra los preoperativos por la fecha de búsqueda
   filtrarPreoperativos(): Preoperativo[] {
     if (!this.fechaBusqueda) {
       this.preoperativoSeleccionado = null;
-      return this.preoperativos.slice(0, 9);
+      return this.preoperativos.slice(0, 9);  // Devuelve los primeros 9 preoperativos
     }
 
     // Si la fecha de búsqueda cambió, restablece el preoperativoSeleccionado
@@ -114,8 +116,9 @@ export class MostrarPreoperativosComponent implements OnInit {
     }
     this.fechaBusquedaAnterior = this.fechaBusqueda;
 
+    // Filtra los preoperativos por la fecha de búsqueda
     const preoperativosFiltrados = this.preoperativos.filter(preoperativo => preoperativo.fecha === this.fechaBusqueda);
-    return preoperativosFiltrados.slice(0, 9);
+    return preoperativosFiltrados.slice(0, 9);  // Devuelve los primeros 9 preoperativos filtrados
   }
 
   // Agrupa empleados de un preoperativo por estación
@@ -124,6 +127,7 @@ export class MostrarPreoperativosComponent implements OnInit {
       return {};
     }
 
+    // Reduce los empleados a un objeto donde las claves son estaciones y los valores son arrays de empleados
     return preoperativo.empleados_preoperativos.reduce((grupos, empleado) => {
       const estacion = empleado.estacion;
       if (!grupos[estacion]) {
@@ -134,7 +138,7 @@ export class MostrarPreoperativosComponent implements OnInit {
     }, {} as { [estacion: string]: EmpleadosPreoperativo[] });
   }
 
-  empleadosAgrupadosPorEstacion: { [estacion: string]: EmpleadosPreoperativo[] } = {};
+  empleadosAgrupadosPorEstacion: { [estacion: string]: EmpleadosPreoperativo[] } = {};  // Almacena los empleados agrupados por estación
 
   // Método para ver detalles de un preoperativo seleccionado
   verDetalles(preoperativo: Preoperativo) {

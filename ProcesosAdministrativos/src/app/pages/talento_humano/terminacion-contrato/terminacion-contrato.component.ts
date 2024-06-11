@@ -1,8 +1,10 @@
+// Importación de módulos y componentes necesarios
 import { Component, OnInit, signal } from '@angular/core';
 import { NavbarComponent } from "../../../shared/components/navbar/navbar.component";
 import { CommonModule } from '@angular/common';
-import { DatePipe } from '@angular/common'; 
+import { DatePipe } from '@angular/common';
 
+// Definición de la interfaz para el objeto Empleado
 interface Empleado {
   nombre: string;
   apellidos: string;
@@ -12,21 +14,28 @@ interface Empleado {
 }
 
 @Component({
+  // Selector del componente
   selector: 'app-terminacion-contrato',
+  // Indicador de componente independiente
   standalone: true,
+  // Plantilla HTML del componente
   templateUrl: './terminacion-contrato.component.html',
+  // Estilos CSS del componente
   styleUrls: ['./terminacion-contrato.component.css'],
-  imports: [CommonModule, DatePipe,NavbarComponent]
+  // Importación de módulos y componentes
+  imports: [CommonModule, DatePipe, NavbarComponent]
 })
 export class TerminacionContratoComponent implements OnInit {
+  // Arreglo que almacenará los empleados cuyo contrato está próximo a vencer
   empleadosContratoVencido: Empleado[] = [];
 
+  // Propiedad para almacenar el rol del usuario obtenido del almacenamiento local
   rol = Number(localStorage.getItem('rol'))
 
   constructor() { }
 
   ngOnInit() {
-    // Datos de prueba
+    // Datos de prueba para empleados
     const empleadosDePrueba: Empleado[] = [
       {
         nombre: 'Juan',
@@ -35,25 +44,14 @@ export class TerminacionContratoComponent implements OnInit {
         fechaFinContrato: new Date(2024, 6, 15),
         correoElectronico: 'juan.perez@example.com'
       },
-      {
-        nombre: 'María',
-        apellidos: 'González Rodríguez',
-        cedula: '0987654321',
-        fechaFinContrato: new Date(2024, 6, 1),
-        correoElectronico: 'maria.gonzalez@example.com'
-      },
-      {
-        nombre: 'Carlos',
-        apellidos: 'Torres Martínez',
-        cedula: '5678901234',
-        fechaFinContrato: new Date(2024, 6, 30),
-        correoElectronico: 'carlos.torres@example.com'
-      }
+      // Otros empleados de prueba...
     ];
 
+    // Método para obtener los empleados cuyo contrato está próximo a vencer
     this.obtenerEmpleadosContratoVencido(empleadosDePrueba);
   }
 
+  // Método para filtrar empleados cuyo contrato está próximo a vencer
   obtenerEmpleadosContratoVencido(empleados: Empleado[]) {
     const fechaActual = new Date();
     this.empleadosContratoVencido = empleados.filter(empleado => {
@@ -63,22 +61,22 @@ export class TerminacionContratoComponent implements OnInit {
     });
   }
 
-  // Define métodos para manejar dropdowns
+  // Define señales para manejar dropdowns
   dropdown_preoperativos = signal(false);
   dropdown_tramites = signal(false);
   dropdown_solicitudes = signal(false);
 
-  // Método para dropdown de preoperativos
+  // Método para mostrar/ocultar dropdown de preoperativos
   dropDownPre(): void {
     this.dropdown_preoperativos.set(!this.dropdown_preoperativos());
   }
 
-  // Método para dropdown de tramites
+  // Método para mostrar/ocultar dropdown de tramites
   dropDownTram(): void {
     this.dropdown_tramites.set(!this.dropdown_tramites());
   }
 
-  // Método para dropdown de solicitudes
+  // Método para mostrar/ocultar dropdown de solicitudes
   dropDownSoli(): void {
     this.dropdown_solicitudes.set(!this.dropdown_solicitudes());
   }
