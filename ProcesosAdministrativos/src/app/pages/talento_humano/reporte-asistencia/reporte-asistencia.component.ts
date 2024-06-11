@@ -19,6 +19,7 @@ import moment from 'moment';
 })
 export class ReporteAsistenciaComponent {
 
+  // Definición del formulario de empleados
   empleadosForm: FormGroup = new FormGroup({
     fechaInicio: new FormControl('', [Validators.required, Validators.nullValidator]),
     fechaFin: new FormControl('', [Validators.required, Validators.nullValidator]),
@@ -36,26 +37,24 @@ export class ReporteAsistenciaComponent {
     ])
   }, [CustomValidators.fechaFinalMenorQueInicial]);
 
-  rol = Number(localStorage.getItem('rol'))
+  rol = Number(localStorage.getItem('rol')) // Obteniendo el rol del usuario del localStorage
 
-  empleados: any = {};
+  empleados: any = {}; // Variable para almacenar los empleados
 
-  stackedBarChart: any;
+  stackedBarChart: any; // Variable para la gráfica de barras apiladas
 
+  horas: Array<any> = []; // Array para almacenar las horas
 
-  horas: Array<any> = [];
+  dias_semana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado']; // Días de la semana
 
-  dias_semana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-
-  constructor(private backendService: BackendService) {
-
-  }
+  constructor(private backendService: BackendService) { }
 
   ngOnInit(): void {
-    this.obtenerNombresEmpleados('OPERADOR')
+    this.obtenerNombresEmpleados('OPERADOR') // Obteniendo los nombres de los empleados al iniciar el componente
   }
 
   obtenerHoras(fecha_inicio: string, fecha_fin: string, cedulas: number[]) {
+    // Obteniendo las horas trabajadas de los empleados desde el servicio backend
     this.backendService.getEmpleadoHoras(fecha_inicio, fecha_fin, cedulas)
       .subscribe({
         next: (horas) => {
@@ -63,7 +62,6 @@ export class ReporteAsistenciaComponent {
           this.horas = horas;
           this.crearGrafico();
           if (horas.length == 0) {
-
             Swal.fire({
               title: 'Empleado/s sin registros!',
               text: 'No se encontraron registros en el rango de fechas seleccionado, verifique e intente nuevamente.',
@@ -87,15 +85,15 @@ export class ReporteAsistenciaComponent {
   }
 
   obtenerNombresEmpleados(cargo: string) {
+    // Obteniendo los nombres de los empleados de acuerdo al cargo desde el servicio backend
     if (cargo in this.empleados) {
-      return
+      return;
     }
     this.backendService.getObtenerNombresEmpleadosCargo(cargo)
       .subscribe({
         next: (empleados) => {
-
           this.empleados[cargo] = empleados;
-          console.log(this.empleados)
+          console.log(this.empleados);
         },
         error: (error) => {
           console.error('Error al obtener los nombres de empleados:', error);
@@ -105,10 +103,10 @@ export class ReporteAsistenciaComponent {
 
   get empleadosArray(): FormArray {
     return this.empleadosForm.get('empleados') as FormArray;
-
   }
 
   asignarCargoEmpleado(j: number, event: Event) {
+    // Asignando cargo al empleado y obteniendo nombres de empleados de acuerdo al cargo
     const elementInput = event.target as HTMLInputElement;
     this.obtenerNombresEmpleados(elementInput.value);
     const empleado = (this.empleadosArray as unknown as FormArray).at(j)
@@ -118,6 +116,7 @@ export class ReporteAsistenciaComponent {
   }
 
   asignarNombreEmpleado(cargo: string, j: number, event: Event) {
+    // Asignando nombre y cédula al empleado
     const elementInput = event.target as HTMLInputElement;
     const empleado = (this.empleadosArray as unknown as FormArray).at(j);
     const cedula: string = this.empleados[cargo].find((objeto: { nombre: any; }) => objeto.nombre === elementInput.value)['cedula'];
@@ -126,10 +125,12 @@ export class ReporteAsistenciaComponent {
   }
 
   eliminarEmpleado(j: number) {
+    // Eliminando un empleado del formulario
     (this.empleadosArray as unknown as FormArray).removeAt(j);
   }
 
   agregarEmpleado() {
+    // Agregando un empleado al formulario
     const empleadoFormGroup = new FormGroup({
       cargo: new FormControl('OPERADOR', [Validators.required, Validators.nullValidator]),
       nombre: new FormControl('', [Validators.required, Validators.nullValidator]),
@@ -139,24 +140,24 @@ export class ReporteAsistenciaComponent {
   }
 
   asignarCedula(empleado: { nombre: string, cedula: number }, cedula: number | undefined) {
+    // Asignando la cédula al empleado
     if (cedula !== undefined) {
       empleado.cedula = cedula;
     }
   }
 
-
-
   generarReporte(): void {
+    // Generando el reporte de horas trabajadas
     const cedulas: number[] = []
     this.empleadosArray.controls.forEach(element => {
-      cedulas.push(element.get('cedula')?.value)
+      cedulas.push(element.get('cedula')?.value);
     });
 
-    this.obtenerHoras(this.empleadosForm.get('fechaInicio')?.value, this.empleadosForm.get('fechaFin')?.value, cedulas)
-
+    this.obtenerHoras(this.empleadosForm.get('fechaInicio')?.value, this.empleadosForm.get('fechaFin')?.value, cedulas);
   }
 
   crearGrafico(): void {
+    // Creando el gráfico de barras apiladas
     if (this.stackedBarChart) {
       this.stackedBarChart.destroy();
     }
@@ -171,6 +172,7 @@ export class ReporteAsistenciaComponent {
   }
 
   prepararDatos(): { nombres: string[], fechas: string[], datos: any[] } {
+    // Preparando los datos para el gráfico
     const nombres: string[] = [];
     const fechas: string[] = [];
     const datos: any[] = [];
@@ -207,6 +209,7 @@ export class ReporteAsistenciaComponent {
   }
 
   crearGraficoIndividual(nombre: string, fechas: string[], datos: any[]) {
+    // Creando el gráfico de barras apiladas para un solo empleado
     this.stackedBarChart = new Chart('canvas', {
       type: 'bar',
       data: {
@@ -260,8 +263,8 @@ export class ReporteAsistenciaComponent {
     });
   }
 
-
   crearGraficoMultiple(nombres: string[], datos: any[], fechas: string[]) {
+    // Creando el gráfico de barras apiladas para múltiples empleados
     console.log(fechas);
     console.log(datos);
     const datasets: ChartDataset<'bar', number[]>[] = [];
@@ -269,7 +272,7 @@ export class ReporteAsistenciaComponent {
     // Calcular la diferencia de días entre fechaInicio y fechaFin
     const fechaInicio = moment(this.empleadosForm.get('fechaInicio')?.value);
     const fechaFin = moment(this.empleadosForm.get('fechaFin')?.value);
-    const diferenciaDias = fechaFin.diff(fechaInicio, 'days') + 1; 
+    const diferenciaDias = fechaFin.diff(fechaInicio, 'days') + 1;
 
     // Iterar sobre los nombres de los empleados
     nombres.forEach((nombre, index) => {
@@ -337,11 +340,6 @@ export class ReporteAsistenciaComponent {
       }
     });
   }
-
-
-
-
-
 
   obtenerColorAleatorio(): string {
     // Función para generar un color aleatorio en formato hexadecimal
