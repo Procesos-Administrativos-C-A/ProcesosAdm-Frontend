@@ -58,7 +58,6 @@ export class ReporteAsistenciaComponent {
     this.backendService.getEmpleadoHoras(fecha_inicio, fecha_fin, cedulas)
       .subscribe({
         next: (horas) => {
-          console.log(horas)
           this.horas = horas;
           this.crearGrafico();
           if (horas.length == 0) {
@@ -72,7 +71,6 @@ export class ReporteAsistenciaComponent {
           }
         },
         error: (error) => {
-          console.error('Error al obtener los nombres de empleados:', error);
           Swal.fire({
             title: 'El mes elegido no tiene registros!',
             text: 'No se encontraron registros en el rango de fechas seleccionado, verifique e intente nuevamente.',
@@ -93,10 +91,8 @@ export class ReporteAsistenciaComponent {
       .subscribe({
         next: (empleados) => {
           this.empleados[cargo] = empleados;
-          console.log(this.empleados);
         },
         error: (error) => {
-          console.error('Error al obtener los nombres de empleados:', error);
         }
       });
   }
@@ -265,8 +261,6 @@ export class ReporteAsistenciaComponent {
 
   crearGraficoMultiple(nombres: string[], datos: any[], fechas: string[]) {
     // Creando el gráfico de barras apiladas para múltiples empleados
-    console.log(fechas);
-    console.log(datos);
     const datasets: ChartDataset<'bar', number[]>[] = [];
 
     // Calcular la diferencia de días entre fechaInicio y fechaFin

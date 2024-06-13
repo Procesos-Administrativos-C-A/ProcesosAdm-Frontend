@@ -45,6 +45,15 @@ dropdown_usuarios_desplegado = signal(false);
  * @param desplegado - Indica si el menú debe estar desplegado (true) o no (false)
  */
 dropDownPre(desplegado: boolean = false): void {
+  this.dropdown_tramites.set(false);
+  this.dropdown_tram_desplegado.set(false);
+  this.dropdown_solicitudes.set(false);
+  this.dropdown_solic_desplegado.set(false);
+  this.dropdown_user.set(false);
+  this.dropdown_user_desplegado.set(false);
+  this.dropdown_usuarios.set(false);
+  this.dropdown_usuarios_desplegado.set(false);
+
   this.dropdown_preop_desplegado.set(desplegado);
   if (this.dropdown_preoperativos()) {
     if (desplegado) {
@@ -65,6 +74,15 @@ dropDownPre(desplegado: boolean = false): void {
  * @param desplegado - Indica si el menú debe estar desplegado (true) o no (false)
  */
 dropDownTram(desplegado: boolean = false): void {
+  this.dropdown_preoperativos.set(false);
+  this.dropdown_preop_desplegado.set(false);
+  this.dropdown_solicitudes.set(false);
+  this.dropdown_solic_desplegado.set(false);
+  this.dropdown_user.set(false);
+  this.dropdown_user_desplegado.set(false);
+  this.dropdown_usuarios.set(false);
+  this.dropdown_usuarios_desplegado.set(false);
+
   this.dropdown_tram_desplegado.set(desplegado);
   if (this.dropdown_tramites()) {
     if (desplegado) {
@@ -85,6 +103,15 @@ dropDownTram(desplegado: boolean = false): void {
  * @param desplegado - Indica si el menú debe estar desplegado (true) o no (false)
  */
 dropDownSolic(desplegado: boolean = false): void {
+  this.dropdown_preoperativos.set(false);
+  this.dropdown_preop_desplegado.set(false);
+  this.dropdown_tramites.set(false);
+  this.dropdown_tram_desplegado.set(false);
+  this.dropdown_user.set(false);
+  this.dropdown_user_desplegado.set(false);
+  this.dropdown_usuarios.set(false);
+  this.dropdown_usuarios_desplegado.set(false);
+
   this.dropdown_solic_desplegado.set(desplegado);
   if (this.dropdown_solicitudes()) {
     if (desplegado) {
@@ -104,7 +131,24 @@ dropDownSolic(desplegado: boolean = false): void {
  * Método para alternar el estado del menú principal
  */
 dropDownMenu(): void {
+  this.dropdown_preoperativos.set(false);
+  this.dropdown_preop_desplegado.set(false);
+  this.dropdown_tramites.set(false);
+  this.dropdown_tram_desplegado.set(false);
+  this.dropdown_solicitudes.set(false);
+  this.dropdown_solic_desplegado.set(false);
+  this.dropdown_user.set(false);
+  this.dropdown_user_desplegado.set(false);
+  this.dropdown_usuarios.set(false);
+  this.dropdown_usuarios_desplegado.set(false);
+
   this.dropdown_menu.set(!this.dropdown_menu());
+}
+
+
+dropDownMenus(): void {
+  this.dropDownMenu()
+  this.dropDownUser()
 }
 
 /**
@@ -112,6 +156,16 @@ dropDownMenu(): void {
  * @param desplegado - Indica si el menú debe estar desplegado (true) o no (false)
  */
 dropDownUser(desplegado: boolean = false): void {
+  this.dropdown_preoperativos.set(false);
+  this.dropdown_preop_desplegado.set(false);
+  this.dropdown_tramites.set(false);
+  this.dropdown_tram_desplegado.set(false);
+  this.dropdown_solicitudes.set(false);
+  this.dropdown_solic_desplegado.set(false);
+  this.dropdown_menu.set(false);
+  this.dropdown_usuarios.set(false);
+  this.dropdown_usuarios_desplegado.set(false);
+
   this.dropdown_user_desplegado.set(desplegado);
   if (this.dropdown_user()) {
     if (desplegado) {
@@ -132,6 +186,15 @@ dropDownUser(desplegado: boolean = false): void {
  * @param desplegado - Indica si el menú debe estar desplegado (true) o no (false)
  */
 dropDownUsuarios(desplegado: boolean = false): void {
+  this.dropdown_preoperativos.set(false);
+  this.dropdown_preop_desplegado.set(false);
+  this.dropdown_tramites.set(false);
+  this.dropdown_tram_desplegado.set(false);
+  this.dropdown_solicitudes.set(false);
+  this.dropdown_solic_desplegado.set(false);
+  this.dropdown_user.set(false);
+  this.dropdown_user_desplegado.set(false);
+
   this.dropdown_usuarios_desplegado.set(desplegado);
   if (this.dropdown_usuarios()) {
     if (desplegado) {
@@ -152,6 +215,7 @@ dropDownUsuarios(desplegado: boolean = false): void {
  */
 cerrarSesion(): void {
   localStorage.clear();
+  window.location.reload();
 }
 
 }
