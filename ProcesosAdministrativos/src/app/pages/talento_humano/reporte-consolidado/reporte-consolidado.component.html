@@ -15,10 +15,10 @@
             (change)="consultarReporte($event)" />
 
         <!-- Botones para descargar el reporte en PDF o Excel -->
-        <div class="flex items-center justify-center p-3 w-auto ml-auto my-4">
+        <div class="sm:flex sm:flex-row telefono:flex-col items-center justify-center p-3 w-auto sm:ml-auto telefono:ml-0 my-4">
             <!-- Botón para descargar el PDF, se muestra solo si hay empleados -->
             <button *ngIf="empleados.length != 0"
-                class="flex items-center justify-center p-3 w-36 my-4 mr-8 rounded-md bg-Primario text-TextoBlanco hover:bg-Secundario active:bg-gray-500"
+                class="flex items-center justify-center p-3 w-36 my-4 sm:mr-8 telefono:mx-auto rounded-md bg-Primario text-TextoBlanco hover:bg-Secundario active:bg-gray-500"
                 (click)="generarPDF()">Descargar PDF</button>
             <!-- Botón para descargar el Excel, se muestra solo si hay empleados -->
             <button *ngIf="empleados.length != 0"
@@ -26,58 +26,65 @@
                 (click)="generarEXEL()">Descargar Excel</button>
         </div>
 
-        <!-- Tabla para mostrar los detalles de horas trabajadas por empleado -->
-        <table class="table-auto w-full mt-10">
-            <!-- Encabezados de la tabla -->
-            <tr class="bg-Primario text-white text-ms">
-                <th class="py-3 px-6">Empleado</th>
-                <th class="py-3 px-6">Cédula</th>
-                <th class="py-3 px-6">Total de horas laboradas</th>
-                <th class="py-3 px-6">Horas diurnas ordinarias</th>
-                <th class="py-3 px-6">Horas diurnas festivo</th>
-                <th class="py-3 px-6">Horas nocturnas</th>
-                <th class="py-3 px-6">Horas nocturnas festivo</th>
-                <th class="py-3 px-6">Horas extra</th>
-            </tr>
-
-            <!-- Mensaje cuando no hay registros de empleados -->
-            <tr *ngIf="empleados.length == 0">
-                <td class="py-20 px-6 text-center bg-white text-xl" colspan="8">Mes sin Registros</td>
-            </tr>
-
-            <!-- Filas de la tabla que muestran los datos de cada empleado -->
-            <tr *ngFor="let empleado of empleados; let i = index"
-                class="text-xs text-center bg-white hover:bg-gray-100">
-                <td class="w-16 p-4 border">
-                    <p>{{empleado.nombre + ' ' + empleado.apellidos}}</p>
-                </td>
-                <td class="w-16 p-4 border">
-                    <p>{{empleado.cedula}}</p>
-                </td>
-                <td class="w-16 p-4 border">
-                    <p>{{empleado.total_horas}}</p>
-                </td>
-                <td class="w-16 p-4 border">
-                    <p>{{empleado.horas_diurnas_ord}}</p>
-                </td>
-                <td class="w-16 p-4 border">
-                    <p>{{empleado.horas_diurnas_fest}}</p>
-                </td>
-                <td class="w-16 p-4 border">
-                    <p>{{empleado.horas_nocturnas}}</p>
-                </td>
-                <td class="w-16 p-4 border">
-                    <p>{{empleado.horas_nocturnas_fest}}</p>
-                </td>
-                <td class="w-16 p-4 border">
-                    <p>{{empleado.horas_extras}}</p>
-                </td>
-            </tr>
-        </table>
+        <!-- Contenedor con overflow para hacer la tabla responsive -->
+        <div class="w-full overflow-x-auto">
+            <!-- Tabla para mostrar los detalles de horas trabajadas por empleado -->
+            <table class="table-auto w-full mt-10">
+                <!-- Encabezados de la tabla -->
+                <thead>
+                    <tr class="bg-Primario text-white text-ms">
+                        <th class="py-3 px-6">Empleado</th>
+                        <th class="py-3 px-6">Cédula</th>
+                        <th class="py-3 px-6">Total de horas laboradas</th>
+                        <th class="py-3 px-6">Horas diurnas ordinarias</th>
+                        <th class="py-3 px-6">Horas diurnas festivo</th>
+                        <th class="py-3 px-6">Horas nocturnas</th>
+                        <th class="py-3 px-6">Horas nocturnas festivo</th>
+                        <th class="py-3 px-6">Horas extra</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Mensaje cuando no hay registros de empleados -->
+                    <tr *ngIf="empleados.length == 0">
+                        <td class="py-20 px-6 text-center bg-white text-xl" colspan="8">Mes sin Registros</td>
+                    </tr>
+                    <!-- Filas de la tabla que muestran los datos de cada empleado -->
+                    <tr *ngFor="let empleado of empleados; let i = index"
+                        class="text-xs text-center bg-white hover:bg-gray-100">
+                        <td class="w-16 p-4 border">
+                            <p>{{empleado.nombre + ' ' + empleado.apellidos}}</p>
+                        </td>
+                        <td class="w-16 p-4 border">
+                            <p>{{empleado.cedula}}</p>
+                        </td>
+                        <td class="w-16 p-4 border">
+                            <p>{{empleado.total_horas}}</p>
+                        </td>
+                        <td class="w-16 p-4 border">
+                            <p>{{empleado.horas_diurnas_ord}}</p>
+                        </td>
+                        <td class="w-16 p-4 border">
+                            <p>{{empleado.horas_diurnas_fest}}</p>
+                        </td>
+                        <td class="w-16 p-4 border">
+                            <p>{{empleado.horas_nocturnas}}</p>
+                        </td>
+                        <td class="w-16 p-4 border">
+                            <p>{{empleado.horas_nocturnas_fest}}</p>
+                        </td>
+                        <td class="w-16 p-4 border">
+                            <p>{{empleado.horas_extras}}</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
         <!-- Contenedor para el gráfico de barras apiladas -->
-        <div class="w-full h-[400px] flex justify-center items-center my-36 pr-40">
-            <canvas id="canvas" class="w-3/4"></canvas>
+        <div class="w-full h-[400px] overflow-x-auto my-32">
+            <div class="min-w-[800px] flex justify-center items-center">
+                <canvas id="canvas" class="w-full"></canvas>
+            </div>
         </div>
 
         <!-- Contenedor para el gráfico de pastel -->

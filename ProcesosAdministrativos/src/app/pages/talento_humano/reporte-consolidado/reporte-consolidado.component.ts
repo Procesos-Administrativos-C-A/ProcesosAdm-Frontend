@@ -23,6 +23,10 @@ export class ReporteConsolidadoComponent {
   empleados: Array<any> = [];
   stackedBarChart: any;
   pieChart: any;
+  hoy = new Date();
+  año = this.hoy.getFullYear();
+  mesActual = String(this.hoy.getMonth() + 1).padStart(2, '0'); // Los meses van de 0 a 11, por eso se suma 1
+  mesAnterior = this.hoy.getMonth() - 2;
   fecha_inicio: string = '2024-05-19';
   fecha_fin: string = '2024-06-20';
   rol = Number(localStorage.getItem('rol')); // Rol obtenido del almacenamiento local
@@ -32,7 +36,7 @@ export class ReporteConsolidadoComponent {
 
   // Método que se ejecuta al inicializar el componente
   ngOnInit(): void {
-    this.obtenerConsolidado('2024-03-19', '2024-05-20'); // Obtiene el reporte consolidado inicial
+    this.obtenerConsolidado(`${this.año}-${this.mesAnterior}-${19}`, `${this.año}-${this.mesActual}-${21}`); // Obtiene el reporte consolidado inicial
   }
 
   // Método para obtener el consolidado de empleados entre fechas específicas

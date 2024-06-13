@@ -10,27 +10,29 @@
         <h1 class="text-center text-2xl font-semibold leading-7 text-gray-900 my-8">Empleados próximos a vencer contrato
         </h1>
         <!-- Tabla que muestra la información de los empleados próximos a vencer contrato -->
-        <table class="table-auto w-10/12 mt-10 mb-20">
-            <!-- Encabezado de la tabla -->
-            <thead>
-                <tr class="bg-gray-200">
-                    <th class="p-4">Nombre completo</th>
-                    <th class="p-4">Cédula</th>
-                    <th class="p-4">Correo electrónico</th>
-                    <th class="p-4">Finalización del contrato</th>
-                </tr>
-            </thead>
-            <!-- Cuerpo de la tabla con filas generadas dinámicamente -->
-            <tbody>
-                <!-- Bucle que recorre la lista de empleados próximos a vencer contrato -->
-                <tr *ngFor="let empleado of empleadosContratoVencido">
-                    <!-- Celdas de la tabla con la información de cada empleado -->
-                    <td class="p-4 border">{{ empleado.nombre }} {{ empleado.apellidos }}</td>
-                    <td class="p-4 border">{{ empleado.cedula }}</td>
-                    <td class="p-4 border">{{ empleado.correoElectronico }}</td>
-                    <td class="p-4 border">{{ empleado.fechaFinContrato | date:'yyyy-MM-dd' }}</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="w-full overflow-x-auto">
+            <table class="table-auto w-full mt-10 mb-20">
+                <!-- Encabezado de la tabla -->
+                <thead>
+                    <tr class="bg-gray-200">
+                        <th class="p-4">Nombre completo</th>
+                        <th class="p-4">Cédula</th>
+                        <th class="p-4">Correo electrónico</th>
+                        <th class="p-4">Finalización del contrato</th>
+                    </tr>
+                </thead>
+                <!-- Cuerpo de la tabla con filas generadas dinámicamente -->
+                <tbody>
+                    <!-- Bucle que recorre la lista de empleados próximos a vencer contrato -->
+                    <tr *ngFor="let empleado of empleadosContratoVencido">
+                        <!-- Celdas de la tabla con la información de cada empleado -->
+                        <td class="p-4 border">{{ empleado.nombre }} {{ empleado.apellidos }}</td>
+                        <td class="p-4 border">{{ empleado.cedula }}</td>
+                        <td class="p-4 border">{{ empleado.correoElectronico }}</td>
+                        <td class="p-4 border">{{ empleado.fechaFinContrato | date:'yyyy-MM-dd' }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </main>
