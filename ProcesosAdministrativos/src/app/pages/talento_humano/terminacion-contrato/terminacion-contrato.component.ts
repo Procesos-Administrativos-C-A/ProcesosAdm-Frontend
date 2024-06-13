@@ -44,7 +44,20 @@ export class TerminacionContratoComponent implements OnInit {
         fechaFinContrato: new Date(2024, 6, 15),
         correoElectronico: 'juan.perez@example.com'
       },
-      // Otros empleados de prueba...
+      {
+        nombre: 'Diego',
+        apellidos: 'Parra Medina',
+        cedula: '1054595384',
+        fechaFinContrato: new Date(2024, 8, 20),
+        correoElectronico: 'juan.perez@example.com'
+      },
+      {
+        nombre: 'Pedro',
+        apellidos: 'Gómez Alzate',
+        cedula: '1082567067',
+        fechaFinContrato: new Date(2024, 6, 15),
+        correoElectronico: 'juan.perez@example.com'
+      },
     ];
 
     // Método para obtener los empleados cuyo contrato está próximo a vencer
